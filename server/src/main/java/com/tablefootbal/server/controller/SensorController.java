@@ -20,4 +20,10 @@ public class SensorController
 		Date date = new Date();
 		log.info("SENSOR DATA RECEIVED @ " + dateFormat.format(date) + " : " + sensorData);
 	}
+	
+	@GetMapping("/")
+	public String sayHello()
+	{
+		return "Connection Accepted";
+	}
 }
