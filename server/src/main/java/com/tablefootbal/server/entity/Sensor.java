@@ -16,9 +16,9 @@ public class Sensor
 	String id;
 	
 	@Column(length = 1)
-	boolean isActive;
+	boolean active;
 	@Column(length = 1)
-	boolean isOnline;
+	boolean online;
 	
 	@Column
 	@Temporal(TemporalType.TIMESTAMP)
