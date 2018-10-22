@@ -8,4 +8,6 @@ services:
                 - "8080:8080"
                 env_file:
                 - ./startup.env
+                volumes:
+                - ./certs/server/:/var/certs/:ro
 
