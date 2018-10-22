@@ -12,7 +12,7 @@ import java.util.Date;
 @Table(name = "sensors")
 public class Sensor
 {
-	@Id()
+	@Id
 	String id;
 	
 	@Column(length = 1)
