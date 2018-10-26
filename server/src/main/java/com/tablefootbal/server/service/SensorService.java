@@ -1,6 +1,7 @@
 package com.tablefootbal.server.service;
 
 import com.tablefootbal.server.entity.Sensor;
+import com.tablefootbal.server.readings.SensorReadings;
 
 import java.util.List;
 
@@ -8,7 +9,7 @@ public interface SensorService
 {
 	boolean checkIfExistsById(String id);
 	
-	Sensor saveOrUpdate(Sensor sensor);
+	Sensor saveOrUpdate(Sensor sensor, SensorReadings.Reading reading);
 	
 	List<Sensor> findActiveSensors();
 	

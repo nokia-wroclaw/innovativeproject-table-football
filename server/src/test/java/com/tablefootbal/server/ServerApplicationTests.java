@@ -7,7 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @RunWith(Suite.class)
 @SpringBootTest
-@Suite.SuiteClasses({SensorRepositoryIntegrationTests.class, SensorServiceTests.class})
+@Suite.SuiteClasses({SensorRepositoryIntegrationTests.class, SensorServiceTests.class,
+SensorReadingsTests.class, SensorDataManagerIntegrationTests.class})
 
 public class ServerApplicationTests {
 

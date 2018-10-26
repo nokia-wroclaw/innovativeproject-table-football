@@ -22,6 +22,6 @@ public class SensorServiceTests
 	{
 		Sensor sensor = new Sensor();
 		sensor.setId(null);
-		service.saveOrUpdate(sensor);
+		service.saveOrUpdate(sensor, null);
 	}
 }
