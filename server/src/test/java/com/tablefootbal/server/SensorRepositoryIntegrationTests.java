@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -83,4 +84,20 @@ public class SensorRepositoryIntegrationTests
 			Assert.assertEquals(sensor.getRoom(), 222);
 		}
 	}
+	
+	@Test
+	public void testNewSensorSaved()
+	{
+		Sensor sensor = new Sensor();
+		sensor.setId("FD:DD:84:21:C2:11");
+		
+		repository.save(sensor);
+		
+		Optional<Sensor> result = repository.findById(sensor.getId());
+		
+		Assert.assertEquals(sensor.getId(), result.get().getId());
+		
+	}
+	
+	
 }
