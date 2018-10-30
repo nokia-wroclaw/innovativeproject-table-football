@@ -3,7 +3,6 @@ package com.tablefootbal.server.service;
 import com.tablefootbal.server.entity.Sensor;
 import com.tablefootbal.server.events.SensorInactiveEvent;
 import com.tablefootbal.server.events.SensorUpdateEvent;
-import com.tablefootbal.server.exceptions.customExceptions.InvalidSensorIdException;
 import com.tablefootbal.server.readings.SensorReadings;
 import com.tablefootbal.server.repository.SensorRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -36,12 +35,6 @@ public class SensorServiceImp implements SensorService, ApplicationListener<Sens
 	@Override
 	public Sensor saveOrUpdate(Sensor sensor, SensorReadings.Reading reading)
 	{
-		String id = sensor.getId();
-		if (id == null)
-		{
-			throw new InvalidSensorIdException();
-		}
-		
 		Date date = new Date();
 		sensor.setLastNotificationDate(date);
 		
