@@ -1,11 +1,9 @@
 package com.tablefootbal.server.events;
 
-import com.tablefootbal.server.entity.Sensor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Component;
@@ -20,6 +18,8 @@ import java.util.concurrent.ScheduledFuture;
 @PropertySource("classpath:readings.properties")
 public class SensorTrackingScheduler implements ApplicationListener<SensorInactiveEvent>
 {
+	private static int ONE_SECOND_IN_MILIS = 1000;
+	
 	@Value("${readings.heartbeat_interval}")
 	private int HEARTBEAT_INTERVAL;
 	
@@ -32,17 +32,12 @@ public class SensorTrackingScheduler implements ApplicationListener<SensorInacti
 	ThreadPoolTaskScheduler scheduler;
 	
 	@Autowired
-	public SensorTrackingScheduler(ApplicationEventPublisher eventPublisher)
+	public SensorTrackingScheduler(ApplicationEventPublisher eventPublisher,
+	                               ThreadPoolTaskScheduler threadPoolTaskScheduler)
 	{
-		this.scheduler = threadPoolTaskScheduler();
+		this.scheduler = threadPoolTaskScheduler;
 		this.scheduledTasks = new HashMap<>();
 		this.eventPublisher = eventPublisher;
-	}
-	
-	@Bean
-	public ThreadPoolTaskScheduler threadPoolTaskScheduler()
-	{
-		return new ThreadPoolTaskScheduler();
 	}
 	
 	public void startTracking(String id)
@@ -55,9 +50,11 @@ public class SensorTrackingScheduler implements ApplicationListener<SensorInacti
 		
 		Runnable trackingTask = new HeartbeatTrackerTask(eventPublisher, id);
 		
+		long period = HEARTBEAT_INTERVAL * ONE_SECOND_IN_MILIS;
+		
 		ScheduledFuture scheduledTask = scheduler.scheduleAtFixedRate(trackingTask,
-				new Date(System.currentTimeMillis() + HEARTBEAT_INTERVAL),
-				HEARTBEAT_INTERVAL);
+				new Date(System.currentTimeMillis() + period),
+				period);
 		
 		scheduledTasks.put(id, scheduledTask);
 	}
@@ -65,10 +62,10 @@ public class SensorTrackingScheduler implements ApplicationListener<SensorInacti
 	@Override
 	public void onApplicationEvent(SensorInactiveEvent sensorInactiveEvent)
 	{
-		Sensor sensor = (Sensor) sensorInactiveEvent.getSource();
-		Future scheduledTask = scheduledTasks.get(sensor.getId());
+		String sensorId = (String) sensorInactiveEvent.getSource();
+		Future scheduledTask = scheduledTasks.get(sensorId);
 		scheduledTask.cancel(false);
 		
-		scheduledTasks.remove(sensor.getId());
+		scheduledTasks.remove(sensorId);
 	}
 }
