@@ -36,9 +36,9 @@ public class SensorReadingsTests
 		
 		sensorReadings.addReading(reading);
 		
-		Assert.assertEquals(sensorReadings.getReadings().get(0).getX(), 10);
-		Assert.assertEquals(sensorReadings.getReadings().get(0).getY(), 10);
-		Assert.assertEquals(sensorReadings.getReadings().get(0).getZ(), 10);
+		Assert.assertEquals(sensorReadings.getReadings().get(0).getX(), 10,0.1);
+		Assert.assertEquals(sensorReadings.getReadings().get(0).getY(), 10,0.1);
+		Assert.assertEquals(sensorReadings.getReadings().get(0).getZ(), 10,0.1);
 	}
 	
 	@Test
@@ -53,7 +53,7 @@ public class SensorReadingsTests
 			sensorReadings.addReading(reading);
 		}
 		
-		Assert.assertEquals((3 * 10 * 5) / 5, sensorReadings.getAverage());
+		Assert.assertEquals((3 * 10 * 5) / 5, sensorReadings.getAverage(),0.1);
 	}
 	
 	@Test
@@ -67,8 +67,8 @@ public class SensorReadingsTests
 			sensorReadings.addReading(reading);
 		}
 		
-		Assert.assertEquals(1, sensorReadings.getReadings().getFirst().getX());
-		Assert.assertEquals(maxReadings, sensorReadings.getReadings().getLast().getX());
+		Assert.assertEquals(1, sensorReadings.getReadings().getFirst().getX(),0.1);
+		Assert.assertEquals(maxReadings, sensorReadings.getReadings().getLast().getX(),0.1);
 		Assert.assertEquals(maxReadings, sensorReadings.getReadings().size());
 	}
 }

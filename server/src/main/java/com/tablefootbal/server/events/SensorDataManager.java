@@ -60,7 +60,7 @@ public class SensorDataManager implements ApplicationListener<SensorUpdateEvent>
 		storedReadings.addReading(reading);
 		readingsMap.put(sensor.getId(), storedReadings);
 		
-		int average = storedReadings.getAverage();
+		double average = storedReadings.getAverage();
 		
 		sensor.setActive(average > THRESHOLD);
 	}

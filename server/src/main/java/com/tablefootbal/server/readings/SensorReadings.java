@@ -25,7 +25,7 @@ public class SensorReadings
 	@Getter
 	public static class Reading
 	{
-		public Reading(int x, int y, int z, long timestamp)
+		public Reading(double x, double y, double z, long timestamp)
 		{
 			this.x = x;
 			this.y = y;
@@ -33,12 +33,12 @@ public class SensorReadings
 			this.timestamp = timestamp;
 		}
 		
-		int x;
-		int y;
-		int z;
+		double x;
+		double y;
+		double z;
 		long timestamp;
 		
-		int getReadingsSum()
+		double getReadingsSum()
 		{
 			return x + y + z;
 		}
@@ -57,15 +57,15 @@ public class SensorReadings
 		}
 	}
 	
-	public int getAverage()
+	public double getAverage()
 	{
-		long result = 0;
+		double result = 0;
 		for (Reading reading : readings)
 		{
 			result += reading.getReadingsSum();
 		}
 		result /= readings.size();
 		
-		return (int) result;
+		return result;
 	}
 }

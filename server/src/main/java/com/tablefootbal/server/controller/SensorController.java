@@ -65,7 +65,7 @@ public class SensorController
 		}
 		
 		Date date = new Date();
-		int[] sensorData = sensorDto.getReadings();
+		double[] sensorData = sensorDto.getReadings();
 		
 		log.info("SENSOR DATA RECEIVED @ " + dateFormat.format(date) + " FROM " + sensorDto.getId());
 		log.info("READINGS --->  X: " + sensorData[0] + " Y: " + sensorData[1] + " Z: " + sensorData[2]);
@@ -101,15 +101,4 @@ public class SensorController
 				messageSource.getMessage("error.invalid_json", null, Locale.getDefault()),
 				HttpStatus.BAD_REQUEST);
 	}
-	
-	@ExceptionHandler(JsonProcessingException.class)
-	public ResponseEntity<String> handleOtherError(Exception exception)
-	{
-		log.error(exception.getMessage());
-		return new ResponseEntity<>(
-				messageSource.getMessage("error.other", null, Locale.getDefault()),
-				HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-	
-	
 }
