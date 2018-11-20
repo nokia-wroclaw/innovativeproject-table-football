@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="floor-header d-flex"
+  [ngClass]="{'justify-content-center': sidenav.opened && smallDevice, 'justify-content-between': (!sidenav.opened && smallDevice) || !smallDevice}" (click)="toggle()">
+    <i class="material-icons hidden-icon" *ngIf="!sidenav.opened || !smallDevice">add</i>
+    <span class="floor-header-text">{{ sidenav.opened && smallDevice ? floorNumber : 'Floor ' + floorNumber }}</span>
+    <i class="material-icons sign" *ngIf="!sidenav.opened || !smallDevice">{{ isOpen ? 'remove' : 'add' }}</i>
+  </div>
+  <hr>
+  <div class="floor-panel" [@openClose]="isOpen ? 'open' : 'closed'">
+    <div class="container">
+      <div class="row d-flex justify-content-around">
+        <div class="col-xs-3">
+          <app-table [tableStatus]="'free'" [roomNumber]="21"></app-table>
+        </div>
+        <div class="col-xs-3">
+          <app-table [tableStatus]="'free'" [roomNumber]="21"></app-table>
+        </div>
+        <div class="col-xs-3">
+          <app-table [tableStatus]="'occupied'" [roomNumber]="21"></app-table>
+        </div>
+        <div class="col-xs-3">
+          <app-table [tableStatus]="'occupied'" [roomNumber]="21"></app-table>
+        </div>
+        <div class="col-xs-3">
+          <app-table [tableStatus]="'inactive'" [roomNumber]="21"></app-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

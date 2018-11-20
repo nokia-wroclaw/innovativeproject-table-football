@@ -1,0 +1,7 @@
+<img class="table-image" [src]="'assets/table_' + tableStatus + '.png'">
+<div class="table-info">
+  Room {{ roomNumber }}
+  <span class="table-status" [style.color]="getTableStatusColor()">
+    {{ tableStatus[0].toUpperCase() + tableStatus.slice(1, tableStatus.length).toLowerCase() }}
+  </span>
+</div>
