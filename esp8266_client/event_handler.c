@@ -5,6 +5,7 @@
 #include "private_key.h"
 #include "sntp.h"
 #include "ssl_conf.h"
+#include "I2C.h"
 
 //uint8 SERVER_IP[4] = {78, 8, 153, 74};
 //char *server_ip_str = "78.8.153.74";
@@ -41,7 +42,7 @@ void send_request(void *arg)
 
     os_delay_us(1000);
 
-    char *body = parse_readings(1.233223, 2.334434, 3.232243);
+    char *body = parse_readings(x_g, y_g, z_g);
     int content_length = os_strlen(body);
 
     os_sprintf(data_to_send, POST_JSON_FORM,
@@ -137,7 +138,7 @@ void initConnection()
     connection->proto.tcp = tcp_info;
 
     os_sprintf(server_ip_str, "%d.%d.%d.%d", SERVER_IP[0], SERVER_IP[1], SERVER_IP[2], SERVER_IP[3]);
-    os_printf("SERVER IP IN STRING:%s",server_ip_str);
+    os_printf("SERVER IP IN STRING:%s", server_ip_str);
 
     espconn_regist_connectcb(connection, connection_success_handler);
     espconn_regist_reconcb(connection, connection_failure_handler);

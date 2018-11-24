@@ -3,6 +3,7 @@
 #include "user_config.h"
 #include "event_handler.h"
 #include "sntp.h"
+#include "I2C.h"
 
 uint32 ICACHE_FLASH_ATTR
 user_rf_cal_sector_set(void)
@@ -38,10 +39,14 @@ user_rf_cal_sector_set(void)
     return rf_cal_sec;
 }
 
+
 void ICACHE_FLASH_ATTR user_init()
 {
     user_rf_cal_sector_set();
     uart_init(BIT_RATE_9600, BIT_RATE_9600);
+
+    initI2C();
+    os_delay_us(10000);
     initConnection();
 
     const char ssid[32] = SSID;
