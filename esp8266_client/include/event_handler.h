@@ -3,6 +3,8 @@
 #include "espconn.h"
 #include "mem.h"
 
+extern bool ready_to_send;
+
 void wifi_event_handler(System_Event_t * e);
 void data_received_handler(void *conn_info,char *data, unsigned short len);
 void connection_success_handler(void *connection);

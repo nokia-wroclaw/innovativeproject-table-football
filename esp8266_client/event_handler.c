@@ -7,8 +7,8 @@
 #include "ssl_conf.h"
 #include "I2C.h"
 
-//uint8 SERVER_IP[4] = {78, 8, 153, 74};
-//char *server_ip_str = "78.8.153.74";
+bool ready_to_send = true;
+
 char server_ip_str[16];
 
 struct espconn *connection;
@@ -32,6 +32,7 @@ void connection_success_handler(void *connection)
 
 void send_request(void *arg)
 {
+    ready_to_send = false;
     char *data_to_send;
 
     os_printf("Allocating data buffer\n");
@@ -65,15 +66,13 @@ void send_request(void *arg)
 void sent_success_handler(void *connection)
 {
     os_printf("Data has been successfully sent\n");
-
-    os_timer_disarm(&timer);
-    os_timer_setfn(&timer, (os_timer_func_t *) send_request, NULL);
-    os_timer_arm(&timer, 10000, 0);
+    ready_to_send = true;
 }
 
 void data_received_handler(void *conn_info, char *data, unsigned short len)
 {
     os_printf("SERVER RESPONSE:\n %s", data);
+    espconn_secure_disconnect(connection);
 }
 
 void wifi_event_handler(System_Event_t *e)
@@ -175,7 +174,7 @@ void connection_failure_handler(void *conn, sint8 err)
             os_printf(" OTHER ERROR\n\r");
             break;
     }
-
+    ready_to_send = true;
     os_timer_disarm(&timer);
     os_timer_setfn(&timer, start_connection, NULL);
     os_timer_arm(&timer, 10000, 0);
@@ -207,7 +206,7 @@ void sntp_listener(void *arg)
         os_timer_disarm(&timer);
         os_printf("\nSNTP server returned timestamp: %d \n", timestamp);
 
-        start_connection();
+//        start_connection();
     }
     os_printf("\nLeaving sntp listener\n");
 }

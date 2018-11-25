@@ -13,9 +13,9 @@ char *parse_readings(real32 x, real32 y, real32 z)
     int y_int = (int) y;
     int z_int = (int) z;
 
-    int fraction_x = (int) (x * FLOAT_CONVERSION_PRECISION) % FLOAT_CONVERSION_PRECISION;
-    int fraction_y = (int) (y * FLOAT_CONVERSION_PRECISION) % FLOAT_CONVERSION_PRECISION;
-    int fraction_z = (int) (z * FLOAT_CONVERSION_PRECISION) % FLOAT_CONVERSION_PRECISION;
+    unsigned int fraction_x = (unsigned int) (x * FLOAT_CONVERSION_PRECISION) % FLOAT_CONVERSION_PRECISION;
+    unsigned int fraction_y = (unsigned int) (y * FLOAT_CONVERSION_PRECISION) % FLOAT_CONVERSION_PRECISION;
+    unsigned int fraction_z = (unsigned int) (z * FLOAT_CONVERSION_PRECISION) % FLOAT_CONVERSION_PRECISION;
 
     char *body_buffer = os_zalloc(512);
     os_sprintf(body_buffer, json_format, MAC_ADDRESS, x_int, fraction_x,
