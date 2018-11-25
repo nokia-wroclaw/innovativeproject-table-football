@@ -26,6 +26,11 @@
     font-size: 2rem;
 }
 
+.no-tables-paragraph {
+    margin-top: 1rem;
+    text-align: center;
+}
+
 hr {
     margin: 0;
     padding: 0;

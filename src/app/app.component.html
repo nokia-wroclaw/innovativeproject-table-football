@@ -1,16 +1,16 @@
 <mat-sidenav-container fullscreen>
     <mat-sidenav #sidenav mode="side" closed>
         <div class="container">
-            <mat-slide-toggle [color]="'primary'" [(checked)]="showOnlyFreeTables">
+            <!-- <mat-slide-toggle [color]="'primary'" (change)="slideToggleChanged($event)">
                 Show only free tables
-            </mat-slide-toggle>
+            </mat-slide-toggle> -->
             <img src="assets/innovative_projects.png" class="innovative-projects" *ngIf="smallDevice">
         </div>
     </mat-sidenav>
     <mat-sidenav-content>
         <app-nav [sidenav]="sidenav"></app-nav>
         <div *ngFor="let floor of floors">
-            <app-floor [floorNumber]="floor.floorNumber" [sidenav]="sidenav"></app-floor>
+            <app-floor [floorNumber]="floor.floorNumber" [sidenav]="sidenav" [showOnlyFreeTables]="showOnlyFreeTables"></app-floor>
         </div>
         <img src="assets/innovative_projects.png" class="innovative-projects" *ngIf="!smallDevice">
     </mat-sidenav-content>

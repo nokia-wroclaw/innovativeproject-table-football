@@ -6,6 +6,8 @@ import {
   animate,
   transition,
 } from '@angular/animations';
+import { Table } from '../model/sensor';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-floor',
@@ -37,8 +39,10 @@ export class FloorComponent implements OnInit {
 
   isOpen = false;
   smallDevice = false;
+  tables: Array<Table>;
 
-  constructor() {
+  constructor(private dataService: DataService) {
+    this.fetchTables();
     if (window.screen.width <= 768) {
       this.smallDevice = true;
     }
@@ -49,5 +53,16 @@ export class FloorComponent implements OnInit {
 
   toggle() {
     this.isOpen = !this.isOpen;
+  }
+
+  fetchTables() {
+    this.dataService.getSensorStatus().subscribe((data: Table[]) => {
+      this.tables = new Array<Table>();
+      data.forEach((table: Table) => {
+        if (table.floor === this.floorNumber) {
+          this.tables.push(table);
+        }
+      });
+    });
   }
 }

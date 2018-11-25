@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Floor } from '../model/floor';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -11,5 +10,9 @@ export class DataService {
 
   getFloors() {
     return this.http.get('assets/floors.json');
+  }
+
+  getSensorStatus() {
+    return this.http.get('http://localhost:8080/sensorStatus/');
   }
 }

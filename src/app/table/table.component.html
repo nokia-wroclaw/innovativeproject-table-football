@@ -1,7 +1,7 @@
-<img class="table-image" [src]="'assets/table_' + tableStatus + '.png'">
+<img class="table-image" [src]="'assets/table.png'" [style.backgroundColor]="getTableStatusColor()">
 <div class="table-info">
-  Room {{ roomNumber }}
+  Room {{ room }}
   <span class="table-status" [style.color]="getTableStatusColor()">
-    {{ tableStatus[0].toUpperCase() + tableStatus.slice(1, tableStatus.length).toLowerCase() }}
+    {{ online ? (active ? 'Occupied' : 'Free') : 'Inactive' }}
   </span>
 </div>

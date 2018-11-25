@@ -10,19 +10,23 @@ import { Floor } from './model/floor';
 })
 export class AppComponent {
   floors: Floor[];
-  showOnlyFreeTables: boolean;
+  showOnlyFreeTables = false;
   smallDevice: boolean;
 
   constructor(private dataService: DataService) {
-    this.getFloors();
+    this.fetchFloors();
     if (window.screen.width <= 768) {
       this.smallDevice = true;
     }
   }
 
-  getFloors() {
+  fetchFloors() {
     this.dataService.getFloors().subscribe((data: Floor[]) => {
       this.floors = data;
     });
+  }
+
+  slideToggleChanged(event) {
+    this.showOnlyFreeTables = event.checked;
   }
 }
