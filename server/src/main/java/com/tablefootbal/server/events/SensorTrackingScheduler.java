@@ -16,7 +16,7 @@ import java.util.concurrent.ScheduledFuture;
 
 @Component
 @PropertySource("classpath:readings.properties")
-public class SensorTrackingScheduler implements ApplicationListener<SensorInactiveEvent> {
+public class SensorTrackingScheduler implements ApplicationListener<SensorOfflineEvent> {
     private static int ONE_SECOND_IN_MILIS = 1000;
 
     @Value("${readings.heartbeat_interval}")
@@ -72,8 +72,8 @@ public class SensorTrackingScheduler implements ApplicationListener<SensorInacti
     }
 
     @Override
-    public void onApplicationEvent(SensorInactiveEvent sensorInactiveEvent) {
-        String sensorId = (String) sensorInactiveEvent.getSource();
+    public void onApplicationEvent(SensorOfflineEvent sensorOfflineEvent) {
+        String sensorId = (String) sensorOfflineEvent.getSource();
         Future task = heartbeatTasks.get(sensorId);
         task.cancel(false);
 

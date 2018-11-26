@@ -2,9 +2,9 @@ package com.tablefootbal.server.events;
 
 import org.springframework.context.ApplicationEvent;
 
-public class SensorInactiveEvent extends ApplicationEvent
+public class SensorOfflineEvent extends ApplicationEvent
 {
-	SensorInactiveEvent(Object sensorId)
+	SensorOfflineEvent(Object sensorId)
 	{
 		super(sensorId);
 	}

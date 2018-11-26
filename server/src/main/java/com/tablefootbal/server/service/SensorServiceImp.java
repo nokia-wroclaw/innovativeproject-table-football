@@ -1,7 +1,7 @@
 package com.tablefootbal.server.service;
 
 import com.tablefootbal.server.entity.Sensor;
-import com.tablefootbal.server.events.SensorInactiveEvent;
+import com.tablefootbal.server.events.SensorOfflineEvent;
 import com.tablefootbal.server.events.SensorUpdateEvent;
 import com.tablefootbal.server.readings.SensorReadings;
 import com.tablefootbal.server.repository.SensorRepository;
@@ -19,7 +19,7 @@ import java.util.Optional;
 @Service
 @Slf4j
 @Transactional
-public class SensorServiceImp implements SensorService, ApplicationListener<SensorInactiveEvent> {
+public class SensorServiceImp implements SensorService, ApplicationListener<SensorOfflineEvent> {
     private final ApplicationEventPublisher eventPublisher;
 
     private final SensorRepository repository;
@@ -56,21 +56,23 @@ public class SensorServiceImp implements SensorService, ApplicationListener<Sens
         if (optionalSensor.isPresent()) {
             Sensor sensor = optionalSensor.get();
             sensor.setActive(isActive);
-            repository.save(sensor);
 
             if (isActive) {
+                sensor.setOnline(true);
                 log.info("Sensor: " + sensorId + " is now active");
             } else {
                 log.info("Sensor: " + sensorId + " is now inactive");
             }
+
+            repository.save(sensor);
         }
     }
 
     @Override
-    public void onApplicationEvent(SensorInactiveEvent sensorInactiveEvent) {
-        String sensorId = (String) sensorInactiveEvent.getSource();
+    public void onApplicationEvent(SensorOfflineEvent sensorOfflineEvent) {
+        String sensorId = (String) sensorOfflineEvent.getSource();
 
-        log.debug("RECEIVING INACTIVE EVENT WITH ID: " + sensorId);
+        log.debug("RECEIVING OFFLINE EVENT WITH ID: " + sensorId);
 
         Optional sensorOptional = repository.findById(sensorId);
 

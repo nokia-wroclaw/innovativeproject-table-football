@@ -17,7 +17,7 @@ public class HeartbeatTrackerTask implements Runnable
 	@Override
 	public void run()
 	{
-		SensorInactiveEvent event = new SensorInactiveEvent(sensorId);
+		SensorOfflineEvent event = new SensorOfflineEvent(sensorId);
 		eventPublisher.publishEvent(event);
 	}
 }
