@@ -19,103 +19,106 @@ import java.util.Optional;
 @Service
 @Slf4j
 @Transactional
-public class SensorServiceImp implements SensorService, ApplicationListener<SensorInactiveEvent>
-{
-	private final ApplicationEventPublisher eventPublisher;
-	
-	private final SensorRepository repository;
-	
-	@Autowired
-	public SensorServiceImp(SensorRepository repository, ApplicationEventPublisher eventPublisher)
-	{
-		this.repository = repository;
-		this.eventPublisher = eventPublisher;
-	}
-	
-	@Override
-	public Sensor saveOrUpdate(Sensor sensor, SensorReadings.Reading reading)
-	{
-		Date date = new Date();
-		sensor.setLastNotificationDate(date);
-		
-		log.debug("------> SAVING NEW SENSOR WITH ID: " + sensor.getId());
-		
-		repository.save(sensor);
-		
-		SensorUpdateEvent event = new SensorUpdateEvent(sensor, reading);
-		
-		log.debug("------> PUBLISHING UPDATE EVENT WITH:" +
-				"\n SENSOR ID: " + sensor.getId() +
-				"\n READING: " + reading);
-		
-		eventPublisher.publishEvent(event);
-		
-		return sensor;
-	}
-	
-	@Override
-	public void onApplicationEvent(SensorInactiveEvent sensorInactiveEvent)
-	{
-		String sensorId = (String) sensorInactiveEvent.getSource();
-		
-		log.debug("RECEIVING INACTIVE EVENT WITH ID: " + sensorId);
-		
-		Optional sensorOptional = repository.findById(sensorId);
-		
-		if (sensorOptional.isPresent())
-		{
-			Sensor sensor = (Sensor) sensorOptional.get();
-			sensor.setOnline(false);
-			
-			repository.save(sensor);
-		}
-	}
-	
-	@Override
-	public boolean checkIfExistsById(String id)
-	{
-		return repository.existsById(id);
-	}
-	
-	@Override
-	public List<Sensor> findActiveSensors()
-	{
-		return repository.findAllByActiveIsTrue();
-	}
-	
-	@Override
-	public List<Sensor> findUnactiveSensors()
-	{
-		return repository.findAllByActiveIsFalse();
-	}
-	
-	@Override
-	public List<Sensor> findConnectedSensors()
-	{
-		return null;
-	}
-	
-	@Override
-	public List<Sensor> findConnected()
-	{
-		return repository.findAllByOnlineIsTrue();
-	}
-	
-	@Override
-	public List<Sensor> findDisconnected()
-	{
-		return repository.findAllByOnlineIsFalse();
-	}
-	
-	@Override
-	public List<Sensor> findAllOnFloor(int floor)
-	{
-		return repository.findAllByFloor(floor);
-	}
-	
-	@Override
-	public List<Sensor> findAllInRoom(int room)
-	{
-		return repository.findAllByRoom(room);
-	}
+public class SensorServiceImp implements SensorService, ApplicationListener<SensorInactiveEvent> {
+    private final ApplicationEventPublisher eventPublisher;
+
+    private final SensorRepository repository;
+
+    @Autowired
+    public SensorServiceImp(SensorRepository repository, ApplicationEventPublisher eventPublisher) {
+        this.repository = repository;
+        this.eventPublisher = eventPublisher;
+    }
+
+    @Override
+    public Sensor saveOrUpdate(Sensor sensor, SensorReadings.Reading reading) {
+        Date date = new Date();
+        sensor.setLastNotificationDate(date);
+
+        log.debug("------> SAVING NEW SENSOR WITH ID: " + sensor.getId());
+
+        repository.save(sensor);
+
+        SensorUpdateEvent event = new SensorUpdateEvent(sensor, reading);
+
+        log.debug("------> PUBLISHING UPDATE EVENT WITH:" +
+                "\n SENSOR ID: " + sensor.getId() +
+                "\n READING: " + reading);
+
+        eventPublisher.publishEvent(event);
+
+        return sensor;
+    }
+
+    @Override
+    public void setActive(String sensorId, boolean isActive) {
+        Optional<Sensor> optionalSensor = repository.findById(sensorId);
+        if (optionalSensor.isPresent()) {
+            Sensor sensor = optionalSensor.get();
+            sensor.setActive(isActive);
+            repository.save(sensor);
+
+            if (isActive) {
+                log.info("Sensor: " + sensorId + " is now active");
+            } else {
+                log.info("Sensor: " + sensorId + " is now inactive");
+            }
+        }
+    }
+
+    @Override
+    public void onApplicationEvent(SensorInactiveEvent sensorInactiveEvent) {
+        String sensorId = (String) sensorInactiveEvent.getSource();
+
+        log.debug("RECEIVING INACTIVE EVENT WITH ID: " + sensorId);
+
+        Optional sensorOptional = repository.findById(sensorId);
+
+        if (sensorOptional.isPresent()) {
+            Sensor sensor = (Sensor) sensorOptional.get();
+            sensor.setOnline(false);
+
+            repository.save(sensor);
+        }
+    }
+
+    @Override
+    public boolean checkIfExistsById(String id) {
+        return repository.existsById(id);
+    }
+
+    @Override
+    public List<Sensor> findActiveSensors() {
+        return repository.findAllByActiveIsTrue();
+    }
+
+    @Override
+    public List<Sensor> findUnactiveSensors() {
+        return repository.findAllByActiveIsFalse();
+    }
+
+    @Override
+    public List<Sensor> findConnectedSensors() {
+        return null;
+    }
+
+    @Override
+    public List<Sensor> findConnected() {
+        return repository.findAllByOnlineIsTrue();
+    }
+
+    @Override
+    public List<Sensor> findDisconnected() {
+        return repository.findAllByOnlineIsFalse();
+    }
+
+    @Override
+    public List<Sensor> findAllOnFloor(int floor) {
+        return repository.findAllByFloor(floor);
+    }
+
+    @Override
+    public List<Sensor> findAllInRoom(int room) {
+        return repository.findAllByRoom(room);
+    }
 }
