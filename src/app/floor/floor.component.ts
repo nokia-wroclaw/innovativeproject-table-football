@@ -8,6 +8,7 @@ import {
 } from '@angular/animations';
 import { Table } from '../model/sensor';
 import { DataService } from '../services/data.service';
+import { interval, timer } from 'rxjs';
 
 @Component({
   selector: 'app-floor',
@@ -40,12 +41,14 @@ export class FloorComponent implements OnInit {
   isOpen = false;
   smallDevice = false;
   tables: Array<Table>;
+  timerSub;
 
   constructor(private dataService: DataService) {
     this.fetchTables();
     if (window.screen.width <= 768) {
       this.smallDevice = true;
     }
+    this.initiateTimer();
   }
 
   ngOnInit() {
@@ -53,6 +56,14 @@ export class FloorComponent implements OnInit {
 
   toggle() {
     this.isOpen = !this.isOpen;
+  }
+
+  initiateTimer() {
+    this.timerSub = interval(2000);
+    this.timerSub.subscribe(() => {
+      this.fetchTables();
+      console.log(this.tables);
+    });
   }
 
   fetchTables() {

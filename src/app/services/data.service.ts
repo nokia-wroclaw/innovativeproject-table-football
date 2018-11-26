@@ -13,6 +13,6 @@ export class DataService {
   }
 
   getSensorStatus() {
-    return this.http.get('http://localhost:8080/sensorStatus/');
+    return this.http.get('https://78.8.153.74/sensorStatus/');
   }
 }
