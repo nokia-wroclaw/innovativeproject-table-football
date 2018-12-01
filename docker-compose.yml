@@ -1,7 +1,6 @@
 version: '3'
 services:
         server:
-                image: 'michalmonko/table_footballserver'
                 build: .
                 ports:
                 - "8443:8443"
@@ -9,5 +8,5 @@ services:
                 env_file:
                 - ./startup.env
                 volumes:
-                - ./certs/server/:/var/certs/:ro
+                - ./certs/:/var/certs/:ro
 
