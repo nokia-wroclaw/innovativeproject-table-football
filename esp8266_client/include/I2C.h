@@ -31,15 +31,16 @@
 
 #define FIFO_SETUP_REGISTER 0x09
 #define FIFO_DISABLED 0x00
-#define FIFO_CIRCURAL_MODE 0x01
+#define FIFO_CIRCURAL_MODE 0x40
+#define FIFO_FILL 0x80
 
 #define HP_FILTER_ENABLED 0x00
 #define HP_FILTER_MASK (0x01<<4)
 #define HP_FILTER_CUTOFF_REGISTER 0x0f
-#define HP_FILTER_CUTOFF_16HZ = 0x00
-#define HP_FILTER_CUTOFF_8HZ = 0x01
-#define HP_FILTER_CUTOFF_4HZ = 0x02
-#define HP_FILTER_CUTOFF_2HZ = 0x03
+#define HP_FILTER_CUTOFF_16HZ 0x00
+#define HP_FILTER_CUTOFF_8HZ 0x01
+#define HP_FILTER_CUTOFF_4HZ 0x02
+#define HP_FILTER_CUTOFF_2HZ 0x03
 
 #define CTRL_REG_1 0x2a
 #define FAST_READ_MASK (0x01<<1)
@@ -57,6 +58,25 @@
 #define OUTPUT_RATE_6_25Hz 0x06
 #define OUTPUT_RATE_1_25Hz 0x07
 
+#define INTERRUPT_REGISTER 0x2d
+#define FIFO_INTERRUPT_ENABLE 0x40
+
+#define INT_MAPPING_REGISTER 0x2e
+#define FIFO_INT_MAP_1 0x40
+
+#define FIFO_SIZE 32
+
+#define MOTION_ENABLED 1
+#define MOTION_CONFIG_REGISTER 0x15
+#define MOTION_INT_SOURCE_REGISTER 0x16
+#define MOTION_CONFIG_SETUP 0xD8
+#define MOTION_ENABLE 0x04
+#define MOTION_INT_PIN_1 0x04
+#define MOTION_THRESHOLD_REGISTER 0x17
+#define MOTION_THRESHOLD 0x04
+#define MOTION_DEBOUNCE_COUNTER_REGISTER 0x18
+#define DEBOUNCE_COUNTER 0x02
+
 sint16_t x;
 sint16_t y;
 sint16_t z;
@@ -67,6 +87,10 @@ float z_g;
 
 uint8_t range;
 uint8_t output_rate;
+
+sint16 * fifo_buffer_x;
+sint16 * fifo_buffer_y;
+sint16 * fifo_buffer_z;
 
 os_timer_t i2c_timer;
 
@@ -97,4 +121,8 @@ void setRange(uint8_t r);
 void print_readings();
 
 void perform_calibration();
+
+void clear_overflow_flag();
+
+void read_full_fifo();
 
