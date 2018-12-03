@@ -6,7 +6,6 @@ import org.junit.runners.Suite;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
-@TestPropertySource(locations = "classpath:test_application.properties")
 @RunWith(Suite.class)
 @SpringBootTest
 @Suite.SuiteClasses({SensorRepositoryIntegrationTests.class,
