@@ -2,25 +2,31 @@ package com.tablefootbal.server.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.redis.core.RedisHash;
 
-import java.io.Serializable;
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
 @Setter
 @Getter
-@RedisHash("sensors")
-public class Sensor implements Serializable
+@Table(name = "sensors")
+public class Sensor
 {
+	@Id
 	String id;
-	
-	boolean active;
 
+	@Column(length = 1)
+	boolean active;
+	@Column(length = 1)
 	boolean online;
-	
+
+	@Column
+	@Temporal(TemporalType.TIMESTAMP)
 	Date lastNotificationDate;
-	
+
+	@Column
 	int floor;
-	
+
+	@Column
 	int room;
 }

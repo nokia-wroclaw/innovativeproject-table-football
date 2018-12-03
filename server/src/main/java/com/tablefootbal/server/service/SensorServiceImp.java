@@ -11,14 +11,12 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Slf4j
-@Transactional
 public class SensorServiceImp implements SensorService, ApplicationListener<SensorOfflineEvent> {
     private final ApplicationEventPublisher eventPublisher;
 
