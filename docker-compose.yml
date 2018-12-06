@@ -19,7 +19,7 @@ services:
   command: redis-server /usr/local/etc/redis/redis.conf
   volumes:
   - ./Redis/data/:/data
-  - ./Redis/log/:/log
+  - ./Redis/log/:/data/log
   - ./Redis/redis.conf:/usr/local/etc/redis/redis.conf
   expose: 
   - 6379
