@@ -82,43 +82,43 @@ public class SensorServiceImp implements SensorService, ApplicationListener<Sens
         }
     }
 
-    @Override
-    public boolean checkIfExistsById(String id) {
-        return repository.existsById(id);
-    }
+//    @Override
+//    public boolean checkIfExistsById(String id) {
+//        return repository.existsById(id);
+//    }
 
-    @Override
-    public List<Sensor> findActiveSensors() {
-        return repository.findAllByActiveIsTrue();
-    }
-
-    @Override
-    public List<Sensor> findUnactiveSensors() {
-        return repository.findAllByActiveIsFalse();
-    }
-
-    @Override
-    public List<Sensor> findConnectedSensors() {
-        return null;
-    }
-
-    @Override
-    public List<Sensor> findConnected() {
-        return repository.findAllByOnlineIsTrue();
-    }
-
-    @Override
-    public List<Sensor> findDisconnected() {
-        return repository.findAllByOnlineIsFalse();
-    }
-
-    @Override
-    public List<Sensor> findAllOnFloor(int floor) {
-        return repository.findAllByFloor(floor);
-    }
-
-    @Override
-    public List<Sensor> findAllInRoom(int room) {
-        return repository.findAllByRoom(room);
-    }
+//    @Override
+//    public List<Sensor> findActiveSensors() {
+//        return repository.findAllByActiveIsTrue();
+//    }
+//
+//    @Override
+//    public List<Sensor> findUnactiveSensors() {
+//        return repository.findAllByActiveIsFalse();
+//    }
+//
+//    @Override
+//    public List<Sensor> findConnectedSensors() {
+//        return null;
+//    }
+//
+//    @Override
+//    public List<Sensor> findConnected() {
+//        return repository.findAllByOnlineIsTrue();
+//    }
+//
+//    @Override
+//    public List<Sensor> findDisconnected() {
+//        return repository.findAllByOnlineIsFalse();
+//    }
+//
+//    @Override
+//    public List<Sensor> findAllOnFloor(int floor) {
+//        return repository.findAllByFloor(floor);
+//    }
+//
+//    @Override
+//    public List<Sensor> findAllInRoom(int room) {
+//        return repository.findAllByRoom(room);
+//    }
 }
