@@ -44,7 +44,7 @@ dependencies {
     implementation group: 'javax.xml.bind', name: 'jaxb-api', version:"$jaxb_apiVersion"
 
     annotationProcessor("org.projectlombok:lombok")
-    compileOnly("org.projectlombok:lombok")
+    implementation("org.projectlombok:lombok")
 
     runtimeOnly('org.springframework.boot:spring-boot-devtools')
     
