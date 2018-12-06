@@ -23,6 +23,11 @@ description = 'server'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+ext{
+    mockitoVersion = '2.10.0'
+    jaxb_apiVersion = '2.3.0'
+}
+
 repositories {
      mavenCentral()
      jcenter()
@@ -36,14 +41,14 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web')
     implementation('org.springframework.data:spring-data-redis')
     implementation('redis.clients:jedis')
-    implementation group: 'javax.xml.bind', name: 'jaxb-api', version:'2.3.0'
+    implementation group: 'javax.xml.bind', name: 'jaxb-api', version:"$jaxb_apiVersion"
 
-    annotationProcessor('org.projectlombok:lombok:1.18.4')
-    compileOnly('org.projectlombok:lombok:1.18.4')
+    annotationProcessor("org.projectlombok:lombok")
+    compileOnly("org.projectlombok:lombok")
 
     runtimeOnly('org.springframework.boot:spring-boot-devtools')
     
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation('org.springframework.security:spring-security-test')
-    testCompile group: 'org.mockito', name: 'mockito-core', version:'2.10.0'
+    testCompile group: 'org.mockito', name: 'mockito-core', version:"$mockitoVersion"
 }
