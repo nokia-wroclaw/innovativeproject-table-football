@@ -1,0 +1,23 @@
+<div class="slide-toggle-container">
+  <mat-slide-toggle [color]="'primary'" class="slide-toggle">
+    Only free tables
+  </mat-slide-toggle>
+</div>
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Floors
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div *ngFor="let floor of floors" class="d-flex justify-content-center">
+      <mat-checkbox [color]="'primary'">Floor {{ floor }}</mat-checkbox>
+    </div>
+  </mat-expansion-panel>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      Rooms
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+</mat-accordion>

@@ -9,7 +9,7 @@ import { Floor } from './model/floor';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
-  floors: Floor[];
+  floors: number[];
   showOnlyFreeTables = false;
   smallDevice: boolean;
 
@@ -21,9 +21,7 @@ export class AppComponent {
   }
 
   fetchFloors() {
-    this.dataService.getFloors().subscribe((data: Floor[]) => {
-      this.floors = data;
-    });
+    this.dataService.getFloors().subscribe((data: number[]) => this.floors = data);
   }
 
   slideToggleChanged(event) {
