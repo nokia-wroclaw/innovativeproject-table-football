@@ -1,0 +1,12 @@
+.header {
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: block;
+    text-align: center;
+    border-bottom: 1px solid lightgrey;
+    color: #1A4294;
+}
+
+.content-container {
+    overflow: hidden;
+}

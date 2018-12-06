@@ -3,7 +3,7 @@
     (click)="toggle()">
     <i class="material-icons hidden-icon" *ngIf="!sidenav.opened || !smallDevice">add</i>
     <span class="floor-header-text">{{ sidenav.opened && smallDevice ? floorNumber : 'Floor ' + floorNumber }}</span>
-    <i class="material-icons sign" *ngIf="!sidenav.opened || !smallDevice">{{ isOpen ? 'remove' : 'add' }}</i>
+    <i class="material-icons sign" *ngIf="!sidenav.opened || !smallDevice">{{ isOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</i>
   </div>
   <hr>
   <div class="floor-panel" [@openClose]="isOpen ? 'open' : 'closed'">

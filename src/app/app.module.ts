@@ -7,13 +7,14 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
 
+import { DataService } from './services/data.service';
+
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { FloorComponent } from './floor/floor.component';
 import { TableComponent } from './table/table.component';
 import { ConfigPanelComponent } from './config-panel/config-panel.component';
-
-import { DataService } from './services/data.service';
+import { CustomCheckboxComponent } from './custom-checkbox/custom-checkbox.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { DataService } from './services/data.service';
     NavComponent,
     FloorComponent,
     TableComponent,
-    ConfigPanelComponent
+    ConfigPanelComponent,
+    CustomCheckboxComponent
   ],
   imports: [
     BrowserModule,
