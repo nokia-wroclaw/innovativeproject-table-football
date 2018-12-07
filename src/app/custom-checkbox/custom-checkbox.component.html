@@ -1,6 +1,7 @@
 <div class="mb-3">
-  <span class="header" (click)="toggle()" [@check]="checked ? 'checked' : 'unchecked'">{{ innerText }}</span>
+  <span class="header" (click)="toggle()" [@check]="checked ? 'checked' : 'unchecked'" [ngClass]="{'header-unchecked': !checked}">{{ innerText }}</span>
   <div class="content-container" [@openClose]="checked ? 'open' : 'closed'">
+    <hr>
     <ng-content></ng-content>
   </div>
 </div>

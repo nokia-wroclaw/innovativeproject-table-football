@@ -3,10 +3,19 @@
     font-size: 1.1rem;
     display: block;
     text-align: center;
-    border-bottom: 1px solid lightgrey;
     color: #1A4294;
+    transition: font-size .1s;
+}
+
+.header-unchecked:hover {
+    font-size: 1.2rem;
 }
 
 .content-container {
     overflow: hidden;
+}
+
+hr {
+    margin: 0;
+    padding: 0;
 }

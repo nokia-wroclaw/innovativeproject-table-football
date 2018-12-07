@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatButtonModule } from '@angular/material/button';
 
 import { DataService } from './services/data.service';
 
@@ -32,7 +33,8 @@ import { CustomCheckboxComponent } from './custom-checkbox/custom-checkbox.compo
     MatSidenavModule,
     MatSlideToggleModule,
     MatCheckboxModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatButtonModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent]
