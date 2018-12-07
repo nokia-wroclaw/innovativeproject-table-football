@@ -22,27 +22,13 @@ import java.util.ArrayList;
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Value("${spring.security.user.name}")
-    private String sensorName;
-
-    @Value("${spring.security.user.password}")
-    private String sensorPassword;
-
-    @Value("${admin.user.name}")
-    private String adminUsername;
-
-    @Value("${admin.password}")
-    private String adminPassword;
 
 
     private final UserService userService;
 
-    private final UserRepository userRepository;
-
     @Autowired
-    public SecurityConfiguration(UserService userService, UserRepository userRepository) {
+    public SecurityConfiguration(UserService userService ) {
         this.userService = userService;
-        this.userRepository = userRepository;
     }
 
     @Override
@@ -82,32 +68,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @EventListener(ApplicationStartedEvent.class)
-    public void InitializeUsersInDb() {
-        User user = new User();
-        user.setUsername(sensorName);
-        user.setPassword(passwordEncoder().encode(sensorPassword));
-
-        UserRole role = new UserRole();
-        role.setName(UserRole.USER_ROLES.ROLE_SENSOR);
-
-        ArrayList<UserRole> roles = new ArrayList<>();
-        roles.add(role);
-
-        user.setRoles(roles);
-        userRepository.save(user);
-
-        user = new User();
-        user.setUsername(adminUsername);
-        user.setPassword(passwordEncoder().encode(adminPassword));
-
-        role = new UserRole();
-        role.setName(UserRole.USER_ROLES.ROLE_ADMIN);
-
-        roles = new ArrayList<>();
-        roles.add(role);
-
-        user.setRoles(roles);
-        userRepository.save(user);
-    }
 }

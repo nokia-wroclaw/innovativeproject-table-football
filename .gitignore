@@ -6,5 +6,6 @@ build
 out
 .idea
 Redis/data
+Redis/log
 Redis/backup
 dump.rdb
