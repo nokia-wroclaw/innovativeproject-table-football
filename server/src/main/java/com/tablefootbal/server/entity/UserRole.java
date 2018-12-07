@@ -10,6 +10,11 @@ import java.util.Collection;
 
 @Getter
 @Setter
-public class UserRole implements Serializable {
+public class UserRole {
     String name;
+
+    public static class USER_ROLES {
+        public static final String ROLE_SENSOR = "ROLE_SENSOR";
+        public static final String ROLE_ADMIN = "ROLE_ADMIN";
+    }
 }
