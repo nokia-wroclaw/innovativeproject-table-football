@@ -44,6 +44,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .requiresChannel().antMatchers("/admin/**").requiresSecure()
                 .and()
+                .cors()
+                .and()
                 .httpBasic()
                 .and()
                 .authorizeRequests();
