@@ -28,10 +28,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Value("${spring.security.user.password}")
     private String sensorPassword;
 
-    @Value("${admin.user.name")
+    @Value("${admin.user.name}")
     private String adminUsername;
 
-    @Value("${admin.password")
+    @Value("${admin.password}")
     private String adminPassword;
 
 
@@ -50,10 +50,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         http.authorizeRequests()
-                .antMatchers("/sensor/**").hasRole("SENSOR")
+                .antMatchers("/sensor/**").hasAnyRole("SENSOR","ADMIN")
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/*").permitAll()
                 .and()
                 .requiresChannel().antMatchers("/sensor/**").requiresSecure()
+                .and()
+                .requiresChannel().antMatchers("/admin/**").requiresSecure()
                 .and()
                 .httpBasic()
                 .and()

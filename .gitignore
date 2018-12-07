@@ -7,3 +7,4 @@ out
 .idea
 Redis/data
 Redis/backup
+dump.rdb
