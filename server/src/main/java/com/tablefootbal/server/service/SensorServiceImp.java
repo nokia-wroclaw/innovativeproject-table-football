@@ -49,6 +49,11 @@ public class SensorServiceImp implements SensorService, ApplicationListener<Sens
     }
 
     @Override
+    public void updateSensorInformation(Sensor sensor) {
+        repository.save(sensor);
+    }
+
+    @Override
     public void setActive(String sensorId, boolean isActive) {
         Optional<Sensor> optionalSensor = repository.findById(sensorId);
         if (optionalSensor.isPresent()) {
