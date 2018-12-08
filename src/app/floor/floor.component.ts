@@ -33,9 +33,6 @@ export class FloorComponent implements OnInit {
   floorNumber: number;
 
   @Input()
-  showOnlyFreeTables: boolean;
-
-  @Input()
   sidenav;
 
   isOpen = false;
