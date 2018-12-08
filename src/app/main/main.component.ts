@@ -15,9 +15,6 @@ export class MainComponent implements OnInit {
     if (window.screen.width <= 768) {
       this.smallDevice = true;
     }
-    this.dataService.getAdminData().subscribe((data) => {
-      console.log(data);
-    });
   }
 
   ngOnInit() {

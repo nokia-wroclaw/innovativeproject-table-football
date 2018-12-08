@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -8,6 +9,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 
 import { DataService } from './services/data.service';
 
@@ -19,6 +21,7 @@ import { ConfigPanelComponent } from './config-panel/config-panel.component';
 import { CustomCheckboxComponent } from './custom-checkbox/custom-checkbox.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { MainComponent } from './main/main.component';
+import { EditableTableComponent } from './editable-table/editable-table.component';
 
 @NgModule({
   declarations: [
@@ -29,11 +32,14 @@ import { MainComponent } from './main/main.component';
     ConfigPanelComponent,
     CustomCheckboxComponent,
     AdminPanelComponent,
-    MainComponent
+    MainComponent,
+    EditableTableComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot([
       { path: 'admin', component: AdminPanelComponent },
       { path: '', component: MainComponent }
@@ -44,7 +50,8 @@ import { MainComponent } from './main/main.component';
     MatSlideToggleModule,
     MatCheckboxModule,
     MatExpansionModule,
-    MatButtonModule
+    MatButtonModule,
+    MatInputModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

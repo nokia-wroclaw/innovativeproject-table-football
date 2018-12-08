@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Table } from '../model/sensor';
+import { Table } from '../model/table';
 
 @Component({
   selector: 'app-table',

@@ -1,0 +1,22 @@
+.navbar {
+    background-color: #1A4294;
+    flex-wrap: nowrap;
+}
+
+.header-img {
+    height: 3rem;
+}
+
+hr {
+    margin: 0;
+}
+
+.data-header {
+    display: inline-block;
+    width: 180px;
+}
+
+.button-header {
+    display: inline-block;
+    width: 64px;
+}

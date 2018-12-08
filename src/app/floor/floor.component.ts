@@ -6,7 +6,7 @@ import {
   animate,
   transition,
 } from '@angular/animations';
-import { Table } from '../model/sensor';
+import { Table } from '../model/table';
 import { DataService } from '../services/data.service';
 import { interval, timer } from 'rxjs';
 
