@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
-@CrossOrigin
 public class AdminController {
 
     final
@@ -22,11 +21,13 @@ public class AdminController {
     }
 
     @GetMapping("/")
+    @CrossOrigin
     public String ConfirmAdmin() {
         return "Admin confirmed";
     }
 
     @PostMapping
+    @CrossOrigin
     @ResponseStatus(HttpStatus.OK)
     public void updateSensors(@RequestBody List<Sensor> sensors) {
 
