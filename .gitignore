@@ -1,3 +1,5 @@
-/server/.idea/**
-/server/*.iml
-/server/target/**
+/server/**
+.gradle/**
+
+Redis/**
+*.rdb
