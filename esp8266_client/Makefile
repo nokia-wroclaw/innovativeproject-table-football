@@ -1,11 +1,11 @@
 
 # common
-DRIVER_LOCATION = /home/user/projects/esp-open-sdk/sdk/driver_lib
+DRIVER_LOCATION = /home/warchlak/ESP8266/esp-open-sdk/sdk/driver_lib
 DRIVER_HEADERS = $(DRIVER_LOCATION)/include/driver
 DEFS =
 CFLAGS :=
 LDFLAGS :=
-SDKPATH = /home/user/projects/esp-open-sdk/sdk
+SDKPATH = /home/warchlak/ESP8266/esp-open-sdk/sdk
 SDKINCLUDES = -I$(SDKPATH)/include -I$(DRIVER_HEADERS) -I./include
 SDKLIBS = -L$(SDKPATH)/ld -L$(SDKPATH)/lib
 
@@ -61,3 +61,4 @@ clean:
 	rm -f esp-image*.bin
 	rm -f esp-image
 	rm -f *~
+	rm -f *.log

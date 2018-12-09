@@ -100,6 +100,8 @@ os_timer_t i2c_timer;
 
 int initI2C();
 
+void read_full_fifo_with_float_conversion();
+
 void gather_readings();
 
 bool start_transmission();

@@ -15,5 +15,6 @@ void init_sntp_server();
 void sntp_listener(void * arg);
 void start_connection();
 void send_request(void * arg);
+void set_ready_send_flag();
 
 

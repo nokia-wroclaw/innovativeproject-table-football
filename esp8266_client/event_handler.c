@@ -16,23 +16,33 @@ esp_tcp *tcp_info;
 struct ip_info ipconfig;
 
 os_timer_t timer;
+os_timer_t timeout_timer;
 
 void connection_success_handler(void *connection)
 {
-
+    ready_to_send = true;
     os_printf("Successful connection to server\n");
     os_printf("HEAP SIZE: %d", system_get_free_heap_size());
 
     espconn_regist_recvcb(connection, data_received_handler);
     espconn_regist_sentcb(connection, sent_success_handler);
 
-    send_request(NULL);
+//    send_request(NULL);
+}
 
+void set_ready_send_flag()
+{
+    ready_to_send = true;
 }
 
 void send_request(void *arg)
 {
     ready_to_send = false;
+
+    os_timer_disarm(&timeout_timer);
+    os_timer_setfn(&timeout_timer, set_ready_send_flag, NULL);
+    os_timer_arm(&timeout_timer, 5000, 0);
+
     char *data_to_send;
 
     os_printf("Allocating data buffer\n");
@@ -41,9 +51,8 @@ void send_request(void *arg)
 
     os_printf("Data buffer allocated\n");
 
-    os_delay_us(1000);
+    char *body = parse_full_buffer(x_buffer, y_buffer, z_buffer,32);
 
-    char *body = parse_readings(x_g, y_g, z_g);
     int content_length = os_strlen(body);
 
     os_sprintf(data_to_send, POST_JSON_FORM,
@@ -174,7 +183,7 @@ void connection_failure_handler(void *conn, sint8 err)
             os_printf(" OTHER ERROR\n\r");
             break;
     }
-    ready_to_send = true;
+    ready_to_send = false;
     os_timer_disarm(&timer);
     os_timer_setfn(&timer, start_connection, NULL);
     os_timer_arm(&timer, 10000, 0);
