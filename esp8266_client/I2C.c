@@ -21,7 +21,7 @@ int initI2C()
     MMA845x_Standby();
     os_delay_us(100);
     configure_for_calibration();
-//    configure_accelerometer();
+    configure_accelerometer();
     os_delay_us(100);
     MMA845x_Active();
 
@@ -45,12 +45,25 @@ bool configure_for_calibration()
 bool configure_accelerometer()
 {
     uint8 data = 0;
-    read_from(FIFO_SETUP_REGISTER, &data);
-    os_printf("FIFO_REGISTER is ");
-    print_in_binary(data);
+//    read_from(FIFO_SETUP_REGISTER, &data);
+//    os_printf("FIFO_REGISTER is ");
+//    print_in_binary(data);
 
     write_to(SENSITIVITY_CFG_REGISTER, range);
+
+    if(FIFO_INTERRUPT_ENABLE)
+    {
+        write_to(OFF_X_REG, 0x00);
+        write_to(OFF_Y_REG, 0x00);
+        write_to(OFF_Z_REG, 0x00);
+        write_to(FIFO_SETUP_REGISTER, FIFO_FILL);
+        write_to(INTERRUPT_REGISTER, FIFO_INTERRUPT_ENABLE);
+        write_to(INT_MAPPING_REGISTER, FIFO_INT_MAP_1);
+    }
+    else
+    {
     write_to(FIFO_SETUP_REGISTER, FIFO_DISABLED);
+    }
 
     if (HP_FILTER_ENABLED)
     {
