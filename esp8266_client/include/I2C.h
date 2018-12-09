@@ -8,9 +8,9 @@
 
 #define GRAVITY_CONSTANT 9.80665f
 
-#define SLAVE_ADDRESS 0x1c
-#define SLAVE_ADDRESS_WRITE 0x38
-#define SLAVE_ADDRESS_READ 0x39
+#define SLAVE_ADDRESS 0x1d
+#define SLAVE_ADDRESS_WRITE 0x3a
+#define SLAVE_ADDRESS_READ 0x3b
 
 #define OUT_X_MSB 0x01
 #define OUT_X_LSB 0x02
@@ -125,4 +125,3 @@ void perform_calibration();
 void clear_overflow_flag();
 
 void read_full_fifo();
-
