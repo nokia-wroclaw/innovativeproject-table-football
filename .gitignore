@@ -1,5 +1,6 @@
 /server/**
 .gradle/**
-
 Redis/**
 *.rdb
+*.json
+esp8266_client/esp-image

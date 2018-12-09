@@ -2,7 +2,7 @@
 // Created by warchlak on 19.11.18.
 //
 
-#include <I2C.h>
+//#include <I2C.h>
 #include <json_parser.h>
 #include <mem.h>
 
@@ -346,9 +346,66 @@ void read_full_fifo()
         fifo_buffer_y[i] = y;
         fifo_buffer_z[i] = z;
 
+
         os_printf("\nX: %d\n", x);
         os_printf("\nY: %d\n", y);
         os_printf("\nZ: %d\n", z);
+    }
+
+    end_transmission();
+
+    os_printf("\nCalibration data acquired\n");
+}
+
+void read_full_fifo_with_float_conversion()
+{
+    MMA845x_Standby();
+
+    start_transmission();
+
+    i2c_master_writeByte(OUT_X_MSB);
+    i2c_master_checkAck();
+    i2c_master_start();
+    i2c_master_writeByte(SLAVE_ADDRESS_READ);
+    i2c_master_checkAck();
+
+    uint16_t divider = 0;
+    if (range == SENSITIVITY_8G) divider = 1024;
+    if (range == SENSITIVITY_4G) divider = 2048;
+    if (range == SENSITIVITY_2G) divider = 4096;
+
+
+    int i;
+    for (i = 0; i < FIFO_SIZE; i++)
+    {
+        x = i2c_master_readByte();
+        i2c_master_send_ack();
+        x <<= 8;
+        x |= i2c_master_readByte();
+        x >>= 2;
+        i2c_master_send_ack();
+
+        y = i2c_master_readByte();
+        i2c_master_send_ack();
+        y <<= 8;
+        y |= i2c_master_readByte();
+        y >>= 2;
+        i2c_master_send_ack();
+
+        z = i2c_master_readByte();
+        i2c_master_send_ack();
+        z <<= 8;
+        z |= i2c_master_readByte();
+        z >>= 2;
+        i2c_master_send_ack();
+
+        fifo_buffer_x[i] = x;
+        fifo_buffer_y[i] = y;
+        fifo_buffer_z[i] = z;
+
+        x_buffer[i] = (float) x / divider * GRAVITY_CONSTANT;
+        y_buffer[i] = (float) y / divider * GRAVITY_CONSTANT;
+        z_buffer[i] = (float) z / divider * GRAVITY_CONSTANT;
     }
 
     end_transmission();
@@ -401,7 +458,7 @@ void perform_calibration()
     write_to(OFF_Y_REG, y_value);
 //    write_to(OFF_Y_REG, z_value);
 
-os_free(fifo_buffer_x);
+    os_free(fifo_buffer_x);
     os_free(fifo_buffer_y);
     os_free(fifo_buffer_z);
 }

@@ -92,6 +92,10 @@ sint16 * fifo_buffer_x;
 sint16 * fifo_buffer_y;
 sint16 * fifo_buffer_z;
 
+float x_buffer[32];
+float y_buffer[32];
+float z_buffer[32];
+
 os_timer_t i2c_timer;
 
 int initI2C();
