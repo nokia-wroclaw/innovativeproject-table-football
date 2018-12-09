@@ -1,7 +1,0 @@
-*.bin
-*.o
-cmake-build-debug/**
-.idea/**
-*.txt
-*.log
-

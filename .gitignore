@@ -4,3 +4,10 @@ Redis/**
 *.rdb
 *.json
 esp8266_client/esp-image
+Makefile
+*.o
+.*
+*.bin
+*.txt
+esp8266_client/cmake-build-debug
+
