@@ -46,6 +46,36 @@ public class SensorController {
         binder.addValidators(new SensorDtoValidator());
     }
 
+//    @PostMapping("/")
+//    public void acquireSensorData(@RequestBody @Valid SensorDto sensorDto, BindingResult result) {
+//        if (result.hasErrors()) {
+//            StringBuilder stringBuilder = new StringBuilder("Binding Exceptions: ");
+//            for (ObjectError error : result.getAllErrors()) {
+//                stringBuilder.append("\n");
+//                stringBuilder.append(
+//                        messageSource.getMessage(error.getCode(), null, Locale.getDefault()));
+//            }
+//            throw new InvalidSensorDataException(stringBuilder.toString());
+//        }
+//
+//        Date date = new Date();
+//        double[] sensorData = sensorDto.getReadings();
+//
+//        log.info("SENSOR DATA RECEIVED @ " + dateFormat.format(date) + " FROM " + sensorDto.getId());
+//        log.info("READINGS --->  X: " + sensorData[0] + " Y: " + sensorData[1] + " Z: " + sensorData[2]);
+//
+//        Sensor sensor = new Sensor();
+//        sensor.setId(sensorDto.getId());
+//        sensor.setRoom(0);
+//        sensor.setFloor(0);
+//
+//        long timestamp = System.currentTimeMillis();
+//        SensorReadings.Reading reading =
+//                new SensorReadings.Reading(sensorData[0], sensorData[1], sensorData[2], timestamp);
+//
+//        sensorService.saveOrUpdate(sensor, reading);
+//    }
+    
     @PostMapping("/")
     public void acquireSensorData(@RequestBody @Valid SensorDto sensorDto, BindingResult result) {
         if (result.hasErrors()) {
@@ -57,23 +87,22 @@ public class SensorController {
             }
             throw new InvalidSensorDataException(stringBuilder.toString());
         }
-
+        
         Date date = new Date();
-        double[] sensorData = sensorDto.getReadings();
-
+        
         log.info("SENSOR DATA RECEIVED @ " + dateFormat.format(date) + " FROM " + sensorDto.getId());
-        log.info("READINGS --->  X: " + sensorData[0] + " Y: " + sensorData[1] + " Z: " + sensorData[2]);
-
+        log.info("READINGS --->  X: " + sensorDto.x[0] + " Y: " + sensorDto.y[0] + " Z: " + sensorDto.z[0]);
+        
         Sensor sensor = new Sensor();
         sensor.setId(sensorDto.getId());
         sensor.setRoom(0);
         sensor.setFloor(0);
 
         long timestamp = System.currentTimeMillis();
-        SensorReadings.Reading reading =
-                new SensorReadings.Reading(sensorData[0], sensorData[1], sensorData[2], timestamp);
-
-        sensorService.saveOrUpdate(sensor, reading);
+//        SensorReadings.Reading reading =
+//                new SensorReadings.Reading(sensorData[0], sensorData[1], sensorData[2], timestamp);
+//
+//        sensorService.saveOrUpdate(sensor, reading);
     }
 
     @GetMapping("/")

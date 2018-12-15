@@ -9,3 +9,4 @@ Redis/data
 Redis/log
 Redis/backup
 dump.rdb
+*.iml
