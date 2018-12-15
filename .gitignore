@@ -9,5 +9,6 @@ Makefile
 .*
 *.bin
 *.txt
+*.log
 esp8266_client/cmake-build-debug
 

@@ -4,6 +4,8 @@
 #include "mem.h"
 
 extern bool ready_to_send;
+extern bool is_connected;
+struct espconn *connection;
 
 void wifi_event_handler(System_Event_t * e);
 void data_received_handler(void *conn_info,char *data, unsigned short len);

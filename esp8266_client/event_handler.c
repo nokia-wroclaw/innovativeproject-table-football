@@ -8,10 +8,10 @@
 #include "I2C.h"
 
 bool ready_to_send = true;
+bool is_connected = false;
 
 char server_ip_str[16];
 
-struct espconn *connection;
 esp_tcp *tcp_info;
 struct ip_info ipconfig;
 
@@ -21,6 +21,7 @@ os_timer_t timeout_timer;
 void connection_success_handler(void *connection)
 {
     ready_to_send = true;
+    is_connected = true;
     os_printf("Successful connection to server\n");
     os_printf("HEAP SIZE: %d", system_get_free_heap_size());
 
@@ -37,6 +38,10 @@ void set_ready_send_flag()
 
 void send_request(void *arg)
 {
+//    float x_test[32] = {3.9731,-3.9755,-3.5362,4.4597,-4.4597,4.4458,-2.7486,4.7772,1.8858,1.065,-4.7346,-1.831,-1.0421,1.713,4.93,-2.1733,2.1132,2.73,-1.6737,4.3646,2.8848,3.1478,1.7745,-2.2449,2.4057,4.502,3.0818,4.0011,-0.6778,-1.0867,-4.4014,-1.4495};
+//    float y_test[32] = {4.0363,2.2414,-3.9316,2.9145,-1.5591,-3.3495,0.5483,-0.3572,4.1518,0.3522,-3.6412,-3.0122,-0.9259,-0.2487,-1.515,0.6406,2.698,-2.4465,1.9404,1.405,-1.741,-3.4153,0.7505,-1.5231,-2.0296,3.9891,-3.0606,0.8568,-4.4574,-1.2602,-0.5885,3.014};
+//    float z_test[32] = {-0.8043,1.5321,0.1643,2.732,4.3203,-1.5976,4.3279,-0.8092,4.9929,2.9848,3.4345,-2.2532,-1.0425,-4.2129,0.0992,4.5467,-0.8925,0.927,-3.078,2.103,4.4798,-3.8996,-4.9509,-3.3094,-2.0349,0.8482,-4.7471,1.0873,1.6234,-4.3452,-0.955,-2.7885};
+
     ready_to_send = false;
 
     os_timer_disarm(&timeout_timer);
@@ -52,6 +57,7 @@ void send_request(void *arg)
     os_printf("Data buffer allocated\n");
 
     char *body = parse_full_buffer(x_buffer, y_buffer, z_buffer,32);
+//      char *body = parse_full_buffer(x_test, y_test, z_test,32);
 
     int content_length = os_strlen(body);
 
@@ -81,7 +87,7 @@ void sent_success_handler(void *connection)
 void data_received_handler(void *conn_info, char *data, unsigned short len)
 {
     os_printf("SERVER RESPONSE:\n %s", data);
-    espconn_secure_disconnect(connection);
+//    espconn_secure_disconnect(connection);
 }
 
 void wifi_event_handler(System_Event_t *e)
@@ -183,7 +189,7 @@ void connection_failure_handler(void *conn, sint8 err)
             os_printf(" OTHER ERROR\n\r");
             break;
     }
-    ready_to_send = false;
+//    ready_to_send = false;
     os_timer_disarm(&timer);
     os_timer_setfn(&timer, start_connection, NULL);
     os_timer_arm(&timer, 10000, 0);
@@ -215,7 +221,7 @@ void sntp_listener(void *arg)
         os_timer_disarm(&timer);
         os_printf("\nSNTP server returned timestamp: %d \n", timestamp);
 
-//        start_connection();
+        start_connection();
     }
     os_printf("\nLeaving sntp listener\n");
 }

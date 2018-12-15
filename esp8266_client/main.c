@@ -95,11 +95,18 @@ void handle_buffer_overflow()
     os_printf("\nI am inside interrupt\n");
     clear_overflow_flag();
     read_full_fifo_with_float_conversion();
-    while(!ready_to_send)
+    if (connection->state == ESPCONN_CLOSE)
     {
-        os_delay_us(10000);
+        is_connected = false;
+        os_printf("\nRenewing connection\n");
+        start_connection();
+    } else if (is_connected && ready_to_send)
+    {
+        os_printf("\nCONNECTION STATE: %d\n", connection->state);
+//        os_delay_us(10000);
+//        start_connection();
+        send_request(NULL);
     }
-    send_request(NULL);
 }
 
 void switchToMotionInterrupt()
@@ -181,7 +188,6 @@ void ICACHE_FLASH_ATTR user_init()
     uart_init(BIT_RATE_9600, BIT_RATE_9600);
 
     initConnection();
-    start_connection();
 
     initI2C();
     enableInterrupt();
@@ -202,6 +208,7 @@ void ICACHE_FLASH_ATTR user_init()
 
     os_printf("Connecting to wifi %s: \n", SSID);
     wifi_station_connect();
+//    start_connection();
 
 }
 
