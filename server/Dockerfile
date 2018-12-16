@@ -1,5 +1,5 @@
 FROM openjdk:10-jre-slim
-COPY ./server/build/libs /usr/src/server
+COPY ./build/libs /usr/src/server
 COPY startup_server.sh /usr/src/server
 WORKDIR /usr/src/server
 EXPOSE 8443
