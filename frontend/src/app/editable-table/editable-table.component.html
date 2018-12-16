@@ -1,0 +1,17 @@
+  <form class="table-data-form d-flex justify-content-around align-items-center">
+    <mat-form-field>
+      <input disabled matInput [(ngModel)]="tableData.id" name="id">
+    </mat-form-field>
+  
+    <mat-form-field>
+      <input [disabled]="!isEditable" required matInput [type]="'number'" [min]="floorMin" [max]="floorMax" [(ngModel)]="tableData.floor" name="floor">
+      <mat-error>Invalid number</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input [disabled]="!isEditable" required matInput type="number" [(ngModel)]="tableData.room" name="room">
+      <mat-error>Invalid number</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button [color]="isEditable ? 'accent' : 'primary'" (click)="editOrSave()">{{ isEditable ? 'SAVE' : 'EDIT'}}</button>
+  </form>

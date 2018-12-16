@@ -1,0 +1,27 @@
+.navbar {
+    background-color: #1A4294;
+    flex-wrap: nowrap;
+}
+
+.header-img {
+    height: 3rem;
+}
+
+.material-icons {
+    color: white;
+}
+
+@media(max-width: 768px) {
+    .header-img {
+        height: 2.5rem;
+    }
+
+    .navbar {
+        height: 56px;
+    }
+}
+
+#toggler {
+    cursor: pointer;
+    margin-right: 1rem;
+}

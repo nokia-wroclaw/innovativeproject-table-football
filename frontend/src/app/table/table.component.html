@@ -1,0 +1,8 @@
+<img class="table-image" [src]="'assets/table.png'" [style.backgroundColor]="getTableStatusColor()">
+<div class="table-info">
+  Room {{ room }}
+  <span class="table-status" [style.color]="getTableStatusColor()">
+    {{ online ? (active ? 'Occupied' : 'Free') : 'Inactive' }}
+  </span>
+</div>
+

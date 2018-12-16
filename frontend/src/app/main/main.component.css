@@ -1,0 +1,26 @@
+.mat-drawer-inner-container {
+    overflow: hidden !important;
+}
+
+mat-sidenav .container {
+    margin-top: 1rem;
+    height: 100%;
+}
+
+.innovative-projects {
+    width: 8rem;
+    position: fixed;
+    bottom: 1rem;
+}
+
+@media(max-width: 768px) {
+    .innovative-projects {
+        left: 3.25rem;
+    }
+}
+
+@media(min-width: 768px) {
+    .innovative-projects {
+        right: 1.5rem;
+    }
+}

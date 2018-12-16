@@ -1,0 +1,26 @@
+.table-info {
+    opacity: .65;
+    background-color: inherit;
+    text-align: center;
+}
+
+.table-status {
+    display: block;
+    margin-top: -5px;
+}
+
+.table-image {
+    margin-top: 1.5rem;
+    width: 175px;
+    padding: 1rem;
+    border-radius: 10px;
+    opacity: .75;
+    box-shadow: 0 0 5px black;
+    margin-bottom: .5rem;
+}
+
+@media(max-width: 992px) {
+    .table-image {
+        width: 93px;
+    }
+}

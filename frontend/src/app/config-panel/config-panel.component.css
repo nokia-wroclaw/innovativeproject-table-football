@@ -1,0 +1,8 @@
+.slide-toggle-container {
+    padding: 15px;
+}
+
+.mat-raised-button {
+    width: 100%;
+    border-radius: 0;
+}

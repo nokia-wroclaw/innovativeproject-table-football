@@ -1,0 +1,16 @@
+<nav class="navbar sticky-top d-flex justify-content-center mb-sm-4">
+  <a routerLink="/" routerLinkActive="active"><img #headerimg class="header-img" src="assets/header.png"></a>
+</nav>
+<div class="container d-flex justify-content-around">
+  <span class="data-header">MAC address</span>
+  <span class="data-header">Floor</span>
+  <span class="data-header">Room</span>
+  <span class="button-header">Action</span>
+</div>
+<div class="container" *ngFor="let table of tables">
+  <hr>
+  <app-editable-table (editStatus)="editStatusChanged($event)" [tableData]="table" [floorMin]="floorMin" [floorMax]="floorMax"></app-editable-table>
+</div>
+<div class="container d-flex justify-content-center mt-3">
+  <button [disabled]="checksum != 0" mat-raised-button color="primary" (click)="updateTables()">APPLY CHANGES</button>
+</div>
