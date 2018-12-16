@@ -22,6 +22,7 @@ import { CustomCheckboxComponent } from './custom-checkbox/custom-checkbox.compo
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { MainComponent } from './main/main.component';
 import { EditableTableComponent } from './editable-table/editable-table.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { EditableTableComponent } from './editable-table/editable-table.componen
     CustomCheckboxComponent,
     AdminPanelComponent,
     MainComponent,
-    EditableTableComponent
+    EditableTableComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -42,6 +44,7 @@ import { EditableTableComponent } from './editable-table/editable-table.componen
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: 'admin', component: AdminPanelComponent },
+      { path: 'login', component: LoginComponent },
       { path: '', component: MainComponent }
     ]
     ),

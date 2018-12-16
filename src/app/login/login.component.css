@@ -1,0 +1,18 @@
+.panel {
+    width: 300px;
+    height: 225px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -175px 0 0 -150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+}
+
+.submit {
+    margin-top: 10px;   
+}
