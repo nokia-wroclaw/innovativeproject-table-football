@@ -1,14 +1,14 @@
 # Ignore Gradle project-specific cache directory
-.gradle
+*.gradle
 
 # Ignore Gradle build output directory
-build
-out
-.idea
+*build
+*out
+*.idea
 
-Redis/data
-Redis/backup
-dump.rdb
+server/Redis/data
+server/Redis/backup
+*dump.rdb
 
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
@@ -49,3 +49,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+#Linux files
+*~
