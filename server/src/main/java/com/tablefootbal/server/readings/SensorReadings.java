@@ -69,7 +69,7 @@ public class SensorReadings
 		return result;
 	}
 
-	public boolean isMovement(){
+	/*public boolean isMovement(){
 		double threshold = 2;
 		double value = this.z;
 		long startTime = System.currentTimeMilis();
@@ -90,5 +90,5 @@ public class SensorReadings
         }else{
 		    return false;
         }
-	}
+	}*/
 }
