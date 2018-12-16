@@ -1,16 +1,38 @@
 package com.tablefootbal.server.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.tablefootbal.server.entity.Sensor;
+import com.tablefootbal.server.service.SensorService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
 
+    final
+    private SensorService sensorService;
+
+    @Autowired
+    public AdminController(SensorService sensorService) {
+        this.sensorService = sensorService;
+    }
+
     @GetMapping("/")
-    public String ConfirmAdmin()
-    {
+    @CrossOrigin
+    public String ConfirmAdmin() {
         return "Admin confirmed";
+    }
+
+    @PostMapping
+    @CrossOrigin
+    @ResponseStatus(HttpStatus.OK)
+    public void updateSensors(@RequestBody List<Sensor> sensors) {
+
+        for (Sensor sensor : sensors) {
+            sensorService.updateSensorInformation(sensor);
+        }
     }
 }

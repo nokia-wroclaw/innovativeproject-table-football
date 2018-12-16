@@ -10,6 +10,8 @@ public interface SensorService {
 
     Sensor saveOrUpdate(Sensor sensor, SensorReadings.Reading reading);
 
+    void updateSensorInformation(Sensor sensor);
+
     void setActive(String SensorId, boolean isActive);
 
 //    List<Sensor> findActiveSensors();

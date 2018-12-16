@@ -1,0 +1,50 @@
+[
+  {
+    "id": "01:F1:D1:31:F1:C1",
+    "active": true,
+    "online": true,
+    "lastNotificationDate": 1539159310000,
+    "floor": 4,
+    "room": 473
+  },
+  {
+    "id": "06:F9:A1:AA:BB:C1",
+    "active": false,
+    "online": true,
+    "lastNotificationDate": 1539159310000,
+    "floor": 3,
+    "room": 395
+  },
+  {
+    "id": "21:33:88:31:20:C1",
+    "active": false,
+    "online": true,
+    "lastNotificationDate": 1539159310000,
+    "floor": 0,
+    "room": 80
+  },
+  {
+    "id": "43:C1:D1:74:F1:C1",
+    "active": false,
+    "online": false,
+    "lastNotificationDate": 1539159310000,
+    "floor": 3,
+    "room": 385
+  },
+  {
+    "id": "01:F1:D1:88:99:C1",
+    "active": false,
+    "online": false,
+    "lastNotificationDate": 1539159310000,
+    "floor": 1,
+    "room": 132
+  },
+  {
+    "id": "01:C1:D1:31:F2:C1",
+    "active": true,
+    "online": true,
+    "lastNotificationDate": 1539159310000,
+    "floor": 2,
+    "room": 225
+  }
+]
