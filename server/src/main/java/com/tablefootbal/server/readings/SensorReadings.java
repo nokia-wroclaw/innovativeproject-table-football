@@ -70,7 +70,7 @@ public class SensorReadings
 			z_reading = (i < z.length ) ? z[i] : 0.0f;
 			
 			reading = new Reading(x_reading, y_reading, z_reading, timestamp);
-			readings.add(reading);
+			addReading(reading);
 		}
 	}
 	
