@@ -6,5 +6,7 @@ import lombok.Getter;
 public class SensorDto
 {
 	String id;
-	double[] readings;
+	public double[] x;
+	public double[] y;
+	public double[] z;
 }
