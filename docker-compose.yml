@@ -2,14 +2,14 @@ version: '3'
 services:
  server:
   network_mode: host
-  build: ./server/
+  build: ./backend/
   ports:
   - "8443:8443"
   - "8080:8080"
   env_file:
-  - ./server/startup.env
+  - ./backend/startup.env
   volumes:
-  - ./server/certs/:/var/certs/:ro
+  - ./backend/certs/:/var/certs/:ro
   entrypoint: ./startup_server.sh
   depends_on:
   - redis
@@ -18,9 +18,9 @@ services:
   image: redis
   command: redis-server /usr/local/etc/redis/redis.conf
   volumes:
-  - ./server/Redis/data/:/data
-  - ./server/Redis/log/:/data/log
-  - ./server/Redis/redis.conf:/usr/local/etc/redis/redis.conf
+  - ./backend/Redis/data/:/data
+  - ./backend/Redis/log/:/data/log
+  - ./backend/Redis/redis.conf:/usr/local/etc/redis/redis.conf
   expose: 
   - 6379
   ports:
