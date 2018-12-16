@@ -41,11 +41,11 @@ export class FloorComponent implements OnInit {
   timerSub;
 
   constructor(private dataService: DataService) {
-    // this.fetchTables();
+    this.fetchTables();
     if (window.screen.width <= 768) {
       this.smallDevice = true;
     }
-    // this.initiateTimer();
+    this.initiateTimer();
   }
 
   ngOnInit() {

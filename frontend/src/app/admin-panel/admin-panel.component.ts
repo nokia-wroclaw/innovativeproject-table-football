@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { Table } from '../model/table';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-panel',
@@ -13,7 +15,10 @@ export class AdminPanelComponent implements OnInit {
   floorMax: number;
   checksum: number;
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService, private authService: AuthService, private router: Router) {
+    if (!this.authService.isAdminConfirmed()) {
+      this.router.navigateByUrl('/login');
+    }
     this.fetchTables();
     this.fetchFloors();
     this.checksum = 0;
@@ -23,7 +28,10 @@ export class AdminPanelComponent implements OnInit {
   }
 
   fetchTables() {
-    this.dataService.getSensorStatus().subscribe((data: Table[]) => this.tables = data);
+    this.dataService.getSensorStatus().subscribe((data: Table[]) => {
+      this.tables = data;
+      this.tables.sort((a: Table, b: Table) => a.floor - b.floor);
+    });
   }
 
   fetchFloors() {
@@ -35,11 +43,7 @@ export class AdminPanelComponent implements OnInit {
   }
 
   updateTables() {
-    this.tables.forEach((table: Table) => {
-      console.log(table);
-    });
-
-    this.dataService.updateSensorStatus(this.tables).subscribe(resposne => console.log(resposne));
+    this.dataService.updateSensorStatus(this.tables);
   }
 
   editStatusChanged(status: number) {

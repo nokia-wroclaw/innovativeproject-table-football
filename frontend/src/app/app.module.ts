@@ -23,6 +23,7 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { MainComponent } from './main/main.component';
 import { EditableTableComponent } from './editable-table/editable-table.component';
 import { LoginComponent } from './login/login.component';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,7 @@ import { LoginComponent } from './login/login.component';
     MatButtonModule,
     MatInputModule
   ],
-  providers: [DataService],
+  providers: [DataService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
