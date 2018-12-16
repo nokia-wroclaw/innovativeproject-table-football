@@ -86,26 +86,20 @@ public class SensorReadings
 		return result;
 	}
 
-	/*public boolean isMovement(){
-		double threshold = 2;
-		double value = this.z;
-		long startTime = System.currentTimeMilis();
-		long elapsedTime = null;
-		int counter = null;
-		long waitTime = 10;
+	public boolean isMovement(){
+		double threshold = 0.1;
+		int counter = 0;
 		int minSignals = 10;
 
-		do{
-		    elapsedTime=System.currentTime() - startTime;
-            if(value>=threshold){
+		for(Reading rd : readings) {
+            if (rd.z >= threshold) {
                 counter++;
             }
-        }while(elapsedTime<waitTime){};
-
-		if(counter>=minSignals && elapsedTime<=waitTime) {
+        }
+		if(counter>=minSignals) {
             return true;
         }else{
 		    return false;
         }
-	}*/
+	}
 }
