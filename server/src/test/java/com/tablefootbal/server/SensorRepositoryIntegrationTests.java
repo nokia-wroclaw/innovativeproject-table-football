@@ -1,7 +1,7 @@
 package com.tablefootbal.server;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tablefootbal.server.entity.Sensor;
-import com.tablefootbal.server.events.SensorOfflineEvent;
 import com.tablefootbal.server.repository.SensorRepository;
 import org.junit.After;
 import org.junit.Assert;
@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.text.DateFormat;
@@ -31,21 +31,28 @@ public class SensorRepositoryIntegrationTests {
 
     @Before
     public void populateData() throws Exception {
-        Sensor sensor;
-        sensor = getSensor("08:3F:33:33:3D:30", true, true, "2018-10-22 18:22:30", 1, 123);
-        addedSensors.add(sensor);
-        sensor = getSensor("03:F3:E3:A3:F3:C3", false, true, "2018-10-20 17:20:20", 1, 125);
-        addedSensors.add(sensor);
-        sensor = getSensor("02:F2:D2:32:F2:C2", false, false, "2018-10-22 18:22:30", 2, 222);
-        addedSensors.add(sensor);
-        sensor = getSensor("28:2F:23:23:2D:20", true, true, "2018-10-30 20:11:44", 2, 222);
-        addedSensors.add(sensor);
-        sensor = getSensor("18:1F:13:13:1D:10", false, true, "2018-09-22 11:22:31", 3, 331);
-        addedSensors.add(sensor);
-        sensor = getSensor("01:F1:D1:31:F1:C1", false, false, "2018-10-10 10:15:10", 3, 385);
-        addedSensors.add(sensor);
-
-        for (Sensor s : addedSensors) {
+//        Sensor sensor;
+//        sensor = getSensor("08:3F:33:33:3D:30", true, true, "2018-10-22 18:22:30", 1, 123);
+//        addedSensors.add(sensor);
+//        sensor = getSensor("03:F3:E3:A3:F3:C3", false, true, "2018-10-20 17:20:20", 1, 125);
+//        addedSensors.add(sensor);
+//        sensor = getSensor("02:F2:D2:32:F2:C2", false, false, "2018-10-22 18:22:30", 2, 222);
+//        addedSensors.add(sensor);
+//        sensor = getSensor("28:2F:23:23:2D:20", true, true, "2018-10-30 20:11:44", 2, 222);
+//        addedSensors.add(sensor);
+//        sensor = getSensor("18:1F:13:13:1D:10", false, true, "2018-09-22 11:22:31", 3, 331);
+//        addedSensors.add(sensor);
+//        sensor = getSensor("01:F1:D1:31:F1:C1", false, false, "2018-10-10 10:15:10", 3, 385);
+//        addedSensors.add(sensor);
+//
+//        for (Sensor s : addedSensors) {
+//            repository.save(s);
+//        }
+        ObjectMapper mapper = new ObjectMapper();
+        ClassPathResource resource = new ClassPathResource("sensors.json");
+        Sensor[] sensors = mapper.readValue(resource.getURL().openStream(), Sensor[].class);
+        for(Sensor s : sensors)
+        {
             repository.save(s);
         }
     }

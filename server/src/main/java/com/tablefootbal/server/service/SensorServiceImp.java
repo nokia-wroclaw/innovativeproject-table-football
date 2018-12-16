@@ -1,9 +1,9 @@
 package com.tablefootbal.server.service;
 
+import com.tablefootbal.server.dto.ReadingDto;
 import com.tablefootbal.server.entity.Sensor;
 import com.tablefootbal.server.events.SensorOfflineEvent;
 import com.tablefootbal.server.events.SensorUpdateEvent;
-import com.tablefootbal.server.readings.SensorReadings;
 import com.tablefootbal.server.repository.SensorRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,26 +27,45 @@ public class SensorServiceImp implements SensorService, ApplicationListener<Sens
         this.eventPublisher = eventPublisher;
     }
 
+//    @Override
+//    public Sensor saveOrUpdate(Sensor sensor, SensorReadings.Reading reading) {
+//        Date date = new Date();
+//        sensor.setLastNotificationDate(date);
+//
+//        log.debug("------> SAVING NEW SENSOR WITH ID: " + sensor.getId());
+//
+//        repository.save(sensor);
+//
+//        SensorUpdateEvent event = new SensorUpdateEvent(sensor, reading);
+//
+//        log.debug("------> PUBLISHING UPDATE EVENT WITH:" +
+//                "\n SENSOR ID: " + sensor.getId() +
+//                "\n READING: " + reading);
+//
+//        eventPublisher.publishEvent(event);
+//
+//        return sensor;
+//    }
+    
     @Override
-    public Sensor saveOrUpdate(Sensor sensor, SensorReadings.Reading reading) {
+    public void saveOrUpdate(Sensor sensor, ReadingDto readingDto)
+    {
         Date date = new Date();
         sensor.setLastNotificationDate(date);
-
+    
         log.debug("------> SAVING NEW SENSOR WITH ID: " + sensor.getId());
-
+    
         repository.save(sensor);
-
-        SensorUpdateEvent event = new SensorUpdateEvent(sensor, reading);
-
+    
+        SensorUpdateEvent event = new SensorUpdateEvent(sensor, readingDto);
+        
+    
         log.debug("------> PUBLISHING UPDATE EVENT WITH:" +
-                "\n SENSOR ID: " + sensor.getId() +
-                "\n READING: " + reading);
-
+                "\n SENSOR ID: " + sensor.getId() );
+    
         eventPublisher.publishEvent(event);
-
-        return sensor;
     }
-
+    
     @Override
     public void updateSensorInformation(Sensor sensor) {
         repository.save(sensor);
