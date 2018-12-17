@@ -50,7 +50,9 @@ public class SensorDataManager implements ApplicationListener<SensorUpdateEvent>
 				"ID: " + sensor.getId());
 		
 		log.debug("-------> STARTING TRACKING FOR SENSOR WITH ID: " + sensor.getId());
-
+		
+		sensorService.setActive(sensor.getId(), true);
+		
 		scheduler.startTracking(sensor.getId());
 		
 		SensorReadings storedReadings = readingsMap.get(sensor.getId());
@@ -64,13 +66,7 @@ public class SensorDataManager implements ApplicationListener<SensorUpdateEvent>
 		
 		readingsMap.put(sensor.getId(), storedReadings);
 
-		if(storedReadings.isMovement())
-		{
-			sensorService.setActive(sensor.getId(), true);
-		}else{
-			sensorService.setActive(sensor.getId(), false);
-		}
-
+//		double average = storedReadings.getAverage();
 	}
 	
 	public Map<String, SensorReadings> getReadingsMap()
