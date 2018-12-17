@@ -1,19 +1,19 @@
 package com.tablefootbal.server.events;
 
-import com.tablefootbal.server.readings.SensorReadings;
+import com.tablefootbal.server.dto.ReadingDto;
 import org.springframework.context.ApplicationEvent;
 
 public class SensorUpdateEvent extends ApplicationEvent
 {
-	private SensorReadings.Reading reading;
+	private ReadingDto reading;
 	
-	public SensorUpdateEvent(Object source, SensorReadings.Reading reading)
+	public SensorUpdateEvent(Object source, ReadingDto reading)
 	{
 		super(source);
 		this.reading = reading;
 	}
 	
-public 	SensorReadings.Reading getReading()
+public 	ReadingDto getReading()
 	{
 		return reading;
 	}
