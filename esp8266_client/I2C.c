@@ -16,7 +16,7 @@ int initI2C()
     i2c_master_init();
 
     setRange(SENSITIVITY_4G);
-    output_rate = OUTPUT_RATE_200Hz;
+    output_rate = OUTPUT_RATE_1_25Hz;
 
     MMA845x_Standby();
     os_delay_us(100);
@@ -53,9 +53,6 @@ bool configure_accelerometer()
 
     if(FIFO_INTERRUPT_ENABLE)
     {
-        write_to(OFF_X_REG, 0x00);
-        write_to(OFF_Y_REG, 0x00);
-        write_to(OFF_Z_REG, 0x00);
         write_to(FIFO_SETUP_REGISTER, FIFO_FILL);
         write_to(INTERRUPT_REGISTER, FIFO_INTERRUPT_ENABLE);
         write_to(INT_MAPPING_REGISTER, FIFO_INT_MAP_1);
@@ -423,7 +420,7 @@ void read_full_fifo_with_float_conversion()
 
     end_transmission();
 
-    os_printf("\nCalibration data acquired\n");
+    MMA845x_Active();
 }
 
 void perform_calibration()
