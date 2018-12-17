@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Ignore Gradle project-specific cache directory
 *.gradle/
 
@@ -45,6 +46,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+*.iml
 
 # System Files
 .DS_Store
@@ -52,3 +54,19 @@ Thumbs.db
 
 #Linux files
 *~
+=======
+/server/**
+.gradle/**
+Redis/**
+*.rdb
+*.json
+esp8266_client/esp-image
+Makefile
+*.o
+.*
+*.bin
+*.txt
+*.log
+esp8266_client/cmake-build-debug
+
+>>>>>>> dev/esp_client_branch
