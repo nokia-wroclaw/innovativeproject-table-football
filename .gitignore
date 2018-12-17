@@ -52,3 +52,6 @@ Thumbs.db
 
 #Linux files
 *~
+
+##Sensitive data
+*KeyStorage.java
