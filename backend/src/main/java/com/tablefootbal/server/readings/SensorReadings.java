@@ -85,4 +85,19 @@ public class SensorReadings
 		
 		return result;
 	}
+
+	public boolean isMovement(double threshold, int minSignals){
+		int counter = 0;
+
+		for(Reading rd : readings) {
+            if (rd.z >= threshold) {
+                counter++;
+            }
+        }
+		if(counter>=minSignals) {
+            return true;
+        }else{
+		    return false;
+        }
+	}
 }

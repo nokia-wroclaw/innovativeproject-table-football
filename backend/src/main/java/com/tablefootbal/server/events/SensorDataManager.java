@@ -20,7 +20,10 @@ import java.util.Map;
 public class SensorDataManager implements ApplicationListener<SensorUpdateEvent>
 {
 	@Value("${readings.threshold}")
-	private int THRESHOLD;
+	private double THRESHOLD;
+	
+	@Value("${readings.minAboveThresholdCount}")
+	private int MIN_ABOVE_THRESHOLD_COUNT;
 	
 	@Value("${readings.max_readings}")
 	private int MAX_READINGS;
@@ -50,9 +53,7 @@ public class SensorDataManager implements ApplicationListener<SensorUpdateEvent>
 				"ID: " + sensor.getId());
 		
 		log.debug("-------> STARTING TRACKING FOR SENSOR WITH ID: " + sensor.getId());
-		
-		sensorService.setActive(sensor.getId(), true);
-		
+
 		scheduler.startTracking(sensor.getId());
 		
 		SensorReadings storedReadings = readingsMap.get(sensor.getId());
@@ -66,7 +67,12 @@ public class SensorDataManager implements ApplicationListener<SensorUpdateEvent>
 		
 		readingsMap.put(sensor.getId(), storedReadings);
 
-//		double average = storedReadings.getAverage();
+		if(storedReadings.isMovement(THRESHOLD,MIN_ABOVE_THRESHOLD_COUNT))
+		{
+			sensorService.setActive(sensor.getId(), true);
+		}else{
+			sensorService.setActive(sensor.getId(), false);
+		}
 	}
 	
 	public Map<String, SensorReadings> getReadingsMap()
