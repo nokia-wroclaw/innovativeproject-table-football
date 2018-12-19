@@ -10,17 +10,20 @@
 
 bool configure_for_calibration();
 
-int initI2C()
-{
+int initI2C() {
     i2c_master_gpio_init();
     i2c_master_init();
 
-    setRange(SENSITIVITY_4G);
+    fifo_buffer_x = os_zalloc(sizeof(sint16) * FIFO_SIZE);
+    fifo_buffer_y = os_zalloc(sizeof(sint16) * FIFO_SIZE);
+    fifo_buffer_z = os_zalloc(sizeof(sint16) * FIFO_SIZE);
+
+    setRange(SENSITIVITY_2G);
     output_rate = OUTPUT_RATE_1_25Hz;
 
     MMA845x_Standby();
     os_delay_us(100);
-    configure_for_calibration();
+//    configure_for_calibration();
     configure_accelerometer();
     os_delay_us(100);
     MMA845x_Active();
@@ -30,11 +33,10 @@ int initI2C()
 
 }
 
-bool configure_for_calibration()
-{
-    write_to(OFF_X_REG, 0x00);
-    write_to(OFF_Y_REG, 0x00);
-    write_to(OFF_Z_REG, 0x00);
+bool configure_for_calibration() {
+//    write_to(OFF_X_REG, 0x0);
+//    write_to(OFF_Y_REG, 0x0);
+//    write_to(OFF_Z_REG, 0x0);
     write_to(FIFO_SETUP_REGISTER, FIFO_FILL);
     write_to(INTERRUPT_REGISTER, FIFO_INTERRUPT_ENABLE);
     write_to(INT_MAPPING_REGISTER, FIFO_INT_MAP_1);
@@ -42,48 +44,43 @@ bool configure_for_calibration()
     write_to(CTRL_REG_1, output_rate << OUTPUT_RATE_OFFSET);
 }
 
-bool configure_accelerometer()
-{
+bool configure_accelerometer() {
     uint8 data = 0;
 //    read_from(FIFO_SETUP_REGISTER, &data);
 //    os_printf("FIFO_REGISTER is ");
 //    print_in_binary(data);
+    write_to(OFF_X_REG, 0x00);
+    write_to(OFF_Y_REG, 0x00);
+    write_to(OFF_Z_REG, 0x00);
 
     write_to(SENSITIVITY_CFG_REGISTER, range);
 
-    if(FIFO_INTERRUPT_ENABLE)
-    {
+    if (FIFO_INTERRUPT_ENABLE) {
         write_to(FIFO_SETUP_REGISTER, FIFO_FILL);
         write_to(INTERRUPT_REGISTER, FIFO_INTERRUPT_ENABLE);
         write_to(INT_MAPPING_REGISTER, FIFO_INT_MAP_1);
-    }
-    else
-    {
-    write_to(FIFO_SETUP_REGISTER, FIFO_DISABLED);
+    } else {
+        write_to(FIFO_SETUP_REGISTER, FIFO_DISABLED);
     }
 
-    if (HP_FILTER_ENABLED)
-    {
+    if (HP_FILTER_ENABLED) {
         write_to(SENSITIVITY_CFG_REGISTER, range | HP_FILTER_MASK);
         write_to(HP_FILTER_CUTOFF_REGISTER, HP_FILTER_CUTOFF_2HZ);
     }
 
     uint8_t config_reg1 = 0x00;
     config_reg1 = output_rate << OUTPUT_RATE_OFFSET;
-    if (FAST_READ_ENABLED)
-    {
+    if (FAST_READ_ENABLED) {
         config_reg1 = config_reg1 | FAST_READ_MASK;
     }
-    if (LOW_POWER_ENABLED)
-    {
+    if (LOW_POWER_ENABLED) {
         config_reg1 = config_reg1 | LOW_POWER_MASK;
     }
 
     write_to(CTRL_REG_1, config_reg1);
     read_from(CTRL_REG_1, &data);
 
-    if (MOTION_ENABLED)
-    {
+    if (MOTION_ENABLED) {
         write_to(MOTION_CONFIG_REGISTER, MOTION_CONFIG_SETUP);
         write_to(MOTION_CONFIG_REGISTER, MOTION_CONFIG_SETUP);
         write_to(INTERRUPT_REGISTER, MOTION_ENABLE);
@@ -93,15 +90,11 @@ bool configure_accelerometer()
     }
 }
 
-void gather_readings()
-{
-    if (start_transmission())
-    {
-        if (get_readings())
-        {
+void gather_readings() {
+    if (start_transmission()) {
+        if (get_readings()) {
             print_readings();
-        } else
-        {
+        } else {
             os_printf("\nError during communication with accelerometer\n");
         }
     }
@@ -109,32 +102,27 @@ void gather_readings()
     end_transmission();
 }
 
-bool start_transmission()
-{
+bool start_transmission() {
     i2c_master_start();
     i2c_master_writeByte(SLAVE_ADDRESS_WRITE);
     return i2c_master_checkAck();
 }
 
-bool end_transmission()
-{
+bool end_transmission() {
     i2c_master_stop();
 }
 
-bool get_readings()
-{
+bool get_readings() {
     i2c_master_writeByte(OUT_X_MSB);
 
-    if (!i2c_master_checkAck())
-    {
+    if (!i2c_master_checkAck()) {
         return false;
     }
 
     i2c_master_start();
     i2c_master_writeByte(SLAVE_ADDRESS_READ);
 
-    if (!i2c_master_checkAck())
-    {
+    if (!i2c_master_checkAck()) {
         return false;
     }
 
@@ -173,28 +161,23 @@ bool get_readings()
 
 }
 
-bool write_to(uint8 reg, uint8 data)
-{
-    if (start_transmission())
-    {
+bool write_to(uint8 reg, uint8 data) {
+    if (start_transmission()) {
         i2c_master_writeByte(reg);
-        if (!i2c_master_checkAck())
-        {
+        if (!i2c_master_checkAck()) {
             os_printf("\nError during communication with accelerometer\n");
             end_transmission();
             return false;
         }
 
         i2c_master_writeByte(data);
-        if (!i2c_master_checkAck())
-        {
+        if (!i2c_master_checkAck()) {
             os_printf("\nError during communication with accelerometer\n");
             end_transmission();
             return false;
         }
 
-    } else
-    {
+    } else {
         os_printf("\nError during communication with accelerometer\n");
     }
 
@@ -202,14 +185,11 @@ bool write_to(uint8 reg, uint8 data)
 }
 
 
-bool read_from(uint8 reg, uint8 *data)
-{
-    if (start_transmission())
-    {
+bool read_from(uint8 reg, uint8 *data) {
+    if (start_transmission()) {
         i2c_master_writeByte(reg);
 
-        if (!i2c_master_checkAck())
-        {
+        if (!i2c_master_checkAck()) {
             os_printf("\nError during accelerometer read\n");
             i2c_master_send_nack();
             end_transmission();
@@ -219,8 +199,7 @@ bool read_from(uint8 reg, uint8 *data)
         i2c_master_start();
         i2c_master_writeByte(SLAVE_ADDRESS_READ);
 
-        if (!i2c_master_checkAck())
-        {
+        if (!i2c_master_checkAck()) {
             os_printf("\nError during accelerometer read\n");
             i2c_master_send_nack();
             end_transmission();
@@ -234,10 +213,8 @@ bool read_from(uint8 reg, uint8 *data)
     }
 }
 
-void print_in_binary(int n)
-{
-    while (n)
-    {
+void print_in_binary(int n) {
+    while (n) {
         if (n & 1)
             os_printf("1");
         else
@@ -248,36 +225,30 @@ void print_in_binary(int n)
     os_printf("\n");
 }
 
-void MMA845x_Standby(void)
-{
+void MMA845x_Standby(void) {
     uint8 current_register_status;
-    if (!read_from(CTRL_REG_1, &current_register_status))
-    {
+    if (!read_from(CTRL_REG_1, &current_register_status)) {
         os_printf("\nCannot put accelerometer in standby mode -> reading error\n");
     }
 
     os_printf("\nCTRL1_REG before standby: ");
     print_in_binary(current_register_status);
 
-    if (!write_to(CTRL_REG_1, current_register_status & ~1))
-    {
+    if (!write_to(CTRL_REG_1, current_register_status & ~1)) {
         os_printf("\nCannot put accelerometer in standby mode -> register write error\n");
     }
 }
 
-void MMA845x_Active(void)
-{
+void MMA845x_Active(void) {
     uint8 current_register_status;
-    if (!read_from(CTRL_REG_1, &current_register_status))
-    {
+    if (!read_from(CTRL_REG_1, &current_register_status)) {
         os_printf("\nCannot put accelerometer in active mode -> reading error\n");
     }
 
     os_printf("\nCTRL1_REG before active: ");
     print_in_binary(current_register_status);
 
-    if (!write_to(CTRL_REG_1, current_register_status | 1))
-    {
+    if (!write_to(CTRL_REG_1, current_register_status | 1)) {
         os_printf("\nCannot put accelerometer in active mode -> register write error\n");
     }
 
@@ -286,13 +257,11 @@ void MMA845x_Active(void)
     print_in_binary(current_register_status);
 }
 
-void setRange(uint8_t r)
-{
+void setRange(uint8_t r) {
     range = r;
 }
 
-void print_readings()
-{
+void print_readings() {
     os_printf("\nEntering print readings \n");
 
     int x_int = (int) x_g;
@@ -306,14 +275,12 @@ void print_readings()
     os_printf("%d\056%d\t%d\056%d\t%d\056%d", x_int, fraction_x, y_int, fraction_y, z_int, fraction_z);
 }
 
-void clear_overflow_flag()
-{
+void clear_overflow_flag() {
     uint8 data;
     read_from(0x00, &data);
 }
 
-void read_full_fifo()
-{
+void read_full_fifo() {
     MMA845x_Standby();
 
     start_transmission();
@@ -329,8 +296,7 @@ void read_full_fifo()
     i2c_master_checkAck();
 
     int i;
-    for (i = 0; i < FIFO_SIZE; i++)
-    {
+    for (i = 0; i < FIFO_SIZE; i++) {
         x = i2c_master_readByte();
         i2c_master_send_ack();
         x <<= 8;
@@ -367,8 +333,7 @@ void read_full_fifo()
     os_printf("\nCalibration data acquired\n");
 }
 
-void read_full_fifo_with_float_conversion()
-{
+void read_full_fifo_with_float_conversion() {
     MMA845x_Standby();
 
     start_transmission();
@@ -380,14 +345,13 @@ void read_full_fifo_with_float_conversion()
     i2c_master_checkAck();
 
     uint16_t divider = 0;
-    if (range == SENSITIVITY_8G) divider = 1024;
-    if (range == SENSITIVITY_4G) divider = 2048;
-    if (range == SENSITIVITY_2G) divider = 4096;
+    if (range == SENSITIVITY_8G) divider = 1024 / GRAVITY_CONSTANT;
+    if (range == SENSITIVITY_4G) divider = 2048 / GRAVITY_CONSTANT;
+    if (range == SENSITIVITY_2G) divider = 4096 / GRAVITY_CONSTANT;
 
 
     int i;
-    for (i = 0; i < FIFO_SIZE; i++)
-    {
+    for (i = 0; i < FIFO_SIZE; i++) {
         x = i2c_master_readByte();
         i2c_master_send_ack();
         x <<= 8;
@@ -413,9 +377,9 @@ void read_full_fifo_with_float_conversion()
         fifo_buffer_y[i] = y;
         fifo_buffer_z[i] = z;
 
-        x_buffer[i] = (float) x / divider * GRAVITY_CONSTANT;
-        y_buffer[i] = (float) y / divider * GRAVITY_CONSTANT;
-        z_buffer[i] = (float) z / divider * GRAVITY_CONSTANT;
+        x_buffer[i] = ((float) x) / divider;
+        y_buffer[i] = ((float) y) / divider;
+        z_buffer[i] = ((float) z) / divider;
     }
 
     end_transmission();
@@ -423,8 +387,7 @@ void read_full_fifo_with_float_conversion()
     MMA845x_Active();
 }
 
-void perform_calibration()
-{
+void perform_calibration() {
     sint32 x_offset = 0;
     sint32 y_offset = 0;
     sint32 z_offset = 0;
@@ -437,8 +400,7 @@ void perform_calibration()
     sint16_t divider = 8;
 
     int i;
-    for (i = 0; i < FIFO_SIZE; i++)
-    {
+    for (i = 0; i < FIFO_SIZE; i++) {
         x_offset += (fifo_buffer_x[i]);
         y_offset += (fifo_buffer_y[i]);
 //        z_offset += (fifo_buffer_z[i]);

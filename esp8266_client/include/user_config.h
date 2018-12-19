@@ -1,2 +1,2 @@
-#define SSID "espwifi"
-#define WIFI_PASS "esptestwifi"
+#define SSID "wifi_ssid"
+#define WIFI_PASS "wifi_pass"

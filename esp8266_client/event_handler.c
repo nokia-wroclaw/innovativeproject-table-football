@@ -96,6 +96,15 @@ void wifi_event_handler(System_Event_t *e)
     {
         case EVENT_STAMODE_CONNECTED:
             os_printf("Connected to SSID: %s \n", e->event_info.connected.ssid);
+            if(wifi_get_macaddr(0x00, mac))
+            {
+                os_printf("\ngot MAC\n");
+                parseMAC();
+            }
+            else
+            {
+                os_printf("\ncannot get MAC\n");
+            }
             break;
 
         case EVENT_STAMODE_GOT_IP:
