@@ -94,7 +94,9 @@ void handle_buffer_overflow()
 
     os_printf("\nI am inside interrupt\n");
     clear_overflow_flag();
+    os_printf("\nCleared overflow flag\n");
     read_full_fifo_with_float_conversion();
+    os_printf("\nReaded buffer\n");
     if (connection->state == ESPCONN_CLOSE)
     {
         is_connected = false;
@@ -190,8 +192,9 @@ void ICACHE_FLASH_ATTR user_init()
     initConnection();
 
     initI2C();
-    enableInterrupt();
-
+//    enableInterrupt();
+    configure_accelerometer();
+switchToBufferOverflowInterrupt();
     const char ssid[32] = SSID;
     const char password[32] = WIFI_PASS;
 
