@@ -32,7 +32,7 @@ import static org.mockito.Mockito.*;
 public class SensorDataManagerIntegrationTests extends TestCase
 {
 	@Value("${readings.threshold}")
-	private int THRESHOLD;
+	private double THRESHOLD;
 	
 	@Value("${readings.max_readings}")
 	private int MAX_READINGS;
@@ -107,7 +107,9 @@ public class SensorDataManagerIntegrationTests extends TestCase
 				new ReadingDto(x_test, y_test, z_test, System.currentTimeMillis()));
 		
 		manager.onApplicationEvent(event);
-		String id = ((Sensor) event.getSource()).getId();
+		Sensor sensor = (Sensor) event.getSource();
+		sensor.getCalibrationStructure().setCalibrationFlag(false);
+		String id = sensor.getId();
 		
 		Map<String, SensorReadings> readingMap = manager.getReadingsMap();
 		Assert.assertNotNull(readingMap);

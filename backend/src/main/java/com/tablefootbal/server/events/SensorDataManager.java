@@ -79,27 +79,37 @@ public class SensorDataManager implements ApplicationListener<SensorUpdateEvent>
 		
 		readingsMap.put(sensor.getId(), storedReadings);
 		
-		if (sensor.getCalibrationStructure().isCalibrationFlag())
+		try
 		{
-			performCalibration(sensor, axis);
-			sensor.setActive(false);
-			sensorService.save(sensor);
-		}
-		else
+			if (sensor.getCalibrationStructure().isCalibrationFlag())
+			{
+				performCalibration(sensor, axis);
+				sensor.setActive(false);
+				sensor.getCalibrationStructure().setCalibrationFlag(false);
+			}
+			else
+			{
+				boolean isActive = isMovement(storedReadings.getReadings(),
+						sensor.getCalibrationStructure(),
+						MIN_ABOVE_THRESHOLD_COUNT);
+				sensorService.setActive(sensor.getId(), isActive);
+			}
+		} catch (IndexOutOfBoundsException e)
 		{
-			boolean isActive = isMovement(storedReadings.getReadings(),
-					sensor.getCalibrationStructure(),
-					MIN_ABOVE_THRESHOLD_COUNT);
-			sensorService.setActive(sensor.getId(), isActive);
+			log.error("Not enough data to perform calibration or movement detection, will try with next buffer");
+		} catch (Exception e)
+		{
+			log.error("Something went wrong during calibration or movement detection");
 		}
+		sensorService.save(sensor);
 	}
 	
-	private void performCalibration(Sensor sensor, CalibrationStructure.Axis axis)
+	private void performCalibration(Sensor sensor, CalibrationStructure.Axis axis) throws IndexOutOfBoundsException
 	{
 		SensorReadings sensorReadings = readingsMap.get(sensor.getId());
 		List<SensorReadings.Reading> readings = sensorReadings.getReadings();
 		
-		List<Double> axisReadings = getAxisReadings(readings,axis);
+		List<Double> axisReadings = getAxisReadings(readings, axis);
 		
 		applyMedianFilter(axisReadings, WINDOW_SIZE);
 		

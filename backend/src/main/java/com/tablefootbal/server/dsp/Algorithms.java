@@ -11,7 +11,7 @@ import static com.tablefootbal.server.events.SensorDataManager.getAxisReadings;
 public class Algorithms
 {
 	
-	static public void applyMedianFilter(List<Double> xAxis, int windowSize)
+	static public void applyMedianFilter(List<Double> xAxis, int windowSize) throws IndexOutOfBoundsException
 	{
 		Double[] window = new Double[windowSize];
 		int windowRange = (windowSize - 1) / 2;
