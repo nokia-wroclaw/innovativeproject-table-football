@@ -47,6 +47,13 @@ public class SensorServiceImp implements SensorService, ApplicationListener<Sens
 //        return sensor;
 //    }
     
+    
+    @Override
+    public void save(Sensor sensor)
+    {
+    repository.save(sensor);
+    }
+    
     @Override
     public void saveOrUpdate(Sensor sensor, ReadingDto readingDto)
     {

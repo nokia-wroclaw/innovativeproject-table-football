@@ -33,9 +33,9 @@ public class SensorReadings
 			this.timestamp = timestamp;
 		}
 		
-		double x;
-		double y;
-		double z;
+		public double x;
+		public double y;
+		public double z;
 		long timestamp;
 		
 		double getReadingsSum()
@@ -84,20 +84,5 @@ public class SensorReadings
 		result /= readings.size();
 		
 		return result;
-	}
-
-	public boolean isMovement(double threshold, int minSignals){
-		int counter = 0;
-
-		for(Reading rd : readings) {
-            if (rd.z >= threshold) {
-                counter++;
-            }
-        }
-		if(counter>=minSignals) {
-            return true;
-        }else{
-		    return false;
-        }
 	}
 }

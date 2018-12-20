@@ -13,6 +13,8 @@ public interface SensorService {
     void updateSensorInformation(Sensor sensor);
 
     void setActive(String SensorId, boolean isActive);
+    
+    void save(Sensor sensor);
 
 //    List<Sensor> findActiveSensors();
 //
