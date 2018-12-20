@@ -3,6 +3,7 @@ package com.tablefootbal.server.events;
 import com.tablefootbal.server.dto.ReadingDto;
 import com.tablefootbal.server.entity.CalibrationStructure;
 import com.tablefootbal.server.entity.Sensor;
+import com.tablefootbal.server.exceptions.customExceptions.NotEnoughDataException;
 import com.tablefootbal.server.readings.SensorReadings;
 import com.tablefootbal.server.service.SensorService;
 import lombok.extern.slf4j.Slf4j;
@@ -94,7 +95,7 @@ public class SensorDataManager implements ApplicationListener<SensorUpdateEvent>
 						MIN_ABOVE_THRESHOLD_COUNT);
 				sensorService.setActive(sensor.getId(), isActive);
 			}
-		} catch (IndexOutOfBoundsException e)
+		} catch (NotEnoughDataException e)
 		{
 			log.error("Not enough data to perform calibration or movement detection, will try with next buffer");
 		} catch (Exception e)
