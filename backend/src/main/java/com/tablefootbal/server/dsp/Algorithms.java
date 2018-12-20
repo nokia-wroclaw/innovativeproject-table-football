@@ -27,16 +27,20 @@ public class Algorithms
 		}
 	}
 	
-	public static boolean isMovement(List<SensorReadings.Reading> readings, CalibrationStructure.Axis axis,
-	                                 double threshold,
+	public static boolean isMovement(List<SensorReadings.Reading> readings,
+	                                 CalibrationStructure calibrationStruct,
 	                                 int minSignals)
 	{
 		int counter = 0;
-		List<Double> axisReadings = getAxisReadings(readings,axis);
+		double maxReading = calibrationStruct.getMaxValue();
+		double minReading = calibrationStruct.getMaxValue();
+		double threshold = calibrationStruct.getThreshold();
+		
+		List<Double> axisReadings = getAxisReadings(readings, calibrationStruct.getAxis());
 		
 		for (Double reading : axisReadings)
 		{
-			if (reading >= threshold)
+			if (reading >=  maxReading + threshold || reading <= minReading - threshold)
 			{
 				counter++;
 			}

@@ -87,7 +87,9 @@ public class SensorDataManager implements ApplicationListener<SensorUpdateEvent>
 		}
 		else
 		{
-			boolean isActive = isMovement(storedReadings.getReadings(), axis, THRESHOLD, MIN_ABOVE_THRESHOLD_COUNT);
+			boolean isActive = isMovement(storedReadings.getReadings(),
+					sensor.getCalibrationStructure(),
+					MIN_ABOVE_THRESHOLD_COUNT);
 			sensorService.setActive(sensor.getId(), isActive);
 		}
 	}
