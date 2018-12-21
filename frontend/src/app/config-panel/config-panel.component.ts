@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-config-panel',
   templateUrl: './config-panel.component.html',
-  styleUrls: ['./config-panel.component.css']
+  styleUrls: ['./config-panel.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ConfigPanelComponent implements OnInit {
   floors: number[];
