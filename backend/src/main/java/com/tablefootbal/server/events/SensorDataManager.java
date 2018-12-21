@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.NoTransactionException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -105,7 +106,7 @@ public class SensorDataManager implements ApplicationListener<SensorUpdateEvent>
 		sensorService.save(sensor);
 	}
 	
-	private void performCalibration(Sensor sensor, CalibrationStructure.Axis axis) throws IndexOutOfBoundsException
+	private void performCalibration(Sensor sensor, CalibrationStructure.Axis axis) throws NotEnoughDataException
 	{
 		SensorReadings sensorReadings = readingsMap.get(sensor.getId());
 		List<SensorReadings.Reading> readings = sensorReadings.getReadings();
