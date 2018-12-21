@@ -1,6 +1,7 @@
 package com.tablefootbal.server;
 
 import com.tablefootbal.server.dto.ReadingDto;
+import com.tablefootbal.server.entity.CalibrationStructure;
 import com.tablefootbal.server.entity.Sensor;
 import com.tablefootbal.server.events.SensorDataManager;
 import com.tablefootbal.server.events.SensorTrackingScheduler;
@@ -12,6 +13,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -21,8 +23,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 import static org.mockito.Mockito.*;
 
@@ -31,8 +32,11 @@ import static org.mockito.Mockito.*;
 @TestPropertySource("classpath:readings.properties")
 public class SensorDataManagerIntegrationTests extends TestCase
 {
+	@Value("${readings.window_size}")
+	private int WINDOW_SIZE;
+	
 	@Value("${readings.threshold}")
-	private int THRESHOLD;
+	private double THRESHOLD;
 	
 	@Value("${readings.max_readings}")
 	private int MAX_READINGS;
@@ -69,6 +73,7 @@ public class SensorDataManagerIntegrationTests extends TestCase
 		
 		ReflectionTestUtils.setField(manager, "THRESHOLD", THRESHOLD);
 		ReflectionTestUtils.setField(manager, "MAX_READINGS", MAX_READINGS);
+		ReflectionTestUtils.setField(manager, "WINDOW_SIZE", WINDOW_SIZE);
 		
 	}
 	
@@ -107,7 +112,9 @@ public class SensorDataManagerIntegrationTests extends TestCase
 				new ReadingDto(x_test, y_test, z_test, System.currentTimeMillis()));
 		
 		manager.onApplicationEvent(event);
-		String id = ((Sensor) event.getSource()).getId();
+		Sensor sensor = (Sensor) event.getSource();
+		sensor.getCalibrationStructure().setCalibrationFlag(false);
+		String id = sensor.getId();
 		
 		Map<String, SensorReadings> readingMap = manager.getReadingsMap();
 		Assert.assertNotNull(readingMap);
@@ -122,9 +129,69 @@ public class SensorDataManagerIntegrationTests extends TestCase
 			Assert.assertEquals(reading.getY(), y_test[i], 0.05);
 			Assert.assertEquals(reading.getZ(), z_test[i], 0.05);
 		}
+	}
+	
+	@Test
+	public void givenCalibrationFlagSet_thenPerformCalibrationCalledAndFlagCleared()
+	{
+		Sensor sensor = new Sensor();
+		sensor.setId("11:11:11:11:11:11");
+		sensor.setActive(false);
+		sensor.setFloor(1);
+		sensor.setRoom(111);
 		
+		CalibrationStructure calibrationStructure = new CalibrationStructure();
 		
+		sensor.setCalibrationStructure(calibrationStructure);
+		calibrationStructure.setCalibrationFlag(true);
+		
+		LinkedList<SensorReadings.Reading> readings = new LinkedList<>(Arrays.asList(
+				new SensorReadings.Reading(1.3, 0, 0, 0),
+				new SensorReadings.Reading(1.1, 0, 0, 0),
+				new SensorReadings.Reading(1.45, 0, 0, 0),
+				new SensorReadings.Reading(1.41, 0, 0, 0),
+				new SensorReadings.Reading(1.46, 0, 0, 0),
+				new SensorReadings.Reading(1.99, 0, 0, 0),
+				new SensorReadings.Reading(1.45, 0, 0, 0),
+				new SensorReadings.Reading(1.45, 0, 0, 0)));
+		
+		SensorReadings sensorReadings = new SensorReadings(MAX_READINGS);
+		sensorReadings.setReadings(readings);
+		manager.getReadingsMap().put(sensor.getId(),sensorReadings);
+		
+		ArgumentCaptor<Sensor> sensorCaptor  = ArgumentCaptor.forClass(Sensor.class);
+		
+		double [] readingArray = {};
+		
+		ReadingDto readingDto = new ReadingDto(readingArray,readingArray,readingArray,0);
+		manager.onApplicationEvent(new SensorUpdateEvent(sensor,readingDto));
+		
+		verify(sensorService).save(sensorCaptor.capture());
+		calibrationStructure = sensorCaptor.getValue().getCalibrationStructure();
+		Assert.assertFalse( calibrationStructure.isCalibrationFlag());
 	}
 	
 	
-}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	 }

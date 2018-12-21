@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.tablefootbal.server.dto.ReadingDto;
 import com.tablefootbal.server.dto.SensorDto;
 import com.tablefootbal.server.dto.SensorDtoValidator;
+import com.tablefootbal.server.entity.CalibrationStructure;
 import com.tablefootbal.server.entity.Sensor;
 import com.tablefootbal.server.exceptions.customExceptions.InvalidPortException;
 import com.tablefootbal.server.exceptions.customExceptions.InvalidSensorDataException;
