@@ -7,10 +7,7 @@
     border-radius: 0 !important;
 }
 
-.mat-fab.mat-primary, .mat-flat-button.mat-primary, .mat-mini-fab.mat-primary, .mat-raised-button.mat-primary {
-    background-color: #1A4294;
-}
-
-.mat-slide-toggle.mat-primary.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+.mat-fab.mat-primary, .mat-flat-button.mat-primary, .mat-mini-fab.mat-primary,
+.mat-raised-button.mat-primary, .mat-slide-toggle.mat-primary.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
     background-color: #1A4294;
 }

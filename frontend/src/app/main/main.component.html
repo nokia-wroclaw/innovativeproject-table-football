@@ -8,7 +8,7 @@
   <mat-sidenav-content>
       <app-nav [sidenav]="sidenav"></app-nav>
       <div *ngFor="let floor of floors">
-          <app-floor [floorNumber]="floor" [sidenav]="sidenav"></app-floor>
+          <app-floor [floorData]="floor" [sidenav]="sidenav"></app-floor>
       </div>
       <router-outlet></router-outlet>
       <img src="assets/innovative_projects.png" class="innovative-projects" *ngIf="!smallDevice">

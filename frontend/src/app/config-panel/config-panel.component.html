@@ -12,11 +12,9 @@
     </mat-expansion-panel-header>
 
     <div *ngFor="let floor of floors" class="ml-2">
-      <app-custom-checkbox [innerText]="'Floor ' + floor">
+      <app-custom-checkbox [innerText]="'Floor ' + floor.floorNumber">
         <div class="d-flex flex-column justify-content-center text-center pt-2">
-          <mat-checkbox>Room 129</mat-checkbox>
-          <mat-checkbox>Room 359</mat-checkbox>
-          <mat-checkbox>Room 986</mat-checkbox>
+          <mat-checkbox *ngFor="let table of floor.tables">Room {{ table.room }}</mat-checkbox>
         </div>
       </app-custom-checkbox>
     </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DataService } from '../services/data.service';
+import { Floor } from '../model/floor';
 
 @Component({
   selector: 'app-config-panel',
@@ -8,16 +9,17 @@ import { DataService } from '../services/data.service';
   encapsulation: ViewEncapsulation.None
 })
 export class ConfigPanelComponent implements OnInit {
-  floors: number[];
+  floors: Array<Floor>;
 
   constructor(private dataService: DataService) {
-    this.fetchFloors();
+    this.floors = new Array<Floor>();
+    this.getFloors();
   }
 
   ngOnInit() {
   }
 
-  fetchFloors() {
-    this.dataService.getFloors().subscribe((data: number[]) => this.floors = data);
+  getFloors() {
+    this.dataService.getFloors().subscribe((floor: Floor) => this.floors.push(floor));
   }
 }

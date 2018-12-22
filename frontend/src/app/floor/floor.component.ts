@@ -9,6 +9,7 @@ import {
 import { Table } from '../model/table';
 import { DataService } from '../services/data.service';
 import { interval, timer } from 'rxjs';
+import { Floor } from '../model/floor';
 
 @Component({
   selector: 'app-floor',
@@ -29,23 +30,19 @@ import { interval, timer } from 'rxjs';
   ]
 })
 export class FloorComponent implements OnInit {
-  @Input()
-  floorNumber: number;
+ @Input()
+  floorData: Floor;
 
   @Input()
   sidenav;
 
   isOpen = false;
   smallDevice = false;
-  tables: Array<Table>;
-  timerSub;
 
   constructor(private dataService: DataService) {
-    this.fetchTables();
     if (window.screen.width <= 768) {
       this.smallDevice = true;
     }
-    this.initiateTimer();
   }
 
   ngOnInit() {
@@ -53,24 +50,5 @@ export class FloorComponent implements OnInit {
 
   toggle() {
     this.isOpen = !this.isOpen;
-  }
-
-  initiateTimer() {
-    this.timerSub = interval(2000);
-    this.timerSub.subscribe(() => {
-      this.fetchTables();
-      console.log(this.tables);
-    });
-  }
-
-  fetchTables() {
-    this.dataService.getSensorStatus().subscribe((data: Table[]) => {
-      this.tables = new Array<Table>();
-      data.forEach((table: Table) => {
-        if (table.floor === this.floorNumber) {
-          this.tables.push(table);
-        }
-      });
-    });
   }
 }
