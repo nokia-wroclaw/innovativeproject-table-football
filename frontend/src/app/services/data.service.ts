@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Table } from '../model/table';
 import { Floor } from '../model/floor';
-import { Observable, Observer } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
   floors: Array<Floor>;
+  visibleFloors: number[];
 
   constructor(private http: HttpClient) {
     this.floors = new Array<Floor>();
@@ -35,7 +36,6 @@ export class DataService {
             }
           });
         }
-
         this.floors.forEach(floor => {
           observer.next(floor);
         });

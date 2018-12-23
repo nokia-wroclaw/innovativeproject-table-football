@@ -7,7 +7,7 @@
   </mat-sidenav>
   <mat-sidenav-content>
       <app-nav [sidenav]="sidenav"></app-nav>
-      <div *ngFor="let floor of floors">
+      <div *ngFor="let floor of floors">    
           <app-floor [floorData]="floor" [sidenav]="sidenav"></app-floor>
       </div>
       <router-outlet></router-outlet>

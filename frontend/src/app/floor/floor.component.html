@@ -1,4 +1,4 @@
-<div class="container mb-2">
+<div [@showHide]="isVisible() ? 'visible' : 'hidden'" class="container mb-2">
   <div class="floor-header d-flex" [ngClass]="{'justify-content-center': sidenav.opened && smallDevice, 'justify-content-between': (!sidenav.opened && smallDevice) || !smallDevice}"
     (click)="toggle()">
     <i class="material-icons hidden-icon" *ngIf="!sidenav.opened || !smallDevice">add</i>

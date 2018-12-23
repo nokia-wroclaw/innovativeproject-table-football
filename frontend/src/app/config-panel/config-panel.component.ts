@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { Floor } from '../model/floor';
 
@@ -10,6 +10,9 @@ import { Floor } from '../model/floor';
 })
 export class ConfigPanelComponent implements OnInit {
   floors: Array<Floor>;
+
+  @Output()
+  filtered = new EventEmitter<number[]>();
 
   constructor(private dataService: DataService) {
     this.floors = new Array<Floor>();

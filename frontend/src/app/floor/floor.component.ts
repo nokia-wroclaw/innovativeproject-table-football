@@ -6,9 +6,7 @@ import {
   animate,
   transition,
 } from '@angular/animations';
-import { Table } from '../model/table';
 import { DataService } from '../services/data.service';
-import { interval, timer } from 'rxjs';
 import { Floor } from '../model/floor';
 
 @Component({
@@ -25,6 +23,21 @@ import { Floor } from '../model/floor';
       })),
       transition('open <=> closed', [
         animate('200ms ease-in-out')
+      ])
+    ]),
+    trigger('showHide', [
+      state('hidden', style({
+        height: '0px',
+        opacity: 0,
+        display: 'none'
+      })),
+      state('visible', style({
+        height: '*',
+        opacity: 1,
+        display: 'block'
+      })),
+      transition('visible <=> hidden', [
+        animate('150ms ease-in-out')
       ])
     ])
   ]
@@ -46,9 +59,14 @@ export class FloorComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isOpen = false;
   }
 
   toggle() {
     this.isOpen = !this.isOpen;
+  }
+
+  isVisible() {
+    return this.floorData.visible === true || this.floorData.visible === undefined;
   }
 }
