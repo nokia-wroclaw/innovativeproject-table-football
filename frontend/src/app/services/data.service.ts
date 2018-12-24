@@ -9,9 +9,11 @@ import { Observable } from 'rxjs';
 })
 export class DataService {
   floors: Array<Floor>;
+  onlyFreeTables: boolean;
 
   constructor(private http: HttpClient) {
     this.floors = new Array<Floor>();
+    this.onlyFreeTables = false;
   }
 
   getSensorStatus() {

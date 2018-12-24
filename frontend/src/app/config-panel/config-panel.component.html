@@ -1,5 +1,5 @@
 <div class="slide-toggle-container">
-  <mat-slide-toggle [color]="'primary'" class="slide-toggle">
+  <mat-slide-toggle (change)="slideChanged($event)" [color]="'primary'" class="slide-toggle">
     Only free tables
   </mat-slide-toggle>
 </div>

@@ -20,5 +20,17 @@ export class Floor {
         });
 
         return count;
-      }
+    }
+
+    getFreeTablesCount() {
+      let count = 0;
+
+      this.tables.forEach(element => {
+        if (element.active === false) {
+          count++;
+        }
+      });
+
+      return count;
+    }
 }

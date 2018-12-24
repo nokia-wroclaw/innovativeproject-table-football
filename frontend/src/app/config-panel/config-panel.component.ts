@@ -22,4 +22,8 @@ export class ConfigPanelComponent implements OnInit {
   getFloors() {
     this.dataService.getFloors().subscribe((floor: Floor) => this.floors.push(floor));
   }
+
+  slideChanged(event) {
+    this.dataService.onlyFreeTables = event.checked;
+  }
 }

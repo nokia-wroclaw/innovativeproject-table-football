@@ -13,12 +13,12 @@
       <div @noTablesVisible *ngIf="floorData.getVisibleTablesCount() > 0"
         class="row d-flex justify-content-around">
         <ng-container *ngFor="let table of floorData.tables">
-          <div @showHideTable *ngIf="(table.visible === true || table.visible === undefined)" class="col-xs-3">
+          <div @showHideTable *ngIf="(table.visible === true || table.visible === undefined) && ((dataService.onlyFreeTables && !table.active) || !dataService.onlyFreeTables)" class="col-xs-3">
             <app-table [tableData]="table"></app-table>
           </div>
         </ng-container>
       </div>
-      <p @noTablesVisible *ngIf="floorData.getVisibleTablesCount() <= 0" class="no-tables-paragraph">
+      <p @noTablesVisible *ngIf="floorData.getVisibleTablesCount() <= 0 || (dataService.onlyFreeTables && floorData.getFreeTablesCount() <= 0)" class="no-tables-paragraph">
         No tables found on this floor.
       </p>
     </div>

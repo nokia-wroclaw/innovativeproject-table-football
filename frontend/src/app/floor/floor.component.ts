@@ -86,7 +86,7 @@ export class FloorComponent implements OnInit {
   isOpen = false;
   smallDevice = false;
 
-  constructor(private dataService: DataService) {
+  constructor(public dataService: DataService) {
     if (window.screen.width <= 768) {
       this.smallDevice = true;
     }
