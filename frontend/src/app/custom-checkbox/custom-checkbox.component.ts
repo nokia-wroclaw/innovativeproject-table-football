@@ -65,6 +65,5 @@ export class CustomCheckboxComponent implements OnInit {
   toggle() {
     this.checked = !this.checked;
     this.floorData.visible = this.checked;
-    console.log(this.floorData.visible);
   }
 }

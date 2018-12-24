@@ -5,4 +5,5 @@ export interface Table {
     lastNotificationDate: Date;
     floor: number;
     room: number;
+    visible?: boolean;
 }

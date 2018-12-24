@@ -9,7 +9,6 @@ import { Observable } from 'rxjs';
 })
 export class DataService {
   floors: Array<Floor>;
-  visibleFloors: number[];
 
   constructor(private http: HttpClient) {
     this.floors = new Array<Floor>();

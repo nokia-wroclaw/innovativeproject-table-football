@@ -24,6 +24,7 @@ import { MainComponent } from './main/main.component';
 import { EditableTableComponent } from './editable-table/editable-table.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './services/auth.service';
+import { TableCheckboxComponent } from './table-checkbox/table-checkbox.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AuthService } from './services/auth.service';
     AdminPanelComponent,
     MainComponent,
     EditableTableComponent,
-    LoginComponent
+    LoginComponent,
+    TableCheckboxComponent
   ],
   imports: [
     BrowserModule,

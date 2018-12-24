@@ -9,4 +9,16 @@ export class Floor {
         this.floorNumber = floorNumber;
         this.tables = new Array<Table>();
     }
+
+    getVisibleTablesCount() {
+        let count = 0;
+
+        this.tables.forEach(element => {
+          if (element.visible === true || element.visible === undefined) {
+            count++;
+          }
+        });
+
+        return count;
+      }
 }
