@@ -5,6 +5,8 @@ import {
   style,
   animate,
   transition,
+  query,
+  stagger
 } from '@angular/animations';
 import { DataService } from '../services/data.service';
 import { Floor } from '../model/floor';
@@ -16,10 +18,12 @@ import { Floor } from '../model/floor';
   animations: [
     trigger('openClose', [
       state('open', style({
-        height: '*'
+        height: '*',
+        opacity: 1
       })),
       state('closed', style({
-        height: '0px'
+        height: '0px',
+        opacity: 0
       })),
       transition('open <=> closed', [
         animate('200ms ease-in-out')
@@ -38,6 +42,36 @@ import { Floor } from '../model/floor';
       })),
       transition('visible <=> hidden', [
         animate('150ms ease-in-out')
+      ])
+    ]),
+    trigger('showHideTable', [
+      transition(':enter', [
+        style({
+          transform: 'translateX(-100%)'
+        }),
+        animate('100ms ease-in-out', style({
+          transform: 'translateX(0%)'
+        }))
+      ]),
+      transition(':leave', [
+        animate('100ms ease-in-out', style({
+          transform: 'translateX(-100%)'
+        }))
+      ])
+    ]),
+    trigger('noTablesVisible', [
+      transition(':enter', [
+        style({ height: '0px', opacity: 0 }),
+        animate('200ms ease-in-out', style({
+          height: '*',
+          opacity: 1
+        }))
+      ]),
+      transition(':leave', [
+        animate('200ms ease-in-out', style({
+          height: '0px',
+          opacity: 0
+        }))
       ])
     ])
   ]
