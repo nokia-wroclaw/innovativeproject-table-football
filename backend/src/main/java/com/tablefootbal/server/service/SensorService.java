@@ -3,6 +3,8 @@ package com.tablefootbal.server.service;
 import com.tablefootbal.server.dto.ReadingDto;
 import com.tablefootbal.server.entity.Sensor;
 
+import java.util.List;
+
 public interface SensorService {
 //    boolean checkIfExistsById(String id);
 
@@ -16,9 +18,9 @@ public interface SensorService {
     
     void save(Sensor sensor);
 
-//    List<Sensor> findActiveSensors();
+    List<Sensor> findOccupiedSensors();
 //
-//    List<Sensor> findUnactiveSensors();
+    List<Sensor> findFreeSensors();
 //
 //    List<Sensor> findConnectedSensors();
 //
@@ -26,7 +28,7 @@ public interface SensorService {
 //
 //    List<Sensor> findDisconnected();
 //
-//    List<Sensor> findAllOnFloor(int floor);
+    List<Sensor> findAllOnFloor(int floor);
 //
-//    List<Sensor> findAllInRoom(int room);
+    List<Sensor> findAllInRoom(int room);
 }
