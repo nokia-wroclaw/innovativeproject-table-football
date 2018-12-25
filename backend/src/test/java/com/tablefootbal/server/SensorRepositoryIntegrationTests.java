@@ -67,7 +67,7 @@ public class SensorRepositoryIntegrationTests {
     public Sensor getSensor(String id, boolean active, boolean online, String date, int floor, int room) throws Exception {
         Sensor sensor = new Sensor();
         sensor.setId(id);
-        sensor.setActive(active);
+        sensor.setOccupied(active);
         sensor.setOnline(online);
         sensor.setFloor(floor);
         sensor.setRoom(room);
@@ -87,7 +87,7 @@ public class SensorRepositoryIntegrationTests {
 //        Assert.assertEquals(result.size(), 2);
 //
 //        for (Sensor sensor : result) {
-//            Assert.assertTrue(sensor.isActive());
+//            Assert.assertTrue(sensor.isOccupied());
 //        }
 //    }
 //

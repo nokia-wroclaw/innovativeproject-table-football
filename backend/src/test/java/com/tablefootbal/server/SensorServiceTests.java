@@ -2,7 +2,6 @@ package com.tablefootbal.server;
 
 import com.tablefootbal.server.entity.Sensor;
 import com.tablefootbal.server.repository.SensorRepository;
-import com.tablefootbal.server.service.SensorService;
 import com.tablefootbal.server.service.SensorServiceImp;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,8 +10,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -32,7 +29,7 @@ public class SensorServiceTests
 	@Before
 	public void init()
 	{
-		//3 active sensors, 3 online sensors, 3 on floor 1, 2 in room 111, 1 in room 100,
+		//3 occupied sensors, 3 online sensors, 3 on floor 1, 2 in room 111, 1 in room 100,
 		// 2 on floor 2, 1 in room 222, 1 in room 200
 		Sensor sensor;
 		List<Sensor> sensors = new ArrayList<>();
@@ -94,7 +91,7 @@ public class SensorServiceTests
 		Assert.assertEquals(3,sensors.size());
 		for (Sensor s: sensors)
 		{
-			Assert.assertTrue(s.isActive());
+			Assert.assertTrue(s.isOccupied());
 		}
 	}
 	
@@ -105,7 +102,7 @@ public class SensorServiceTests
 		Assert.assertEquals(2,sensors.size());
 		for (Sensor s: sensors)
 		{
-			Assert.assertTrue(!s.isActive());
+			Assert.assertTrue(!s.isOccupied());
 		}
 	}
 	

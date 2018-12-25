@@ -12,11 +12,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.NoTransactionException;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static com.tablefootbal.server.dsp.Algorithms.applyMedianFilter;
 import static com.tablefootbal.server.dsp.Algorithms.isMovement;
@@ -86,15 +84,15 @@ public class SensorDataManager implements ApplicationListener<SensorUpdateEvent>
 			if (sensor.getCalibrationStructure().isCalibrationFlag())
 			{
 				performCalibration(sensor, axis);
-				sensor.setActive(false);
+				sensor.setOccupied(false);
 				sensor.getCalibrationStructure().setCalibrationFlag(false);
 			}
 			else
 			{
-				boolean isActive = isMovement(storedReadings.getReadings(),
+				boolean isOccupied = isMovement(storedReadings.getReadings(),
 						sensor.getCalibrationStructure(),
 						MIN_ABOVE_THRESHOLD_COUNT);
-				sensorService.setActive(sensor.getId(), isActive);
+				sensorService.setOccupied(sensor.getId(), isOccupied);
 			}
 		} catch (NotEnoughDataException e)
 		{

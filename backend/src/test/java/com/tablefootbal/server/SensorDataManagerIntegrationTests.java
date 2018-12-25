@@ -61,7 +61,7 @@ public class SensorDataManagerIntegrationTests extends TestCase
 		sensor.setId("11:11:11:11:11:11");
 		sensor.setLastNotificationDate(new Date());
 		sensor.setOnline(true);
-		sensor.setActive(true);
+		sensor.setOccupied(true);
 		sensor.setFloor(1);
 		sensor.setRoom(111);
 		
@@ -69,7 +69,7 @@ public class SensorDataManagerIntegrationTests extends TestCase
 		when(event.getSource()).thenReturn(sensor);
 		
 		doNothing().when(scheduler).startTracking(Mockito.anyString());
-		doNothing().when(sensorService).setActive(anyString(), anyBoolean());
+		doNothing().when(sensorService).setOccupied(anyString(), anyBoolean());
 		
 		ReflectionTestUtils.setField(manager, "THRESHOLD", THRESHOLD);
 		ReflectionTestUtils.setField(manager, "MAX_READINGS", MAX_READINGS);
@@ -87,7 +87,7 @@ public class SensorDataManagerIntegrationTests extends TestCase
 //
 //		Sensor sensor = (Sensor) event.getSource();
 //
-//		Assert.assertFalse(sensor.isActive());
+//		Assert.assertFalse(sensor.isOccupied());
 //	}
 //
 	@Test
@@ -136,7 +136,7 @@ public class SensorDataManagerIntegrationTests extends TestCase
 	{
 		Sensor sensor = new Sensor();
 		sensor.setId("11:11:11:11:11:11");
-		sensor.setActive(false);
+		sensor.setOccupied(false);
 		sensor.setFloor(1);
 		sensor.setRoom(111);
 		

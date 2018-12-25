@@ -85,18 +85,18 @@ public class SensorServiceImp implements SensorService, ApplicationListener<Sens
 	}
 	
 	@Override
-	public void setActive(String sensorId, boolean isActive)
+	public void setOccupied(String sensorId, boolean isOccupied)
 	{
 		Optional<Sensor> optionalSensor = repository.findById(sensorId);
 		if (optionalSensor.isPresent())
 		{
 			Sensor sensor = optionalSensor.get();
-			sensor.setActive(isActive);
-			
-			if (isActive)
+			sensor.setOccupied(isOccupied);
+
+			if (isOccupied)
 			{
 				sensor.setOnline(true);
-				log.info("Sensor: " + sensorId + " is now active");
+				log.info("Sensor: " + sensorId + " is now occupied");
 			}
 			else
 			{
@@ -132,7 +132,7 @@ public class SensorServiceImp implements SensorService, ApplicationListener<Sens
 		
 		return StreamSupport
 				.stream(sensors.spliterator(), false)
-				.filter(Sensor::isActive)
+				.filter(Sensor::isOccupied)
 				.collect(Collectors.toList());
 	}
 	
@@ -144,7 +144,7 @@ public class SensorServiceImp implements SensorService, ApplicationListener<Sens
 		
 		return StreamSupport
 				.stream(sensors.spliterator(), false)
-				.filter(s -> !s.isActive())
+				.filter(s -> !s.isOccupied())
 				.collect(Collectors.toList());
 	}
 	

@@ -8,15 +8,15 @@ import org.springframework.data.redis.core.RedisHash;
 import java.io.Serializable;
 import java.util.Date;
 
-@Setter
 @Getter
+@Setter
 @RedisHash("sensors")
 public class Sensor implements Serializable
 {
-	public Sensor(String id, boolean active, boolean online, Date lastNotificationDate)
+	public Sensor(String id, boolean occupied, boolean online, Date lastNotificationDate)
 	{
 		this.id = id;
-		this.active = active;
+		this.occupied = occupied;
 		this.online = online;
 		this.lastNotificationDate = lastNotificationDate;
 		this.calibrationStructure = new CalibrationStructure();
@@ -29,7 +29,7 @@ public class Sensor implements Serializable
 	
 	String id;
 	
-	boolean active;
+	boolean occupied;
 	
 	boolean online;
 	

@@ -14,7 +14,7 @@ public interface SensorService {
 
     void updateSensorInformation(Sensor sensor);
 
-    void setActive(String SensorId, boolean isActive);
+    void setOccupied(String SensorId, boolean isOccupied);
     
     void save(Sensor sensor);
 
