@@ -1,7 +1,6 @@
 version: '3'
 services:
  server:
-  network_mode: host
   build: ./backend/
   ports:
   - "8443:8443"
@@ -21,10 +20,6 @@ services:
   - ./backend/Redis/data/:/data
   - ./backend/Redis/log/:/data/log
   - ./backend/Redis/redis.conf:/usr/local/etc/redis/redis.conf
-  expose: 
-  - 6379
-  ports:
-  - "6379:6379"
 
  # frontend:
  #    build: ./frontend/

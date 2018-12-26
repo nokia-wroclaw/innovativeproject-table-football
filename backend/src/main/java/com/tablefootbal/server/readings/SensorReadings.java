@@ -33,9 +33,9 @@ public class SensorReadings
 			this.timestamp = timestamp;
 		}
 		
-		double x;
-		double y;
-		double z;
+		public double x;
+		public double y;
+		public double z;
 		long timestamp;
 		
 		double getReadingsSum()
