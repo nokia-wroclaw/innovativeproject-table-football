@@ -12,8 +12,8 @@ export class DataService {
   onlyFreeTables: boolean;
 
   constructor(private http: HttpClient) {
-    this.floors = new Array<Floor>();
     this.onlyFreeTables = false;
+    this.floors = new Array<Floor>();
   }
 
   getSensorStatus() {
@@ -57,5 +57,47 @@ export class DataService {
       }, error => {
         window.alert('Error occured. Status: ' + error.status);
       });
+  }
+
+  areFloorsEqual(first: Floor[], second: Floor[]) {
+    if (!first || !second) {
+      return false;
+    }
+
+    if (first.length !== second.length) {
+      return false;
+    }
+
+    for (let i = 0; i < first.length; i++) {
+      if (!this.areTablesEqual(first[i].tables, second[i].tables)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  areTablesEqual(first: Table[], second: Table[]) {
+    if (!first || !second) {
+      return false;
+    }
+
+    if (first.length !== second.length) {
+      return false;
+    }
+
+    for (let i = 0; i < first.length; i++) {
+      if (!(
+        first[i].id === second[i].id &&
+        first[i].occupied === second[i].occupied &&
+        first[i].online === second[i].online &&
+        first[i].floor === second[i].floor &&
+        first[i].room === second[i].room
+      )) {
+        return false;
+      }
+    }
+
+    return true;
   }
 }

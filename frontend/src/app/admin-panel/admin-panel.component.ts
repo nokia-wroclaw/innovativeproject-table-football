@@ -40,8 +40,6 @@ export class AdminPanelComponent implements OnInit {
 
     this.dataService.getFloors().subscribe((floor: Floor) => {
       floors.push(floor.floorNumber);
-      this.floorMin = floors[0];
-      this.floorMax = floors[floors.length - 1];
     });
   }
 

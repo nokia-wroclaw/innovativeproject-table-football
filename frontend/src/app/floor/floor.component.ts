@@ -4,9 +4,7 @@ import {
   state,
   style,
   animate,
-  transition,
-  query,
-  stagger
+  transition
 } from '@angular/animations';
 import { DataService } from '../services/data.service';
 import { Floor } from '../model/floor';

@@ -13,7 +13,7 @@
 
     <div *ngFor="let floor of floors" class="ml-2">
       <app-custom-checkbox [floorData]="floor">
-        <div class="d-flex flex-column justify-content-center text-center pt-2">
+        <div class="d-flex flex-column pl-3 pt-2">
           <app-table-checkbox *ngFor="let table of floor.tables" [tableData]="table"></app-table-checkbox>
         </div>
       </app-custom-checkbox>
