@@ -10,6 +10,7 @@ import {
 } from '@angular/animations';
 import { DataService } from '../services/data.service';
 import { Floor } from '../model/floor';
+import { Table } from '../model/table';
 
 @Component({
   selector: 'app-floor',
@@ -86,7 +87,7 @@ export class FloorComponent implements OnInit {
   isOpen = false;
   smallDevice = false;
 
-  constructor(public dataService: DataService) {
+  constructor(private dataService: DataService) {
     if (window.screen.width <= 768) {
       this.smallDevice = true;
     }
@@ -102,5 +103,15 @@ export class FloorComponent implements OnInit {
 
   isVisible() {
     return this.floorData.visible === true || this.floorData.visible === undefined;
+  }
+
+  isTableVisible(table: Table) {
+    return (table.visible === true || table.visible === undefined) &&
+     ((this.dataService.onlyFreeTables && !table.occupied) || !this.dataService.onlyFreeTables);
+  }
+
+  anyTableVisible() {
+    return !(this.floorData.getVisibleTablesCount() <= 0 ||
+    (this.dataService.onlyFreeTables && this.floorData.getFreeTablesCount() <= 0));
   }
 }

@@ -26,7 +26,7 @@ export class Floor {
       let count = 0;
 
       this.tables.forEach(element => {
-        if (element.active === false) {
+        if (element.occupied === false) {
           count++;
         }
       });

@@ -1,6 +1,6 @@
 export interface Table {
     id: string;
-    active: boolean;
+    occupied: boolean;
     online: boolean;
     lastNotificationDate: Date;
     floor: number;
