@@ -6,37 +6,24 @@ import { Table } from '../model/table';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-export class TableComponent implements OnInit, Table {
+export class TableComponent implements OnInit {
   @Input()
   tableData: Table;
-
-  id: string;
-  occupied: boolean;
-  online: boolean;
-  lastNotificationDate: Date;
-  floor: number;
-  room: number;
 
   constructor() {
   }
 
   ngOnInit() {
-    this.id = this.tableData.id;
-    this.occupied = this.tableData.occupied;
-    this.online = this.tableData.online;
-    this.lastNotificationDate = this.tableData.lastNotificationDate;
-    this.floor = this.tableData.floor;
-    this.room = this.tableData.room;
   }
 
   getTableStatusColor() {
-    if (this.online === false) {
+    if (this.tableData.online === false) {
       return '#A7A7A7';
     }
 
-    if (this.occupied === false) {
+    if (this.tableData.occupied === false) {
       return '#19B900';
-    } else if (this.occupied === true) {
+    } else if (this.tableData.occupied === true) {
       return '#FF0000';
     }
 
