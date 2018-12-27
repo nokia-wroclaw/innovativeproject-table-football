@@ -1,16 +1,20 @@
-<nav class="navbar sticky-top d-flex justify-content-center mb-sm-4">
-  <a routerLink="/" routerLinkActive="active"><img #headerimg class="header-img" src="assets/header.png"></a>
-</nav>
-<div class="container d-flex justify-content-around">
-  <span class="data-header">MAC address</span>
-  <span class="data-header">Floor</span>
-  <span class="data-header">Room</span>
-  <span class="button-header">Action</span>
-</div>
-<div class="container" *ngFor="let table of tables">
-  <hr>
-  <app-editable-table (editStatus)="editStatusChanged($event)" [tableData]="table"></app-editable-table>
-</div>
-<div class="container d-flex justify-content-center mt-3">
-  <button [disabled]="checksum != 0" mat-raised-button color="primary" (click)="updateTables()">APPLY CHANGES</button>
-</div>
+<mat-sidenav-container fullscreen>
+  <mat-sidenav #sidenav mode="side" closed>
+    <div class="d-flex flex-column">
+      <button mat-button [color]="activeTab === 'sensorInfo' ? 'primary' : ''" (click)="setActiveTab('sensorInfo')">Sensor
+        Info</button>
+      <button mat-button [color]="activeTab === 'calibration' ? 'primary' : ''" (click)="setActiveTab('calibration')">Calibration</button>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-nav [sidenav]="sidenav"></app-nav>
+    <div class="d-flex">
+      <div @calibrationAnimation *ngIf="activeTab === 'calibration'" class="w-100">
+        <app-admin-calibration></app-admin-calibration>
+      </div>
+      <div @sensorInfoAnimation *ngIf="activeTab === 'sensorInfo'" class="w-100">
+        <app-admin-sensor-info></app-admin-sensor-info>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

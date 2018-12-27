@@ -11,12 +11,37 @@ hr {
     margin: 0;
 }
 
-.data-header {
+.header {
     display: inline-block;
+}
+
+.mac-header {
+    width: 129px;
+}
+
+.input-header {
     width: 180px;
 }
 
 .button-header {
-    display: inline-block;
-    width: 64px;
+    width: 203px;
+    padding-left: .8rem;
+}
+
+.mat-fab.mat-primary, .mat-flat-button.mat-primary, .mat-mini-fab.mat-primary,
+.mat-raised-button.mat-primary, .mat-slide-toggle.mat-primary.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+    background-color: #1A4294;
+}
+
+.mat-button.mat-primary {
+    color: #1A4294;
+}
+
+button:focus {
+    outline: none;
+}
+
+.mat-button {
+    width: 100%;
+    border-radius: 0px !important;
 }
