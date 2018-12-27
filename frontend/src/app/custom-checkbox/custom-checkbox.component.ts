@@ -9,6 +9,7 @@ import {
   keyframes
   // ...
 } from '@angular/animations';
+import { Floor } from '../model/floor';
 
 @Component({
   selector: 'app-custom-checkbox',
@@ -49,16 +50,21 @@ import {
 })
 export class CustomCheckboxComponent implements OnInit {
   @Input()
-  innerText: string;
-  @Input()
   checked: boolean;
+  @Input()
+  floorData: Floor;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
+    this.checked = true;
+    this.floorData.visible = true;
   }
 
   toggle() {
     this.checked = !this.checked;
+    this.floorData.visible = this.checked;
+    console.log(this.floorData);
   }
 }

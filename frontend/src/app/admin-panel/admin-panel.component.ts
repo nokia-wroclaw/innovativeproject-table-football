@@ -3,6 +3,7 @@ import { DataService } from '../services/data.service';
 import { Table } from '../model/table';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { Floor } from '../model/floor';
 
 @Component({
   selector: 'app-admin-panel',
@@ -35,10 +36,10 @@ export class AdminPanelComponent implements OnInit {
   }
 
   fetchFloors() {
-    this.dataService.getFloors().subscribe((data: number[]) => {
-      data = data.sort();
-      this.floorMin = data[0];
-      this.floorMax = data[data.length - 1];
+    const floors = new Array<number>();
+
+    this.dataService.getFloors().subscribe((floor: Floor) => {
+      floors.push(floor.floorNumber);
     });
   }
 

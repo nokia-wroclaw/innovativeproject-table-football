@@ -11,7 +11,7 @@ export class TableComponent implements OnInit, Table {
   tableData: Table;
 
   id: string;
-  active: boolean;
+  occupied: boolean;
   online: boolean;
   lastNotificationDate: Date;
   floor: number;
@@ -22,7 +22,7 @@ export class TableComponent implements OnInit, Table {
 
   ngOnInit() {
     this.id = this.tableData.id;
-    this.active = this.tableData.active;
+    this.occupied = this.tableData.occupied;
     this.online = this.tableData.online;
     this.lastNotificationDate = this.tableData.lastNotificationDate;
     this.floor = this.tableData.floor;
@@ -34,9 +34,9 @@ export class TableComponent implements OnInit, Table {
       return '#A7A7A7';
     }
 
-    if (this.active === false) {
+    if (this.occupied === false) {
       return '#19B900';
-    } else if (this.active === true) {
+    } else if (this.occupied === true) {
       return '#FF0000';
     }
 

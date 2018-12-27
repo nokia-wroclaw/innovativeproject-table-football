@@ -1,6 +1,4 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { DataService } from './services/data.service';
-import { Floor } from './model/floor';
 
 @Component({
   selector: 'app-root',
