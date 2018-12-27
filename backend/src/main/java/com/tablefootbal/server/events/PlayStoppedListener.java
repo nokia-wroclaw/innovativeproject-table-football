@@ -19,6 +19,6 @@ public class PlayStoppedListener implements ApplicationListener<PlayStoppedEvent
 
     @Override
     public void onApplicationEvent(PlayStoppedEvent event) {
-        sensorService.setActive((String) event.getSource(), false);
+        sensorService.setOccupied((String) event.getSource(), false);
     }
 }

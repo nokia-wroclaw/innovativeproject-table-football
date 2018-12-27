@@ -21,6 +21,13 @@ export class DataService {
     let headers = new HttpHeaders();
     headers = headers.append('Authorization', 'Basic ' + btoa('admin:admin'));
 
-    return this.http.post<Table[]>('https://localhost:8443/admin/', sensors, { headers: headers });
+    return this.http.post<Table[]>('https://localhost:8443/admin/', sensors, { headers: headers })
+    .subscribe(response => {
+      if (response == null) {
+        window.alert('Updated successfully.');
+      }
+    }, error => {
+        window.alert('Error occured. Status: ' + error.status);
+    });
   }
 }

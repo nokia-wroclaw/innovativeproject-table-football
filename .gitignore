@@ -6,9 +6,16 @@
 *out
 *.idea
 
-server/Redis/data
-server/Redis/backup
-*dump.rdb
+#Redis logs and files
+*.rdb
+*.log
+
+#C compliation thrash
+*.bin
+*.o
+
+#Makefile so it will not overwrite your local one
+Makefile
 
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
@@ -18,7 +25,7 @@ server/Redis/backup
 /out-tsc
 
 # dependencies
-/node_modules
+/frontend/node_modules
 
 # IDEs and editors
 /.idea
@@ -36,6 +43,7 @@ server/Redis/backup
 !.vscode/launch.json
 !.vscode/extensions.json
 
+
 # misc
 /.sass-cache
 /connect.lock
@@ -45,6 +53,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+*.iml
 
 # System Files
 .DS_Store

@@ -33,9 +33,9 @@ public class SensorReadings
 			this.timestamp = timestamp;
 		}
 		
-		double x;
-		double y;
-		double z;
+		public double x;
+		public double y;
+		public double z;
 		long timestamp;
 		
 		double getReadingsSum()
@@ -54,6 +54,23 @@ public class SensorReadings
 		{
 			readings.removeFirst();
 			readings.addLast(reading);
+		}
+	}
+	
+	public void addReadingsArray(double[] x, double[] y, double[] z, long timestamp)
+	{
+		int maxSize = Math.max(Math.max(x.length, y.length), y.length);
+		
+		Reading reading;
+		double x_reading, y_reading, z_reading;
+		for (int i = 0; i < maxSize; i++)
+		{
+			x_reading = (i < x.length ) ? x[i] : 0.0f;
+			y_reading = (i < y.length ) ? y[i] : 0.0f;
+			z_reading = (i < z.length ) ? z[i] : 0.0f;
+			
+			reading = new Reading(x_reading, y_reading, z_reading, timestamp);
+			addReading(reading);
 		}
 	}
 	

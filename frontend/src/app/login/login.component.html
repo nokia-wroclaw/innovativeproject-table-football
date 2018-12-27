@@ -1,9 +1,9 @@
-<form class="panel">
+<form class="panel" (submit)="login($event)">
   <mat-form-field>
-    <input matInput placeholder="Username">
+    <input matInput placeholder="Username" id="username">
   </mat-form-field>
   <mat-form-field>
-    <input matInput type="password" placeholder="Password">
+    <input matInput type="password" placeholder="Password" id="password">
   </mat-form-field>
-  <button mat-raised-button color="primary" class="submit">Login</button>
+  <button mat-raised-button color="primary" class="button">Login</button>
 </form>

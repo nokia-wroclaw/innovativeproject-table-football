@@ -2,12 +2,10 @@ package com.tablefootbal.server.controller;
 
 import com.tablefootbal.server.entity.Sensor;
 import com.tablefootbal.server.repository.SensorRepository;
+import com.tablefootbal.server.service.SensorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +15,16 @@ import java.util.List;
 @CrossOrigin
 public class TableStatusController {
 
-    final
+    final private
     SensorRepository repository;
+    
+    final private
+    SensorService sensorService;
 
     @Autowired
-    public TableStatusController(SensorRepository repository) {
+    public TableStatusController(SensorRepository repository, SensorService sensorService) {
         this.repository = repository;
+        this.sensorService = sensorService;
     }
 
     @GetMapping("/")
@@ -38,4 +40,50 @@ public class TableStatusController {
         iterable.forEach(list::add);
         return list;
     }
+    
+    @GetMapping("/sensorStatus/occupied")
+    @ResponseBody
+    public List<Sensor> getOccupiedSensors() {
+    	return sensorService.findOccupiedSensors();
+    }
+    
+    @GetMapping("/sensorStatus/free")
+    @ResponseBody
+    public List<Sensor> getFreeSensors() {
+        return sensorService.findFreeSensors();
+    }
+    
+    @GetMapping("/sensorStatus/room/{room}")
+    @ResponseBody
+    public List<Sensor> getAllInRoom(@PathVariable("room") int room) {
+        return sensorService.findAllInRoom(room);
+    }
+    
+    @GetMapping("/sensorStatus/floor/{floor}")
+    @ResponseBody
+    public List<Sensor> getAllOnFloor(@PathVariable("floor") int floor) {
+        return sensorService.findAllOnFloor(floor);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

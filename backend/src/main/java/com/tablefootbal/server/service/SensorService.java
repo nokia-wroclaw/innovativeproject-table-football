@@ -1,25 +1,33 @@
 package com.tablefootbal.server.service;
 
+import com.tablefootbal.server.dto.ReadingDto;
 import com.tablefootbal.server.entity.Sensor;
-import com.tablefootbal.server.readings.SensorReadings;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface SensorService {
-//    boolean checkIfExistsById(String id);
 
-    Sensor saveOrUpdate(Sensor sensor, SensorReadings.Reading reading);
+    void saveOrUpdate(Sensor sensor, ReadingDto readingDto);
 
     void updateSensorInformation(Sensor sensor);
 
-    void setActive(String SensorId, boolean isActive);
+    void setOccupied(String SensorId, boolean isOccupied);
+    
+    void save(Sensor sensor);
 
-    Optional<Sensor> getById(String id);
+    List<Sensor> findOccupiedSensors();
 
-//    List<Sensor> findActiveSensors();
-//
-//    List<Sensor> findUnactiveSensors();
+    List<Sensor> findFreeSensors();
+
+    List<Sensor> findAllOnFloor(int floor);
+
+    List<Sensor> findAllInRoom(int room);
+
+
+
+//    boolean checkIfExistsById(String id);
+//    Sensor saveOrUpdate(Sensor sensor, SensorReadings.Reading reading);
 //
 //    List<Sensor> findConnectedSensors();
 //
@@ -27,7 +35,5 @@ public interface SensorService {
 //
 //    List<Sensor> findDisconnected();
 //
-//    List<Sensor> findAllOnFloor(int floor);
-//
-//    List<Sensor> findAllInRoom(int room);
+
 }
