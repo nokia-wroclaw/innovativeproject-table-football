@@ -1,7 +1,6 @@
 package com.tablefootbal.server.notifications.service;
 
 import com.tablefootbal.server.notifications.entity.MatchObserver;
-import com.tablefootbal.server.notifications.repository.ObserverRepository;
 import com.tablefootbal.server.service.SensorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
