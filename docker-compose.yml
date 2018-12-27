@@ -25,6 +25,6 @@ services:
     build: ./frontend/
     volumes:
       - ./frontend/src/:/usr/src/app
-      - ./frontend/src//usr/src/app/node_modules
+      - ./frontend/src/:/usr/src/app/node_modules
     ports:
       - '4200:80'
