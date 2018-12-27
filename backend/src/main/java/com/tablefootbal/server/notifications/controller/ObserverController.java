@@ -48,7 +48,7 @@ public class ObserverController {
         matchObserver.setTokenFCM(tokenFCM);
         matchObserver.setRegisterDate(date);
 
-        observerService.register(matchObserverDto.getSensors_id(), matchObserver);
+        observerService.register(matchObserver);
 
 
 

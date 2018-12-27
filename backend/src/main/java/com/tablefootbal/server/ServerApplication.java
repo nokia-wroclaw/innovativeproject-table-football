@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
@@ -27,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
-@EnableWebSecurity
+//@EnableWebSecurity
 @EnableWebMvc
 @EnableScheduling
 @EnableRedisRepositories
@@ -91,6 +93,12 @@ public class ServerApplication {
     }
 
     public static void main(String[] args) {
+        ApplicationContext context =
         SpringApplication.run(ServerApplication.class, args);
+
+        for(String name: context.getBeanDefinitionNames())
+            System.out.println(name);
+
+
     }
 }

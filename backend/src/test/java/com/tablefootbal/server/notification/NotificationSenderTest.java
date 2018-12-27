@@ -1,4 +1,4 @@
-package com.tablefootbal.server;
+package com.tablefootbal.server.notification;
 
 import com.tablefootbal.server.entity.Sensor;
 import com.tablefootbal.server.notifications.KeyStorage;
@@ -56,7 +56,7 @@ public class NotificationSenderTest {
     public Sensor getSensor(String id, boolean active, boolean online, String date, int floor, int room) throws Exception {
         Sensor sensor = new Sensor();
         sensor.setId(id);
-        sensor.setActive(active);
+        sensor.setOccupied(active);
         sensor.setOnline(online);
         sensor.setFloor(floor);
         sensor.setRoom(room);
