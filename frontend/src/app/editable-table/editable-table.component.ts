@@ -1,5 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Table } from '../model/table';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Table} from '../model/table';
+import {CalibrationService} from '../services/calibration.service';
+import {HttpResponse} from '@angular/common/http';
+import {error} from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-editable-table',
@@ -13,10 +16,15 @@ export class EditableTableComponent implements OnInit {
   @Output() editStatus = new EventEmitter<number>();
 
   isEditable: boolean;
+  calibrationStatus: boolean;
+  isCalibrationPending = false;
 
-  constructor() { }
+  constructor(private calibrationService: CalibrationService) {
+    this.calibrationService = calibrationService;
+  }
 
   ngOnInit() {
+    this.calibrationStatus = true;
   }
 
   editOrSave() {
@@ -31,5 +39,18 @@ export class EditableTableComponent implements OnInit {
     } else {
       alert('Please insert a valid number!');
     }
+  }
+
+  sendCalibrationRequest() {
+    this.isCalibrationPending = true;
+    this.calibrationService.sendCalibrationRequest(this.tableData.id)
+      .subscribe((response: HttpResponse<string>) => {
+        this.calibrationStatus = response.ok;
+        this.isCalibrationPending = false;
+      }, (err: Error) => {
+        console.error('Error sending calibration request' + err);
+        this.calibrationStatus = false;
+        this.isCalibrationPending = false;
+      });
   }
 }

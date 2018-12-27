@@ -25,6 +25,8 @@ import { EditableTableComponent } from './editable-table/editable-table.componen
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './services/auth.service';
 import { TableCheckboxComponent } from './table-checkbox/table-checkbox.component';
+import { AdminSensorInfoComponent } from './admin-sensor-info/admin-sensor-info.component';
+import { AdminCalibrationComponent } from './admin-calibration/admin-calibration.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { TableCheckboxComponent } from './table-checkbox/table-checkbox.componen
     MainComponent,
     EditableTableComponent,
     LoginComponent,
-    TableCheckboxComponent
+    TableCheckboxComponent,
+    AdminSensorInfoComponent,
+    AdminCalibrationComponent
   ],
   imports: [
     BrowserModule,

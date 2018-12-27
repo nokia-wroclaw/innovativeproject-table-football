@@ -35,4 +35,10 @@ public class AdminController {
             sensorService.updateSensorInformation(sensor);
         }
     }
+
+    @PostMapping("/calibration/{sensorId}")
+    @CrossOrigin
+    @ResponseStatus(HttpStatus.OK)
+    public void updateSensors(@PathVariable String sensorId) {
+    }
 }
