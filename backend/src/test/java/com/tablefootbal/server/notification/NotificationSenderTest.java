@@ -1,9 +1,9 @@
 package com.tablefootbal.server.notification;
 
 import com.tablefootbal.server.entity.Sensor;
-import com.tablefootbal.server.notifications.KeyStorage;
 import com.tablefootbal.server.notifications.dto.Notification;
 import com.tablefootbal.server.notifications.dto.Push;
+import com.tablefootbal.server.notifications.service.KeyStorage;
 import com.tablefootbal.server.notifications.service.NotificationSender;
 import com.tablefootbal.server.notifications.service.NotificationService;
 import org.junit.Assert;

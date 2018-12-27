@@ -9,6 +9,7 @@ import com.tablefootbal.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationContext;
@@ -32,7 +33,6 @@ import java.util.List;
 //@EnableWebSecurity
 @EnableWebMvc
 @EnableScheduling
-@EnableRedisRepositories
 public class ServerApplication {
     @Autowired
     SensorRepository sensorRepository;

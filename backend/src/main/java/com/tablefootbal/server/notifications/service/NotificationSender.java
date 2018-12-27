@@ -1,6 +1,5 @@
 package com.tablefootbal.server.notifications.service;
 
-import com.tablefootbal.server.notifications.KeyStorage;
 import com.tablefootbal.server.notifications.dto.Push;
 import com.tablefootbal.server.notifications.entity.FirebaseResponse;
 import com.tablefootbal.server.notifications.filters.HeaderRequestInterceptor;
