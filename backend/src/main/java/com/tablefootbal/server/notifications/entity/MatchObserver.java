@@ -1,22 +1,22 @@
 package com.tablefootbal.server.notifications.entity;
 
-import com.tablefootbal.server.entity.Sensor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
+
+import java.util.Date;
 
 @Setter
 @Getter
 public class MatchObserver {
 
+    @Id
+    private String sensorID;
+
     private TokenFCM tokenFCM;
 
-    private Sensor sensor;
+    private Date registerDate;
 
-    public MatchObserver(){}
-
-    public MatchObserver(TokenFCM tokenFCM, Sensor sensor){
-        this.tokenFCM = tokenFCM;
-        this.sensor = sensor;
-    }
+    public MatchObserver() {}
 
 }

@@ -4,6 +4,7 @@ import com.tablefootbal.server.entity.Sensor;
 import com.tablefootbal.server.readings.SensorReadings;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SensorService {
 //    boolean checkIfExistsById(String id);
@@ -13,6 +14,8 @@ public interface SensorService {
     void updateSensorInformation(Sensor sensor);
 
     void setActive(String SensorId, boolean isActive);
+
+    Optional<Sensor> getById(String id);
 
 //    List<Sensor> findActiveSensors();
 //

@@ -72,6 +72,14 @@ public class SensorServiceImp implements SensorService, ApplicationListener<Sens
     }
 
     @Override
+    public Optional<Sensor> getById(String id) {
+
+        Optional<Sensor> sensorOptional = repository.findById(id);
+
+        return Optional.empty();
+    }
+
+    @Override
     public void onApplicationEvent(SensorOfflineEvent sensorOfflineEvent) {
         String sensorId = (String) sensorOfflineEvent.getSource();
 
