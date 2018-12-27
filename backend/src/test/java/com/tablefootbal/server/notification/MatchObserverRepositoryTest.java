@@ -34,7 +34,7 @@ public class MatchObserverRepositoryTest {
         o1.setTokenFCM(t1);
 
         MatchObserver o2 = new MatchObserver();
-        o2.setSensorID("08:3F:33:33:3D:30");
+        o2.setSensorID("08:3F:33:33:3D:31");
         TokenFCM t2 = new TokenFCM();
         t2.setToken("AAA");
         o2.setTokenFCM(t2);
