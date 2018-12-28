@@ -14,6 +14,8 @@
   <span>
     <button mat-raised-button [color]="isEditable ? 'accent' : 'primary'" (click)="editOrSave()">{{ isEditable ? 'Save'
       : 'Edit'}}</button>
-    <button mat-raised-button [color]="'primary'">Calibrate</button>
+    <button mat-raised-button [disabled]="isCalibrationPending" [color]="calibrationStatus ? 'primary' : 'warn'"
+      (click)="sendCalibrationRequest()">{{calibrationStatus ? 'CALIBRATE' : 'RETRY'}}
+    </button>
   </span>
 </form>
