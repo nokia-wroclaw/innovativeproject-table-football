@@ -50,9 +50,9 @@ export class AdminPanelComponent implements OnInit {
   activeTab: string;
 
   constructor(private authService: AuthService, private router: Router) {
-    // if (!this.authService.isAdminConfirmed()) {
-    //   this.router.navigateByUrl('/login');
-    // }
+    if (!this.authService.isAdminConfirmed()) {
+      this.router.navigateByUrl('/login');
+    }
     this.activeTab = 'sensorInfo';
   }
 

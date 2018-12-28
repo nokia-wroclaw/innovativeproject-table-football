@@ -15,9 +15,9 @@ export class AuthService {
     let headers = new HttpHeaders();
     headers = headers.append('Authorization', 'Basic ' + btoa(username + ':' + password));
 
-    return this.http.get('https://localhost:8443/admin/', { headers: headers })
-    .subscribe(response => console.log(response), error => {
-      if (error.status === 200) {
+    return this.http.get('https://localhost:8443/admin/', { headers: headers, responseType: 'text' })
+    .subscribe(response => {
+      if (response === 'Admin confirmed') {
         this.authorized = true;
         this.router.navigateByUrl('/admin');
       } else {
