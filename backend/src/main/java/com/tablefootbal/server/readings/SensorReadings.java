@@ -59,7 +59,7 @@ public class SensorReadings
 	
 	public void addReadingsArray(double[] x, double[] y, double[] z, long timestamp)
 	{
-		int maxSize = Math.max(Math.max(x.length, y.length), y.length);
+		int maxSize = Math.max(Math.max(x.length, y.length), z.length);
 		
 		Reading reading;
 		double x_reading, y_reading, z_reading;

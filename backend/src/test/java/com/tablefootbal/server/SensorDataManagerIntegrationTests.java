@@ -23,6 +23,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.security.AlgorithmParameters;
 import java.util.*;
 
 import static org.mockito.Mockito.*;
@@ -56,7 +57,6 @@ public class SensorDataManagerIntegrationTests extends TestCase
 	@Before
 	public void init()
 	{
-		
 		Sensor sensor = new Sensor();
 		sensor.setId("11:11:11:11:11:11");
 		sensor.setLastNotificationDate(new Date());
@@ -70,11 +70,10 @@ public class SensorDataManagerIntegrationTests extends TestCase
 		
 		doNothing().when(scheduler).startTracking(Mockito.anyString());
 		doNothing().when(sensorService).setOccupied(anyString(), anyBoolean());
-		
+
 		ReflectionTestUtils.setField(manager, "THRESHOLD", THRESHOLD);
 		ReflectionTestUtils.setField(manager, "MAX_READINGS", MAX_READINGS);
 		ReflectionTestUtils.setField(manager, "WINDOW_SIZE", WINDOW_SIZE);
-		
 	}
 	
 	//	@Test
@@ -157,41 +156,19 @@ public class SensorDataManagerIntegrationTests extends TestCase
 		
 		SensorReadings sensorReadings = new SensorReadings(MAX_READINGS);
 		sensorReadings.setReadings(readings);
-		manager.getReadingsMap().put(sensor.getId(),sensorReadings);
+		manager.getReadingsMap().put(sensor.getId(), sensorReadings);
 		
-		ArgumentCaptor<Sensor> sensorCaptor  = ArgumentCaptor.forClass(Sensor.class);
+		ArgumentCaptor<Sensor> sensorCaptor = ArgumentCaptor.forClass(Sensor.class);
 		
-		double [] readingArray = {};
+		double[] readingArray = {};
 		
-		ReadingDto readingDto = new ReadingDto(readingArray,readingArray,readingArray,0);
-		manager.onApplicationEvent(new SensorUpdateEvent(sensor,readingDto));
+		ReadingDto readingDto = new ReadingDto(readingArray, readingArray, readingArray, 0);
+		manager.onApplicationEvent(new SensorUpdateEvent(sensor, readingDto));
 		
 		verify(sensorService).save(sensorCaptor.capture());
 		calibrationStructure = sensorCaptor.getValue().getCalibrationStructure();
-		Assert.assertFalse( calibrationStructure.isCalibrationFlag());
+		Assert.assertFalse(calibrationStructure.isCalibrationFlag());
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	 }
+}

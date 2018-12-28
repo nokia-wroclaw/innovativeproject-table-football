@@ -54,6 +54,12 @@ public class SensorServiceImp implements SensorService, ApplicationListener<Sens
 	
 	
 	@Override
+	public Optional<Sensor> findById(String id)
+	{
+		return repository.findById(id);
+	}
+	
+	@Override
 	public void save(Sensor sensor)
 	{
 		repository.save(sensor);
@@ -100,7 +106,7 @@ public class SensorServiceImp implements SensorService, ApplicationListener<Sens
 			}
 			else
 			{
-				log.info("Sensor: " + sensorId + " is now inactive");
+				log.info("Sensor: " + sensorId + " is now free");
 			}
 			
 			repository.save(sensor);

@@ -26,6 +26,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/sensor")
@@ -111,13 +112,22 @@ public class SensorController
 		
 		Date date = new Date();
 		
-		log.info("SENSOR DATA RECEIVED @ " + dateFormat.format(date) + " FROM " + sensorDto.getId());
-		log.info("READINGS --->  X: " + sensorDto.x[0] + " Y: " + sensorDto.y[0] + " Z: " + sensorDto.z[0]);
+		log.info("\nSENSOR DATA RECEIVED @ " + dateFormat.format(date) + " FROM " + sensorDto.getId());
+		log.info(sensorDto.toString());
 		
-		Sensor sensor = new Sensor();
-		sensor.setId(sensorDto.getId());
-		sensor.setRoom(0);
-		sensor.setFloor(0);
+		Sensor sensor;
+		Optional<Sensor> sensorOptional = sensorService.findById(sensorDto.getId());
+		if (sensorOptional.isPresent())
+		{
+			sensor = sensorOptional.get();
+		}
+		else
+		{
+			sensor = new Sensor();
+			sensor.setId(sensorDto.getId());
+			sensor.setRoom(0);
+			sensor.setFloor(0);
+		}
 
 //        SensorReadings.Reading reading =
 //                new SensorReadings.Reading(sensorData[0], sensorData[1], sensorData[2], timestamp);

@@ -6,6 +6,8 @@ import com.tablefootbal.server.entity.Sensor;
 import com.tablefootbal.server.exceptions.customExceptions.NotEnoughDataException;
 import com.tablefootbal.server.readings.SensorReadings;
 import com.tablefootbal.server.service.SensorService;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,13 +22,15 @@ import static com.tablefootbal.server.dsp.Algorithms.applyMedianFilter;
 import static com.tablefootbal.server.dsp.Algorithms.isMovement;
 
 @Component
-@PropertySource("classpath:readings.properties")
 @Slf4j
+@Getter
+@Setter
+@PropertySource("classpath:readings.properties")
 public class SensorDataManager implements ApplicationListener<SensorUpdateEvent>
 {
 	
 	@Value("${readings.axis}")
-	private CalibrationStructure.Axis axis;
+	CalibrationStructure.Axis axis;
 	
 	@Value("${readings.window_size}")
 	private int WINDOW_SIZE;
@@ -86,6 +90,8 @@ public class SensorDataManager implements ApplicationListener<SensorUpdateEvent>
 				performCalibration(sensor, axis);
 				sensor.setOccupied(false);
 				sensor.getCalibrationStructure().setCalibrationFlag(false);
+				log.info("Calibration finished for sensors: " + sensor.getId() + "\n");
+				log.info(sensor.getCalibrationStructure().toString());
 			}
 			else
 			{
@@ -93,6 +99,7 @@ public class SensorDataManager implements ApplicationListener<SensorUpdateEvent>
 						sensor.getCalibrationStructure(),
 						MIN_ABOVE_THRESHOLD_COUNT);
 				sensorService.setOccupied(sensor.getId(), isOccupied);
+				log.info("Sensor: " + sensor.getId() + " occupied value has been set to " + isOccupied + "\n");
 			}
 		} catch (NotEnoughDataException e)
 		{
@@ -146,7 +153,6 @@ public class SensorDataManager implements ApplicationListener<SensorUpdateEvent>
 		}
 		return axisReadings;
 	}
-	
 }
 
 
