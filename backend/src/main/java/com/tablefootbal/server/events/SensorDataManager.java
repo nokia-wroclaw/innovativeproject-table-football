@@ -98,7 +98,7 @@ public class SensorDataManager implements ApplicationListener<SensorUpdateEvent>
 				boolean isOccupied = isMovement(storedReadings.getReadings(),
 						sensor.getCalibrationStructure(),
 						MIN_ABOVE_THRESHOLD_COUNT);
-				sensorService.setOccupied(sensor.getId(), isOccupied);
+				sensor.setOccupied(isOccupied);
 				log.info("Sensor: " + sensor.getId() + " occupied value has been set to " + isOccupied + "\n");
 			}
 		} catch (NotEnoughDataException e)

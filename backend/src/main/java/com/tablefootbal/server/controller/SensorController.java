@@ -128,12 +128,10 @@ public class SensorController
 			sensor.setRoom(0);
 			sensor.setFloor(0);
 		}
+		sensor.setOnline(true);
 
-//        SensorReadings.Reading reading =
-//                new SensorReadings.Reading(sensorData[0], sensorData[1], sensorData[2], timestamp);
 		ReadingDto readingDto = new ReadingDto(sensorDto.x, sensorDto.y, sensorDto.z, System.currentTimeMillis());
 		sensorService.saveOrUpdate(sensor, readingDto);
-//        sensorService.saveOrUpdate(sensor, reading);
 	}
 	
 	@GetMapping("/")
