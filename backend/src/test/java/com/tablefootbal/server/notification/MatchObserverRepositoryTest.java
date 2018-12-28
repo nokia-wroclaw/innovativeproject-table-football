@@ -1,8 +1,11 @@
 package com.tablefootbal.server.notification;
 
 import com.tablefootbal.server.notifications.entity.MatchObserver;
+import com.tablefootbal.server.notifications.entity.MatchObserverList;
 import com.tablefootbal.server.notifications.entity.TokenFCM;
 import com.tablefootbal.server.notifications.repository.ObserverRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,11 +15,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Slf4j
 public class MatchObserverRepositoryTest {
 
     @Autowired
@@ -27,33 +30,27 @@ public class MatchObserverRepositoryTest {
 
     @Before
     public void populateData(){
-        MatchObserver o1 = new MatchObserver();
-        o1.setSensorID("08:3F:33:33:3D:30");
-        TokenFCM t1 = new TokenFCM();
-        t1.setToken("123");
-        o1.setTokenFCM(t1);
 
-        MatchObserver o2 = new MatchObserver();
-        o2.setSensorID("08:3F:33:33:3D:31");
-        TokenFCM t2 = new TokenFCM();
-        t2.setToken("AAA");
-        o2.setTokenFCM(t2);
-
-        addedObservers.add(o1);
-        addedObservers.add(o2);
     }
 
     @Test
     public void shouldBeTwoObjectsInRepo(){
-        for(MatchObserver o: addedObservers)
-            repository.save(o);
+        MatchObserverList l1 = new MatchObserverList();
+        MatchObserverList l2 = new MatchObserverList();
 
-        List<MatchObserver> actual = new ArrayList<>();
-        Iterator<MatchObserver> iter = repository.findAll().iterator();
-        while(iter.hasNext())
-            actual.add(iter.next());
+        l1.setSensorID("123");
+        l2.setSensorID("223");
 
-        Assert.assertEquals(addedObservers.size(),actual.size());
+        repository.save(l1);
+        repository.save(l2);
+
+
+        Assert.assertEquals(2,repository.count());
+    }
+
+    @After
+    public void cleanUp(){
+
     }
 
 }

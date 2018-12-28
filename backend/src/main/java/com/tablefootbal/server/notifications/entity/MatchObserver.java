@@ -9,10 +9,8 @@ import java.util.Date;
 
 @Setter
 @Getter
-@RedisHash("match_observer")
 public class MatchObserver {
 
-    @Id
     private String sensorID;
 
     private TokenFCM tokenFCM;
