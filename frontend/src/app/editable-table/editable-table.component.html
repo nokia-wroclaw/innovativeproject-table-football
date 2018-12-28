@@ -2,7 +2,7 @@
     <span>{{ tableData.id }}</span>
   
     <mat-form-field>
-      <input [disabled]="!isEditable" required matInput [type]="'number'" [min]="floorMin" [max]="floorMax" [(ngModel)]="tableData.floor" name="floor">
+      <input [disabled]="!isEditable" required matInput [type]="'number'" [(ngModel)]="tableData.floor" name="floor">
       <mat-error>Invalid number</mat-error>
     </mat-form-field>
 

@@ -21,6 +21,7 @@ services:
   - ./backend/Redis/log/:/data/log
   - ./backend/Redis/redis.conf:/usr/local/etc/redis/redis.conf
 
+
     # frontend:
          #     build: ./frontend/
      #     volumes:
@@ -28,3 +29,4 @@ services:
          #       - ./frontend/src//usr/src/app/node_modules
          #     ports:
              #       - '4200:80'
+
