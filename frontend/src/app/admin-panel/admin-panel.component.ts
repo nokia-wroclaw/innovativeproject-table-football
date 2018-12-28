@@ -40,7 +40,7 @@ import {
       ]),
       transition(':leave', [
         animate('150ms ease-out', style({
-          transform: 'translateX(-10%)'
+          transform: 'translateX(-100%)'
         }))
       ])
     ])

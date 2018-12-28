@@ -13,6 +13,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 
 import { DataService } from './services/data.service';
+import { AuthService } from './services/auth.service';
+import { CookieService } from 'ngx-cookie-service';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -24,7 +26,6 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { MainComponent } from './main/main.component';
 import { EditableTableComponent } from './editable-table/editable-table.component';
 import { LoginComponent } from './login/login.component';
-import { AuthService } from './services/auth.service';
 import { TableCheckboxComponent } from './table-checkbox/table-checkbox.component';
 import { AdminSensorInfoComponent } from './admin-sensor-info/admin-sensor-info.component';
 import { AdminCalibrationComponent } from './admin-calibration/admin-calibration.component';
@@ -65,7 +66,7 @@ import { AdminCalibrationComponent } from './admin-calibration/admin-calibration
     MatInputModule,
     MatRadioModule
   ],
-  providers: [DataService, AuthService],
+  providers: [DataService, AuthService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
