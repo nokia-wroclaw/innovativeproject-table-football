@@ -7,3 +7,7 @@ button {
     height: 2.3rem;
     margin: .8rem;
 }
+
+.mat-raised-button.mat-warn {
+    width: 100px;
+}

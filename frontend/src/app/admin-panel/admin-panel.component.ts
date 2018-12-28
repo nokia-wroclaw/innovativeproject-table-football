@@ -24,7 +24,7 @@ import {
         }))
       ]),
       transition(':leave', [
-        animate('500ms ease-out', style({
+        animate('150ms ease-out', style({
           transform: 'translateX(100%)'
         }))
       ])

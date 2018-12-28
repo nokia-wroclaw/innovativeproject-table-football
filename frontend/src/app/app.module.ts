@@ -10,6 +10,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { DataService } from './services/data.service';
 
@@ -61,7 +62,8 @@ import { AdminCalibrationComponent } from './admin-calibration/admin-calibration
     MatCheckboxModule,
     MatExpansionModule,
     MatButtonModule,
-    MatInputModule
+    MatInputModule,
+    MatRadioModule
   ],
   providers: [DataService, AuthService],
   bootstrap: [AppComponent]

@@ -1,3 +1,55 @@
-<p>
-  admin-calibration works!
-</p>
+<div class="d-flex justify-content-center">
+  <form class="calibration-form">
+    <div class="d-flex flex-column justify-content-center">
+
+      <mat-radio-group>
+        <div class="d-flex justify-content-between">
+          <span class="input-title">AXIS</span>
+          <div>
+            <mat-radio-button>X</mat-radio-button>
+            <mat-radio-button>Y</mat-radio-button>
+            <mat-radio-button>Z</mat-radio-button>
+          </div>
+          <span class="invisible">AXIS</span>
+        </div>
+      </mat-radio-group>
+
+      <div class="d-flex justify-content-between">
+        <span class="align-self-center input-title">THRESHOLD</span>
+        <mat-form-field>
+
+          <input required matInput type="number" name="threshold">
+          <mat-error>Invalid number</mat-error>
+
+        </mat-form-field>
+        <span class="invisible">THRESHOLD</span>
+      </div>
+
+      <div class="d-flex justify-content-between">
+        <span class="align-self-center input-title">MIN ABOVE THRESHOLD COUNT</span>
+        <mat-form-field>
+
+          <input required matInput type="number" name="minAboveThresholdCount">
+          <mat-error>Invalid number</mat-error>
+
+        </mat-form-field>
+        <span class="invisible">MIN ABOVE THRESHOLD COUNT</span>
+      </div>
+
+      <div class="d-flex justify-content-between">
+        <span class="align-self-center input-title">MAX READINGS</span>
+        <mat-form-field>
+
+          <input required matInput type="number" name="maxReadings">
+          <mat-error>Invalid number</mat-error>
+
+        </mat-form-field>
+        <span class="invisible">MAX READINGS</span>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <button mat-raised-button color="primary">Send</button>
+      </div>
+    </div>
+  </form>
+</div>
