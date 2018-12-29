@@ -37,18 +37,11 @@ public class ObserverController {
     @PostMapping("/")
     public void registerDevice(@RequestBody MatchObserverDto matchObserverDto){
 
-        Date date = new Date();
+        TokenFCM token = new TokenFCM(matchObserverDto.getFcm_token());
+        MatchObserver observer = new MatchObserver(token);
 
-        TokenFCM tokenFCM = new TokenFCM();
-        tokenFCM.setToken(matchObserverDto.getFcm_token());
 
-        log.info("Device registered" + matchObserverDto.getFcm_token().substring(0,10) +"...");
-
-        MatchObserver matchObserver = new MatchObserver();
-        matchObserver.setTokenFCM(tokenFCM);
-        matchObserver.setRegisterDate(date);
-
-        observerService.register(matchObserver);
+        observerService.register(observer,matchObserverDto.getSensors_id());
 
 
 

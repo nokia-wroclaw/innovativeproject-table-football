@@ -2,9 +2,7 @@ package com.tablefootbal.server.notification;
 
 import com.tablefootbal.server.notifications.entity.MatchObserver;
 import com.tablefootbal.server.notifications.entity.MatchObserverList;
-import com.tablefootbal.server.notifications.entity.TokenFCM;
 import com.tablefootbal.server.notifications.repository.ObserverRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,10 +14,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Slf4j
 public class MatchObserverRepositoryTest {
 
     @Autowired
@@ -35,22 +33,28 @@ public class MatchObserverRepositoryTest {
 
     @Test
     public void shouldBeTwoObjectsInRepo(){
-        MatchObserverList l1 = new MatchObserverList();
-        MatchObserverList l2 = new MatchObserverList();
-
-        l1.setSensorID("123");
-        l2.setSensorID("223");
+        MatchObserverList l1 = new MatchObserverList("123");
+        MatchObserverList l2 = new MatchObserverList("223");
 
         repository.save(l1);
         repository.save(l2);
 
-
         Assert.assertEquals(2,repository.count());
+    }
+
+    @Test
+    public void shouldFindById(){
+        String id = "123";
+        MatchObserverList l1 = new MatchObserverList(id);
+        repository.save(l1);
+
+        Optional<MatchObserverList> optional = repository.findById(id);
+        Assert.assertTrue(optional.isPresent());
     }
 
     @After
     public void cleanUp(){
-
+        repository.deleteAll();
     }
 
 }

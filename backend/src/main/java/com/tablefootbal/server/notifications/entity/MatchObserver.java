@@ -11,12 +11,10 @@ import java.util.Date;
 @Getter
 public class MatchObserver {
 
-    private String sensorID;
+    private final TokenFCM tokenFCM;
 
-    private TokenFCM tokenFCM;
-
-    private Date registerDate;
-
-    public MatchObserver() {}
+    public MatchObserver(TokenFCM tokenFCM) {
+        this.tokenFCM = tokenFCM;
+    }
 
 }

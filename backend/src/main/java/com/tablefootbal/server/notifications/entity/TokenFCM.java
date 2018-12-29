@@ -3,16 +3,13 @@ package com.tablefootbal.server.notifications.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
 public class TokenFCM {
 
-    private String token;
-
-    public TokenFCM(){}
+    private final String TOKEN;
 
     public TokenFCM(String token){
-        this.token = token;
+        this.TOKEN = token;
     }
 
 }

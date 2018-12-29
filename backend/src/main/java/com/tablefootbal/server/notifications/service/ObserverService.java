@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface ObserverService {
 
-    void register(MatchObserver observer);
-    void register(List<MatchObserver> listToRegister);
+    void register(MatchObserver observer, String[] sensor_IDs);
+
 }

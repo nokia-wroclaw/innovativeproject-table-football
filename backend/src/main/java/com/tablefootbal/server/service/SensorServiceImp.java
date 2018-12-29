@@ -130,7 +130,7 @@ public class SensorServiceImp implements SensorService, ApplicationListener<Sens
 	public List<Sensor> findOccupiedSensors()
 	{
 		Iterable<Sensor> sensors = repository.findAll();
-		
+
 		return StreamSupport
 				.stream(sensors.spliterator(), false)
 				.filter(Sensor::isOccupied)
@@ -169,6 +169,11 @@ public class SensorServiceImp implements SensorService, ApplicationListener<Sens
 				.stream(sensors.spliterator(), false)
 				.filter(s -> s.getRoom() == room)
 				.collect(Collectors.toList());
+	}
+
+	@Override
+	public Optional<Sensor> findById(String id){
+		return repository.findById(id);
 	}
 	
 }

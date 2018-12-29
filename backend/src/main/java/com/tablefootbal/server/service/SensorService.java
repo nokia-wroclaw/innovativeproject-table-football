@@ -24,6 +24,8 @@ public interface SensorService {
 
     List<Sensor> findAllInRoom(int room);
 
+    Optional<Sensor> findById(String id);
+
 
 
 //    boolean checkIfExistsById(String id);

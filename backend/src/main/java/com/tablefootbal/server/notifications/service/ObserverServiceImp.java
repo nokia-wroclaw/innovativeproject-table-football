@@ -1,33 +1,45 @@
 package com.tablefootbal.server.notifications.service;
 
 import com.tablefootbal.server.notifications.entity.MatchObserver;
+import com.tablefootbal.server.notifications.entity.MatchObserverList;
+import com.tablefootbal.server.notifications.repository.ObserverRepository;
 import com.tablefootbal.server.service.SensorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ObserverServiceImp implements ObserverService {
 
-    //private final ObserverRepository observerRepository;
+    private  ObserverRepository observerRepository;
 
-    private final SensorService sensorService;
+    private  SensorService sensorService;
 
     @Autowired
-    public ObserverServiceImp(SensorService sensorService) {
-       // this.observerRepository = observerRepository;
-        this.sensorService = sensorService;
+    public ObserverServiceImp(SensorService sensorService, ObserverRepository observerRepository) {
+       this.observerRepository = observerRepository;
+       this.sensorService = sensorService;
     }
 
     @Override
-    public void register(MatchObserver observer) {
-        //observerRepository.save(observer);
+    public void register(MatchObserver observer, String[] sensor_IDs) {
+
+        MatchObserverList list;
+
+        for(String id: sensor_IDs){
+            Optional<MatchObserverList> optional = observerRepository.findById(id);
+            if(optional.isPresent()){
+                list = optional.get();
+                list.getObservers().add(observer);
+            }else{
+                list = new MatchObserverList(id);
+                list.getObservers().add(observer);
+            }
+
+            observerRepository.save(list);
+        }
+
     }
 
-    @Override
-    public void register(List<MatchObserver> listToRegister) {
-        for(MatchObserver observer: listToRegister);
-            //observerRepository.save(observer);
-    }
 }

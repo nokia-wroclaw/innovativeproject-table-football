@@ -2,7 +2,6 @@ package com.tablefootbal.server.notifications.entity;
 
 
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
@@ -13,12 +12,14 @@ import java.util.Set;
 public class MatchObserverList {
 
     @Id
-    @Setter
     @Getter
-    String sensorID;
+    private final String sensorID;
 
     @Getter
-    Set<MatchObserver> collection = new HashSet<>();
+    private Set<MatchObserver> observers = new HashSet<>();
 
+    public MatchObserverList(String sensorID){
+        this.sensorID = sensorID;
+    }
 
 }
