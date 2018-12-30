@@ -41,6 +41,7 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web')
     implementation('org.springframework.data:spring-data-redis')
     implementation('io.lettuce:lettuce-core')
+    implementation('org.json:json:20171018')
     implementation group: 'javax.xml.bind', name: 'jaxb-api', version:"$jaxb_apiVersion"
 
     annotationProcessor("org.projectlombok:lombok")

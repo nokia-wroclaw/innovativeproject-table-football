@@ -34,4 +34,6 @@ public interface SensorService {
     List<Sensor> findAllOnFloor(int floor);
 //
     List<Sensor> findAllInRoom(int room);
+
+    void markAllForCalibration();
 }
