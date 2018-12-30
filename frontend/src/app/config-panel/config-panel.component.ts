@@ -80,7 +80,6 @@ export class ConfigPanelComponent implements OnInit {
       const foundTable = tables.find(element => element.id === table.id);
 
       if (foundTable !== undefined) {
-        console.log('chuj');
         foundTable.visible = table.visible;
       }
     });

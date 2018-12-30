@@ -9,6 +9,7 @@ import {
 import { DataService } from '../services/data.service';
 import { Floor } from '../model/floor';
 import { Table } from '../model/table';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-floor',
@@ -76,7 +77,7 @@ import { Table } from '../model/table';
   ]
 })
 export class FloorComponent implements OnInit {
- @Input()
+  @Input()
   floorData: Floor;
 
   @Input()
@@ -85,18 +86,44 @@ export class FloorComponent implements OnInit {
   isOpen = false;
   smallDevice = false;
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService, private cookieService: CookieService) {
     if (window.screen.width <= 768) {
       this.smallDevice = true;
     }
   }
 
   ngOnInit() {
+    const expandedFloorsString = this.cookieService.get('table-football-expanded-floors');
+    if (expandedFloorsString.length > 0) {
+      const expandedFloors: Array<number> = JSON.parse(expandedFloorsString);
+      if (expandedFloors.find(element => element === this.floorData.floorNumber) !== undefined) {
+        this.isOpen = true;
+        return;
+      }
+    }
+
     this.isOpen = false;
   }
 
   toggle() {
     this.isOpen = !this.isOpen;
+
+    const expandedFloorsString = this.cookieService.get('table-football-expanded-floors');
+    let expandedFloors: Array<number>;
+
+    if (expandedFloorsString.length > 0) {
+      expandedFloors = JSON.parse(expandedFloorsString);
+    } else {
+      expandedFloors = new Array<number>();
+    }
+
+    if (this.isOpen) {
+      expandedFloors.push(this.floorData.floorNumber);
+    } else {
+      expandedFloors = expandedFloors.filter(element => element !== this.floorData.floorNumber);
+    }
+
+    this.cookieService.set('table-football-expanded-floors', JSON.stringify(expandedFloors));
   }
 
   isVisible() {
@@ -105,11 +132,11 @@ export class FloorComponent implements OnInit {
 
   isTableVisible(table: Table) {
     return (table.visible === true || table.visible === undefined) &&
-     ((this.dataService.onlyFreeTables && !table.occupied) || !this.dataService.onlyFreeTables);
+      ((this.dataService.onlyFreeTables && !table.occupied) || !this.dataService.onlyFreeTables);
   }
 
   anyTableVisible() {
     return !(this.floorData.getVisibleTablesCount() <= 0 ||
-    (this.dataService.onlyFreeTables && this.floorData.getFreeTablesCount() <= 0));
+      (this.dataService.onlyFreeTables && this.floorData.getFreeTablesCount() <= 0));
   }
 }

@@ -33,8 +33,40 @@ export class MainComponent implements OnInit {
     this.dataService.getFloors().subscribe((floor: Floor) => tempFloors.push(floor),
       error => console.log(error), () => {
         if (!this.dataService.areFloorsEqual(tempFloors, this.floors)) {
-          this.floors = tempFloors;
+          // this.floors = tempFloors;
+          this.updateFloors(tempFloors);
+          this.floors.sort((a, b) => a.floorNumber - b.floorNumber);
         }
       });
+  }
+
+  updateFloors(incomingFloors: Floor[]) {
+    // filtering floors
+    this.floors = this.floors
+    .filter(floor => incomingFloors.find(incomingFloor => incomingFloor.floorNumber === floor.floorNumber) !== undefined);
+
+    // filtering tables
+    this.floors.forEach(floor => {
+      const incomingTables = incomingFloors.find(incomingFloor => incomingFloor.floorNumber === floor.floorNumber).tables;
+
+      floor.tables = floor.tables
+      .filter(table => incomingTables.find(incomingTable => incomingTable.id === table.id) !== undefined);
+    });
+
+    // inserting new floors
+    incomingFloors.forEach(incomingFloor => {
+      const foundFloor = this.floors.find(floor => floor.floorNumber === incomingFloor.floorNumber);
+      if (foundFloor === undefined) {
+        this.floors.push(incomingFloor);
+      } else {
+        // inserting new tables
+        incomingFloor.tables.forEach(incomingTable => {
+          const foundTable = foundFloor.tables.find(table => table.id === incomingTable.id);
+          if (foundTable === undefined) {
+            foundFloor.tables.push(incomingTable);
+          }
+        });
+      }
+    });
   }
 }

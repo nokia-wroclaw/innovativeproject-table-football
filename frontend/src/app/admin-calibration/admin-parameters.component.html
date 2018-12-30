@@ -2,13 +2,13 @@
   <form class="calibration-form">
     <div class="d-flex flex-column justify-content-center">
 
-      <mat-radio-group>
+      <mat-radio-group [(ngModel)]="parameters.axis" name="axis">
         <div class="d-flex justify-content-between">
           <span class="input-title">AXIS</span>
           <div>
-            <mat-radio-button>X</mat-radio-button>
-            <mat-radio-button>Y</mat-radio-button>
-            <mat-radio-button>Z</mat-radio-button>
+            <mat-radio-button [value]="'X'">X</mat-radio-button>
+            <mat-radio-button [value]="'Y'">Y</mat-radio-button>
+            <mat-radio-button [value]="'Z'">Z</mat-radio-button>
           </div>
           <span class="invisible">AXIS</span>
         </div>
@@ -18,7 +18,7 @@
         <span class="align-self-center input-title">THRESHOLD</span>
         <mat-form-field>
 
-          <input required matInput type="number" name="threshold">
+          <input required matInput [value]="0" [(ngModel)]="parameters.threshold" type="number" name="threshold">
           <mat-error>Invalid number</mat-error>
 
         </mat-form-field>
@@ -29,7 +29,7 @@
         <span class="align-self-center input-title">MIN ABOVE THRESHOLD COUNT</span>
         <mat-form-field>
 
-          <input required matInput type="number" name="minAboveThresholdCount">
+          <input required matInput [(ngModel)]="parameters.peaks_count" type="number" name="minAboveThresholdCount">
           <mat-error>Invalid number</mat-error>
 
         </mat-form-field>
@@ -37,10 +37,21 @@
       </div>
 
       <div class="d-flex justify-content-between">
+        <span class="align-self-center input-title">WINDOW SIZE</span>
+        <mat-form-field>
+
+          <input required matInput [(ngModel)]="parameters.window_size" type="number" name="windowSize">
+          <mat-error>Invalid number</mat-error>
+
+        </mat-form-field>
+        <span class="invisible">WINDOW SIZE</span>
+      </div>
+
+      <div class="d-flex justify-content-between">
         <span class="align-self-center input-title">MAX READINGS</span>
         <mat-form-field>
 
-          <input required matInput type="number" name="maxReadings">
+          <input required matInput [(ngModel)]="parameters.max_readings" type="number" name="maxReadings">
           <mat-error>Invalid number</mat-error>
 
         </mat-form-field>
@@ -48,7 +59,7 @@
       </div>
 
       <div class="d-flex justify-content-center">
-        <button mat-raised-button color="primary">Send</button>
+        <button mat-raised-button color="primary" (click)="sendParameters()">Send</button>
       </div>
     </div>
   </form>

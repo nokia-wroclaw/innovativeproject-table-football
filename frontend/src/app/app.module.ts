@@ -28,7 +28,7 @@ import { EditableTableComponent } from './editable-table/editable-table.componen
 import { LoginComponent } from './login/login.component';
 import { TableCheckboxComponent } from './table-checkbox/table-checkbox.component';
 import { AdminSensorInfoComponent } from './admin-sensor-info/admin-sensor-info.component';
-import { AdminCalibrationComponent } from './admin-calibration/admin-calibration.component';
+import { AdminParametersComponent } from './admin-calibration/admin-parameters.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +44,7 @@ import { AdminCalibrationComponent } from './admin-calibration/admin-calibration
     LoginComponent,
     TableCheckboxComponent,
     AdminSensorInfoComponent,
-    AdminCalibrationComponent
+    AdminParametersComponent
   ],
   imports: [
     BrowserModule,

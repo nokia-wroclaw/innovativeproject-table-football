@@ -29,7 +29,7 @@ import {
         }))
       ])
     ]),
-    trigger('calibrationAnimation', [
+    trigger('parametersAnimation', [
       transition(':enter', [
         style({
           transform: 'translateX(-100%)'

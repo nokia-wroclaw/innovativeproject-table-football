@@ -1,11 +1,15 @@
 package com.tablefootbal.server.events;
 
+import com.tablefootbal.server.dsp.AlgorithmParameters;
 import com.tablefootbal.server.dto.ReadingDto;
 import com.tablefootbal.server.entity.CalibrationStructure;
 import com.tablefootbal.server.entity.Sensor;
 import com.tablefootbal.server.exceptions.customExceptions.NotEnoughDataException;
 import com.tablefootbal.server.readings.SensorReadings;
+import com.tablefootbal.server.service.AlgorithmConfigurationService;
 import com.tablefootbal.server.service.SensorService;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +17,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -20,25 +25,12 @@ import static com.tablefootbal.server.dsp.Algorithms.applyMedianFilter;
 import static com.tablefootbal.server.dsp.Algorithms.isMovement;
 
 @Component
-@PropertySource("classpath:readings.properties")
 @Slf4j
+@Getter
+@Setter
 public class SensorDataManager implements ApplicationListener<SensorUpdateEvent>
 {
-	
-	@Value("${readings.axis}")
-	private CalibrationStructure.Axis axis;
-	
-	@Value("${readings.window_size}")
-	private int WINDOW_SIZE;
-	
-	@Value("${readings.threshold}")
-	private double THRESHOLD;
-	
-	@Value("${readings.minAboveThresholdCount}")
-	private int MIN_ABOVE_THRESHOLD_COUNT;
-	
-	@Value("${readings.max_readings}")
-	private int MAX_READINGS;
+	private AlgorithmParameters algorithmParameters;
 	
 	private final SensorTrackingScheduler scheduler;
 	
@@ -46,14 +38,24 @@ public class SensorDataManager implements ApplicationListener<SensorUpdateEvent>
 	
 	private final SensorService sensorService;
 	
+	private final AlgorithmConfigurationService algorithmService;
+	
 	@Autowired
-	public SensorDataManager(SensorTrackingScheduler scheduler, SensorService sensorService)
+	public SensorDataManager(SensorTrackingScheduler scheduler, SensorService sensorService, AlgorithmParameters algorithmParameters,
+	                         AlgorithmConfigurationService algorithmService)
 	{
 		this.readingsMap = new HashMap<>();
 		this.scheduler = scheduler;
 		this.sensorService = sensorService;
+		this.algorithmParameters = algorithmParameters;
+		this.algorithmService = algorithmService;
 	}
 	
+	@PostConstruct
+	public void initializeAlgorithmParameters()
+	{
+		algorithmService.updateAlgorithmParameters(algorithmParameters);
+	}
 	@Override
 	public void onApplicationEvent(SensorUpdateEvent sensorUpdateEvent)
 	{
@@ -72,7 +74,7 @@ public class SensorDataManager implements ApplicationListener<SensorUpdateEvent>
 		
 		if (storedReadings == null)
 		{
-			storedReadings = new SensorReadings(MAX_READINGS);
+			storedReadings = new SensorReadings(algorithmParameters.getMAX_READINGS());
 		}
 		
 		storedReadings.addReadingsArray(reading.getX(), reading.getY(), reading.getZ(), reading.getTimestamp());
@@ -83,16 +85,19 @@ public class SensorDataManager implements ApplicationListener<SensorUpdateEvent>
 		{
 			if (sensor.getCalibrationStructure().isCalibrationFlag())
 			{
-				performCalibration(sensor, axis);
+				performCalibration(sensor, algorithmParameters.getAxis());
 				sensor.setOccupied(false);
 				sensor.getCalibrationStructure().setCalibrationFlag(false);
+				log.info("Calibration finished for sensors: " + sensor.getId() + "\n");
+				log.info(sensor.getCalibrationStructure().toString());
 			}
 			else
 			{
 				boolean isOccupied = isMovement(storedReadings.getReadings(),
 						sensor.getCalibrationStructure(),
-						MIN_ABOVE_THRESHOLD_COUNT);
-				sensorService.setOccupied(sensor.getId(), isOccupied);
+						algorithmParameters.getMIN_ABOVE_THRESHOLD_COUNT());
+				sensor.setOccupied(isOccupied);
+				log.info("Sensor: " + sensor.getId() + " occupied value has been set to " + isOccupied + "\n");
 			}
 		} catch (NotEnoughDataException e)
 		{
@@ -111,7 +116,7 @@ public class SensorDataManager implements ApplicationListener<SensorUpdateEvent>
 		
 		List<Double> axisReadings = getAxisReadings(readings, axis);
 		
-		applyMedianFilter(axisReadings, WINDOW_SIZE);
+		applyMedianFilter(axisReadings, algorithmParameters.getWINDOW_SIZE());
 		
 		double maxValue = axisReadings.stream().mapToDouble(r -> r).max().orElse(0.0);
 		double minValue = axisReadings.stream().mapToDouble(r -> r).min().orElse(0.0);
@@ -119,7 +124,7 @@ public class SensorDataManager implements ApplicationListener<SensorUpdateEvent>
 		sensor.getCalibrationStructure().setAxis(axis);
 		sensor.getCalibrationStructure().setMaxValue(maxValue);
 		sensor.getCalibrationStructure().setMinValue(minValue);
-		sensor.getCalibrationStructure().setThreshold(THRESHOLD);
+		sensor.getCalibrationStructure().setThreshold(algorithmParameters.getTHRESHOLD());
 		sensor.getCalibrationStructure().setCalibrationFlag(false);
 	}
 	
@@ -146,7 +151,6 @@ public class SensorDataManager implements ApplicationListener<SensorUpdateEvent>
 		}
 		return axisReadings;
 	}
-	
 }
 
 

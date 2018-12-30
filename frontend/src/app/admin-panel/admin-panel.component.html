@@ -3,14 +3,14 @@
     <div class="d-flex flex-column">
       <button mat-button [color]="activeTab === 'sensorInfo' ? 'primary' : ''" (click)="setActiveTab('sensorInfo')">Sensor
         Info</button>
-      <button mat-button [color]="activeTab === 'calibration' ? 'primary' : ''" (click)="setActiveTab('calibration')">Calibration</button>
+      <button mat-button [color]="activeTab === 'parameters' ? 'primary' : ''" (click)="setActiveTab('parameters')">Parameters</button>
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
     <app-nav [sidenav]="sidenav"></app-nav>
     <div class="d-flex">
-      <div @calibrationAnimation *ngIf="activeTab === 'calibration'" class="w-100">
-        <app-admin-calibration></app-admin-calibration>
+      <div @parametersAnimation *ngIf="activeTab === 'parameters'" class="w-100">
+        <app-admin-parameters></app-admin-parameters>
       </div>
       <div @sensorInfoAnimation *ngIf="activeTab === 'sensorInfo'" class="w-100">
         <app-admin-sensor-info></app-admin-sensor-info>
