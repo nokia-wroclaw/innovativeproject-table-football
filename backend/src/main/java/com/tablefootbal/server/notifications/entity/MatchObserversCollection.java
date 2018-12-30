@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @RedisHash("matchobserverlist")
-public class MatchObserverList {
+public class MatchObserversCollection {
 
     @Id
     @Getter
@@ -18,7 +18,7 @@ public class MatchObserverList {
     @Getter
     private Set<MatchObserver> observers = new HashSet<>();
 
-    public MatchObserverList(String sensorID){
+    public MatchObserversCollection(String sensorID){
         this.sensorID = sensorID;
     }
 

@@ -1,7 +1,7 @@
 package com.tablefootbal.server.notification;
 
 import com.tablefootbal.server.notifications.entity.MatchObserver;
-import com.tablefootbal.server.notifications.entity.MatchObserverList;
+import com.tablefootbal.server.notifications.entity.MatchObserversCollection;
 import com.tablefootbal.server.notifications.repository.ObserverRepository;
 import org.junit.After;
 import org.junit.Assert;
@@ -33,8 +33,8 @@ public class MatchObserverRepositoryTest {
 
     @Test
     public void shouldBeTwoObjectsInRepo(){
-        MatchObserverList l1 = new MatchObserverList("123");
-        MatchObserverList l2 = new MatchObserverList("223");
+        MatchObserversCollection l1 = new MatchObserversCollection("123");
+        MatchObserversCollection l2 = new MatchObserversCollection("223");
 
         repository.save(l1);
         repository.save(l2);
@@ -45,10 +45,10 @@ public class MatchObserverRepositoryTest {
     @Test
     public void shouldFindById(){
         String id = "123";
-        MatchObserverList l1 = new MatchObserverList(id);
+        MatchObserversCollection l1 = new MatchObserversCollection(id);
         repository.save(l1);
 
-        Optional<MatchObserverList> optional = repository.findById(id);
+        Optional<MatchObserversCollection> optional = repository.findById(id);
         Assert.assertTrue(optional.isPresent());
     }
 

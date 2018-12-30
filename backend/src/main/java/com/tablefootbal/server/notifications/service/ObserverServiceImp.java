@@ -1,15 +1,17 @@
 package com.tablefootbal.server.notifications.service;
 
 import com.tablefootbal.server.notifications.entity.MatchObserver;
-import com.tablefootbal.server.notifications.entity.MatchObserverList;
+import com.tablefootbal.server.notifications.entity.MatchObserversCollection;
 import com.tablefootbal.server.notifications.repository.ObserverRepository;
 import com.tablefootbal.server.service.SensorService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class ObserverServiceImp implements ObserverService {
 
     private  ObserverRepository observerRepository;
@@ -25,19 +27,20 @@ public class ObserverServiceImp implements ObserverService {
     @Override
     public void register(MatchObserver observer, String[] sensor_IDs) {
 
-        MatchObserverList list;
+        MatchObserversCollection list;
 
         for(String id: sensor_IDs){
-            Optional<MatchObserverList> optional = observerRepository.findById(id);
+            Optional<MatchObserversCollection> optional = observerRepository.findById(id);
             if(optional.isPresent()){
                 list = optional.get();
                 list.getObservers().add(observer);
             }else{
-                list = new MatchObserverList(id);
+                list = new MatchObserversCollection(id);
                 list.getObservers().add(observer);
             }
 
             observerRepository.save(list);
+            log.info("Registered an observer" + list.toString());
         }
 
     }

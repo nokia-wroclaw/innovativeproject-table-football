@@ -1,7 +1,7 @@
 package com.tablefootbal.server.notification;
 
 import com.tablefootbal.server.notifications.entity.MatchObserver;
-import com.tablefootbal.server.notifications.entity.MatchObserverList;
+import com.tablefootbal.server.notifications.entity.MatchObserversCollection;
 import com.tablefootbal.server.notifications.entity.TokenFCM;
 import com.tablefootbal.server.notifications.repository.ObserverRepository;
 import com.tablefootbal.server.notifications.service.ObserverServiceImp;
@@ -55,13 +55,13 @@ public class MatchObserverServiceTest {
     public void givenObserverCalledForTwoSensors_thenSaveCalledTwoTimes()
     {
         //Doesn't really matter what will be returned
-        Mockito.when(repository.save(Mockito.any(MatchObserverList.class))).thenReturn(new MatchObserverList("id"));
+        Mockito.when(repository.save(Mockito.any(MatchObserversCollection.class))).thenReturn(new MatchObserversCollection("id"));
 
         Mockito.when(repository.findById(Mockito.anyString())).thenReturn(Optional.empty());
         String [] id = {"11:11:11:11:11:11","22:22:22:22:22:22"};
         MatchObserver observer = new MatchObserver(new TokenFCM("TOKEN"));
         service.register(observer,id);
-        Mockito.verify(repository,Mockito.times(2)).save(Mockito.any(MatchObserverList.class));
+        Mockito.verify(repository,Mockito.times(2)).save(Mockito.any(MatchObserversCollection.class));
 
     }
 
@@ -69,17 +69,17 @@ public class MatchObserverServiceTest {
     public void givenObserversListAlreadyInRepository_thenObserverAddedToTheLists()
     {
         //Doesn't really matter what will be returned
-        Mockito.when(repository.save(Mockito.any(MatchObserverList.class))).thenReturn(new MatchObserverList("id"));
+        Mockito.when(repository.save(Mockito.any(MatchObserversCollection.class))).thenReturn(new MatchObserversCollection("id"));
 
         String id1 = "11:11:11:11:11:11";
                 String id2 = "22:22:22:22:22:22";
         String [] id = {id1,id2};
 
-        MatchObserverList list1 = new MatchObserverList(id1);
-        MatchObserverList list2 = new MatchObserverList(id2);
+        MatchObserversCollection list1 = new MatchObserversCollection(id1);
+        MatchObserversCollection list2 = new MatchObserversCollection(id2);
         List expected = asList(list1,list2);
 
-        ArgumentCaptor<MatchObserverList> listCaptor = ArgumentCaptor.forClass(MatchObserverList.class);
+        ArgumentCaptor<MatchObserversCollection> listCaptor = ArgumentCaptor.forClass(MatchObserversCollection.class);
 
         Mockito.when(repository.findById(id1)).thenReturn(Optional.of(list1));
         Mockito.when(repository.findById(id2)).thenReturn(Optional.of(list2));
