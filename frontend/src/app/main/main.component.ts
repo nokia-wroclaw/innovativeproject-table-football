@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { Floor } from '../model/floor';
 import { timer } from 'rxjs';
+import { Table } from '../model/table';
 
 @Component({
   selector: 'app-main',
@@ -50,7 +51,7 @@ export class MainComponent implements OnInit {
       const incomingTables = incomingFloors.find(incomingFloor => incomingFloor.floorNumber === floor.floorNumber).tables;
 
       floor.tables = floor.tables
-      .filter(table => incomingTables.find(incomingTable => incomingTable.id === table.id) !== undefined);
+      .filter(table => incomingTables.find(incomingTable => this.areTablesEqual(incomingTable, table)) !== undefined);
     });
 
     // inserting new floors
@@ -61,12 +62,25 @@ export class MainComponent implements OnInit {
       } else {
         // inserting new tables
         incomingFloor.tables.forEach(incomingTable => {
-          const foundTable = foundFloor.tables.find(table => table.id === incomingTable.id);
+          const foundTable = foundFloor.tables.find(table => this.areTablesEqual(table, incomingTable));
           if (foundTable === undefined) {
             foundFloor.tables.push(incomingTable);
           }
         });
       }
     });
+  }
+
+  areTablesEqual(first: Table, second: Table) {
+    if (!(
+      first.id === second.id &&
+      first.occupied === second.occupied &&
+      first.online === second.online &&
+      first.room === second.room
+    )) {
+      return false;
+    }
+
+    return true;
   }
 }
