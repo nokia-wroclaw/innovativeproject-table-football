@@ -1,0 +1,15 @@
+<div>
+  <div class="container d-flex justify-content-around">
+    <span class="header mac-header">MAC address</span>
+    <span class="header input-header">Floor</span>
+    <span class="header input-header">Room</span>
+    <span class="header button-header">Action</span>
+  </div>
+  <div class="container" *ngFor="let table of tables">
+    <hr>
+    <app-editable-table (editStatus)="editStatusChanged($event)" [tableData]="table"></app-editable-table>
+  </div>
+  <div class="container d-flex justify-content-center mt-3">
+    <button [disabled]="checksum != 0" mat-raised-button color="primary" (click)="updateTables()">Apply changes</button>
+  </div>
+</div>

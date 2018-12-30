@@ -1,12 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Table } from '../model/table';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition,
-} from '@angular/animations';
 
 @Component({
   selector: 'app-table-checkbox',
@@ -16,14 +9,16 @@ import {
 export class TableCheckboxComponent implements OnInit {
   @Input()
   tableData: Table;
+  @Output()
+  changed = new EventEmitter();
 
   constructor() { }
 
   ngOnInit() {
-    this.tableData.visible = true;
   }
 
-  changed(event) {
+  checked(event) {
     this.tableData.visible = event.checked;
+    this.changed.emit();
   }
 }

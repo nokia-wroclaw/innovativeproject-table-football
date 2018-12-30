@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {
   trigger,
   state,
@@ -53,18 +53,19 @@ export class CustomCheckboxComponent implements OnInit {
   checked: boolean;
   @Input()
   floorData: Floor;
+  @Output()
+  changed = new EventEmitter();
 
   constructor() {
   }
 
   ngOnInit() {
-    this.checked = true;
-    this.floorData.visible = true;
+    this.checked = this.floorData.visible;
   }
 
   toggle() {
     this.checked = !this.checked;
     this.floorData.visible = this.checked;
-    console.log(this.floorData);
+    this.changed.emit();
   }
 }
