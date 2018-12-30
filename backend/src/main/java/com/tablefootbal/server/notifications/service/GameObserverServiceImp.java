@@ -40,7 +40,7 @@ public class GameObserverServiceImp implements GameObserverService {
             }
 
             observerRepository.save(list);
-            log.info("Registered an observer" + list.toString());
+            log.info("Registered an observer for sensor ID: " + list.getSensorID());
         }
 
     }
