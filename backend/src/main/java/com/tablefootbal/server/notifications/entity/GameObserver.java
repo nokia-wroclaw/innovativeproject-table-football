@@ -7,10 +7,10 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Setter
 @Getter
-@EqualsAndHashCode
 public class GameObserver {
 
     private final TokenFCM tokenFCM;
@@ -19,4 +19,16 @@ public class GameObserver {
         this.tokenFCM = tokenFCM;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GameObserver that = (GameObserver) o;
+        return Objects.equals(tokenFCM, that.tokenFCM);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tokenFCM);
+    }
 }
