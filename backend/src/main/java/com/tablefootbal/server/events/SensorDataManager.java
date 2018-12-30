@@ -147,7 +147,7 @@ public class SensorDataManager implements ApplicationListener<SensorUpdateEvent>
 		}
 		else
 		{
-			axisReadings = readings.stream().map(SensorReadings.Reading::getX).collect(Collectors.toList());
+			axisReadings = readings.stream().map(SensorReadings.Reading::getZ).collect(Collectors.toList());
 		}
 		return axisReadings;
 	}
