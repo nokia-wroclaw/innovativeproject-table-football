@@ -1,8 +1,8 @@
 package com.tablefootbal.server.notifications.service;
 
-import com.tablefootbal.server.notifications.entity.MatchObserver;
-import com.tablefootbal.server.notifications.entity.MatchObserversCollection;
-import com.tablefootbal.server.notifications.repository.ObserverRepository;
+import com.tablefootbal.server.notifications.entity.GameObserver;
+import com.tablefootbal.server.notifications.entity.GameObserversCollection;
+import com.tablefootbal.server.notifications.repository.GameObserverRepository;
 import com.tablefootbal.server.service.SensorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,30 +12,30 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-public class ObserverServiceImp implements ObserverService {
+public class GameObserverServiceImp implements GameObserverService {
 
-    private  ObserverRepository observerRepository;
+    private GameObserverRepository observerRepository;
 
     private  SensorService sensorService;
 
     @Autowired
-    public ObserverServiceImp(SensorService sensorService, ObserverRepository observerRepository) {
+    public GameObserverServiceImp(SensorService sensorService, GameObserverRepository observerRepository) {
        this.observerRepository = observerRepository;
        this.sensorService = sensorService;
     }
 
     @Override
-    public void register(MatchObserver observer, String[] sensor_IDs) {
+    public void register(GameObserver observer, String[] sensor_IDs) {
 
-        MatchObserversCollection list;
+        GameObserversCollection list;
 
         for(String id: sensor_IDs){
-            Optional<MatchObserversCollection> optional = observerRepository.findById(id);
+            Optional<GameObserversCollection> optional = observerRepository.findById(id);
             if(optional.isPresent()){
                 list = optional.get();
                 list.getObservers().add(observer);
             }else{
-                list = new MatchObserversCollection(id);
+                list = new GameObserversCollection(id);
                 list.getObservers().add(observer);
             }
 

@@ -1,10 +1,10 @@
 package com.tablefootbal.server.notification;
 
-import com.tablefootbal.server.notifications.entity.MatchObserver;
-import com.tablefootbal.server.notifications.entity.MatchObserversCollection;
+import com.tablefootbal.server.notifications.entity.GameObserver;
+import com.tablefootbal.server.notifications.entity.GameObserversCollection;
 import com.tablefootbal.server.notifications.entity.TokenFCM;
-import com.tablefootbal.server.notifications.repository.ObserverRepository;
-import com.tablefootbal.server.notifications.service.ObserverServiceImp;
+import com.tablefootbal.server.notifications.repository.GameObserverRepository;
+import com.tablefootbal.server.notifications.service.GameObserverServiceImp;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,26 +19,26 @@ import java.util.Optional;
 import static java.util.Arrays.asList;
 
 @RunWith(SpringRunner.class)
-public class MatchObserverServiceTest {
+public class GameGameObserverServiceTest {
 
     @Mock
-    ObserverRepository repository;
+    GameObserverRepository repository;
 
     @InjectMocks
-    ObserverServiceImp service;
+    GameObserverServiceImp service;
 
-    MatchObserver o1;
+    GameObserver o1;
     String[] o1_list;
 
-    MatchObserver o2;
+    GameObserver o2;
     String[] o2_list;
 
     @Before
     public void setUp() {
-        o1 = new MatchObserver(new TokenFCM("aav"));
+        o1 = new GameObserver(new TokenFCM("aav"));
         o1_list = new String[]{"111", "222", "333"};
 
-        o2 = new MatchObserver(new TokenFCM("bbb"));
+        o2 = new GameObserver(new TokenFCM("bbb"));
         o2_list = new String[]{"222", "333", "444"};
 
     }
@@ -55,13 +55,13 @@ public class MatchObserverServiceTest {
     public void givenObserverCalledForTwoSensors_thenSaveCalledTwoTimes()
     {
         //Doesn't really matter what will be returned
-        Mockito.when(repository.save(Mockito.any(MatchObserversCollection.class))).thenReturn(new MatchObserversCollection("id"));
+        Mockito.when(repository.save(Mockito.any(GameObserversCollection.class))).thenReturn(new GameObserversCollection("id"));
 
         Mockito.when(repository.findById(Mockito.anyString())).thenReturn(Optional.empty());
         String [] id = {"11:11:11:11:11:11","22:22:22:22:22:22"};
-        MatchObserver observer = new MatchObserver(new TokenFCM("TOKEN"));
+        GameObserver observer = new GameObserver(new TokenFCM("TOKEN"));
         service.register(observer,id);
-        Mockito.verify(repository,Mockito.times(2)).save(Mockito.any(MatchObserversCollection.class));
+        Mockito.verify(repository,Mockito.times(2)).save(Mockito.any(GameObserversCollection.class));
 
     }
 
@@ -69,22 +69,22 @@ public class MatchObserverServiceTest {
     public void givenObserversListAlreadyInRepository_thenObserverAddedToTheLists()
     {
         //Doesn't really matter what will be returned
-        Mockito.when(repository.save(Mockito.any(MatchObserversCollection.class))).thenReturn(new MatchObserversCollection("id"));
+        Mockito.when(repository.save(Mockito.any(GameObserversCollection.class))).thenReturn(new GameObserversCollection("id"));
 
         String id1 = "11:11:11:11:11:11";
                 String id2 = "22:22:22:22:22:22";
         String [] id = {id1,id2};
 
-        MatchObserversCollection list1 = new MatchObserversCollection(id1);
-        MatchObserversCollection list2 = new MatchObserversCollection(id2);
+        GameObserversCollection list1 = new GameObserversCollection(id1);
+        GameObserversCollection list2 = new GameObserversCollection(id2);
         List expected = asList(list1,list2);
 
-        ArgumentCaptor<MatchObserversCollection> listCaptor = ArgumentCaptor.forClass(MatchObserversCollection.class);
+        ArgumentCaptor<GameObserversCollection> listCaptor = ArgumentCaptor.forClass(GameObserversCollection.class);
 
         Mockito.when(repository.findById(id1)).thenReturn(Optional.of(list1));
         Mockito.when(repository.findById(id2)).thenReturn(Optional.of(list2));
 
-        MatchObserver observer = new MatchObserver(new TokenFCM("TOKEN"));
+        GameObserver observer = new GameObserver(new TokenFCM("TOKEN"));
 
         service.register(observer,id);
 

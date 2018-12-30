@@ -11,11 +11,11 @@ import java.util.Date;
 @Setter
 @Getter
 @EqualsAndHashCode
-public class MatchObserver {
+public class GameObserver {
 
     private final TokenFCM tokenFCM;
 
-    public MatchObserver(TokenFCM tokenFCM) {
+    public GameObserver(TokenFCM tokenFCM) {
         this.tokenFCM = tokenFCM;
     }
 

@@ -1,8 +1,8 @@
 package com.tablefootbal.server.notification;
 
-import com.tablefootbal.server.notifications.entity.MatchObserver;
-import com.tablefootbal.server.notifications.entity.MatchObserversCollection;
-import com.tablefootbal.server.notifications.repository.ObserverRepository;
+import com.tablefootbal.server.notifications.entity.GameObserver;
+import com.tablefootbal.server.notifications.entity.GameObserversCollection;
+import com.tablefootbal.server.notifications.repository.GameObserverRepository;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,12 +18,12 @@ import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class MatchObserverRepositoryTest {
+public class GameGameObserverRepositoryTest {
 
     @Autowired
-    public ObserverRepository repository;
+    public GameObserverRepository repository;
     
-    private List<MatchObserver> addedObservers = new ArrayList<>();
+    private List<GameObserver> addedObservers = new ArrayList<>();
 
 
     @Before
@@ -33,8 +33,8 @@ public class MatchObserverRepositoryTest {
 
     @Test
     public void shouldBeTwoObjectsInRepo(){
-        MatchObserversCollection l1 = new MatchObserversCollection("123");
-        MatchObserversCollection l2 = new MatchObserversCollection("223");
+        GameObserversCollection l1 = new GameObserversCollection("123");
+        GameObserversCollection l2 = new GameObserversCollection("223");
 
         repository.save(l1);
         repository.save(l2);
@@ -45,10 +45,10 @@ public class MatchObserverRepositoryTest {
     @Test
     public void shouldFindById(){
         String id = "123";
-        MatchObserversCollection l1 = new MatchObserversCollection(id);
+        GameObserversCollection l1 = new GameObserversCollection(id);
         repository.save(l1);
 
-        Optional<MatchObserversCollection> optional = repository.findById(id);
+        Optional<GameObserversCollection> optional = repository.findById(id);
         Assert.assertTrue(optional.isPresent());
     }
 

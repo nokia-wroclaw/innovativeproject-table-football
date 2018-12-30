@@ -9,16 +9,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 @RedisHash("matchobserverlist")
-public class MatchObserversCollection {
+public class GameObserversCollection {
 
     @Id
     @Getter
     private final String sensorID;
 
     @Getter
-    private Set<MatchObserver> observers = new HashSet<>();
+    private Set<GameObserver> observers = new HashSet<>();
 
-    public MatchObserversCollection(String sensorID){
+    public GameObserversCollection(String sensorID){
         this.sensorID = sensorID;
     }
 
