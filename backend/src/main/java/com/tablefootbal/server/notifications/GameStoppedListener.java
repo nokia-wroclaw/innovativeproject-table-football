@@ -10,7 +10,5 @@ public class GameStoppedListener implements ApplicationListener<PlayStoppedEvent
 
         String sensorId = event.getSource().toString();
 
-
-
     }
 }
