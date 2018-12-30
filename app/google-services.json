@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "308763088135",
+    "firebase_url": "https://football-table-innoproject.firebaseio.com",
+    "project_id": "football-table-innoproject",
+    "storage_bucket": "football-table-innoproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:308763088135:android:e7473556140569d6",
+        "android_client_info": {
+          "package_name": "nokia.tablefootball.tablefootballandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "308763088135-a307961bmo3tq1ssn9p0ri5c9dq867q0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcdaZHiRJwWp98epAIwQYr4OROd3o-biU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
