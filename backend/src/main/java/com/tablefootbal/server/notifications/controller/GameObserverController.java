@@ -36,13 +36,12 @@ public class GameObserverController {
     @PostMapping("/")
     public void registerDevice(@RequestBody GameObserverDto gameObserverDto){
 
+        log.info("Received register request from" + gameObserverDto.getFcm_token().substring(0,5) + "... for: " + gameObserverDto.getSensors_id());
+
         TokenFCM token = new TokenFCM(gameObserverDto.getFcm_token());
         GameObserver observer = new GameObserver(token);
 
-
         gameObserverService.register(observer, gameObserverDto.getSensors_id());
-
-
 
     }
 }
