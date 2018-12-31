@@ -30,6 +30,7 @@
     "express": "^4.16.4",
     "hammerjs": "^2.0.8",
     "jquery": "^3.3.1",
+    "ngx-cookie-service": "^2.1.0",
     "path": "^0.12.7",
     "popper.js": "^1.14.5",
     "rxjs": "~6.3.3",

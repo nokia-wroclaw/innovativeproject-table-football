@@ -26,4 +26,13 @@ public class CalibrationStructure
 	double minValue;
 	double threshold;
 	boolean calibrationFlag;
+	
+	@Override
+	public String toString()
+	{
+		return "axis=" + axis +
+				", maxValue=" + maxValue +
+				", minValue=" + minValue +
+				", threshold=" + threshold;
+	}
 }

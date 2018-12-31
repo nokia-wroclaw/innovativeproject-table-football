@@ -16,6 +16,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,6 +27,7 @@ import javax.annotation.Resource;
 import java.io.BufferedReader;
 import java.io.File;
 import java.nio.file.Files;
+import java.security.AlgorithmParameters;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,6 +92,7 @@ public class ServerApplication {
 
         user.setRoles(roles);
         userRepository.save(user);
+        
     }
 
     public static void main(String[] args) {

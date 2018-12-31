@@ -5,10 +5,12 @@ services:
   ports:
   - "8443:8443"
   - "8080:8080"
+  - "18443:18443"
   env_file:
   - ./backend/startup.env
   volumes:
   - ./backend/certs/:/var/certs/:ro
+  - ./backend/log/:/var/log/
   entrypoint: ./startup_server.sh
   depends_on:
   - redis
@@ -21,6 +23,7 @@ services:
   - ./backend/Redis/log/:/data/log
   - ./backend/Redis/redis.conf:/usr/local/etc/redis/redis.conf
 
+<<<<<<< HEAD
 
     # frontend:
          #     build: ./frontend/
@@ -30,3 +33,12 @@ services:
          #     ports:
              #       - '4200:80'
 
+=======
+ frontend:
+    build: ./frontend/
+    volumes:
+      - ./frontend/src/:/usr/src/app
+      - ./frontend/src/:/usr/src/app/node_modules
+    ports:
+      - '4200:80'
+>>>>>>> dev/all_in_one

@@ -1,5 +1,6 @@
 package com.tablefootbal.server;
 
+import com.tablefootbal.server.dsp.AlgorithmParameters;
 import com.tablefootbal.server.dto.ReadingDto;
 import com.tablefootbal.server.entity.CalibrationStructure;
 import com.tablefootbal.server.entity.Sensor;
@@ -32,11 +33,17 @@ import static org.mockito.Mockito.*;
 @TestPropertySource("classpath:readings.properties")
 public class SensorDataManagerIntegrationTests extends TestCase
 {
+	@Value("${readings.axis}")
+	CalibrationStructure.Axis axis;
+	
 	@Value("${readings.window_size}")
 	private int WINDOW_SIZE;
 	
 	@Value("${readings.threshold}")
 	private double THRESHOLD;
+	
+	@Value("${readings.minAboveThresholdCount}")
+	private int MIN_ABOVE_THRESHOLD_COUNT;
 	
 	@Value("${readings.max_readings}")
 	private int MAX_READINGS;
@@ -50,13 +57,14 @@ public class SensorDataManagerIntegrationTests extends TestCase
 	@Mock
 	SensorService sensorService;
 	
+	private AlgorithmParameters algorithmParameters;
+	
 	private SensorUpdateEvent event;
 	
 	
 	@Before
 	public void init()
 	{
-		
 		Sensor sensor = new Sensor();
 		sensor.setId("11:11:11:11:11:11");
 		sensor.setLastNotificationDate(new Date());
@@ -65,16 +73,24 @@ public class SensorDataManagerIntegrationTests extends TestCase
 		sensor.setFloor(1);
 		sensor.setRoom(111);
 		
+		algorithmParameters = new AlgorithmParameters();
+		algorithmParameters.setTHRESHOLD(THRESHOLD);
+		algorithmParameters.setMAX_READINGS(MAX_READINGS);
+		algorithmParameters.setWINDOW_SIZE(WINDOW_SIZE);
+		algorithmParameters.setMIN_ABOVE_THRESHOLD_COUNT(MIN_ABOVE_THRESHOLD_COUNT);
+		algorithmParameters.setAxis(axis);
+		
 		event = mock(SensorUpdateEvent.class);
 		when(event.getSource()).thenReturn(sensor);
 		
 		doNothing().when(scheduler).startTracking(Mockito.anyString());
 		doNothing().when(sensorService).setOccupied(anyString(), anyBoolean());
+//
+//		ReflectionTestUtils.setField(manager, "THRESHOLD", THRESHOLD);
+//		ReflectionTestUtils.setField(manager, "MAX_READINGS", MAX_READINGS);
+//		ReflectionTestUtils.setField(manager, "WINDOW_SIZE", WINDOW_SIZE);
 		
-		ReflectionTestUtils.setField(manager, "THRESHOLD", THRESHOLD);
-		ReflectionTestUtils.setField(manager, "MAX_READINGS", MAX_READINGS);
-		ReflectionTestUtils.setField(manager, "WINDOW_SIZE", WINDOW_SIZE);
-		
+		manager.setAlgorithmParameters(algorithmParameters);
 	}
 	
 	//	@Test
@@ -157,41 +173,19 @@ public class SensorDataManagerIntegrationTests extends TestCase
 		
 		SensorReadings sensorReadings = new SensorReadings(MAX_READINGS);
 		sensorReadings.setReadings(readings);
-		manager.getReadingsMap().put(sensor.getId(),sensorReadings);
+		manager.getReadingsMap().put(sensor.getId(), sensorReadings);
 		
-		ArgumentCaptor<Sensor> sensorCaptor  = ArgumentCaptor.forClass(Sensor.class);
+		ArgumentCaptor<Sensor> sensorCaptor = ArgumentCaptor.forClass(Sensor.class);
 		
-		double [] readingArray = {};
+		double[] readingArray = {};
 		
-		ReadingDto readingDto = new ReadingDto(readingArray,readingArray,readingArray,0);
-		manager.onApplicationEvent(new SensorUpdateEvent(sensor,readingDto));
+		ReadingDto readingDto = new ReadingDto(readingArray, readingArray, readingArray, 0);
+		manager.onApplicationEvent(new SensorUpdateEvent(sensor, readingDto));
 		
 		verify(sensorService).save(sensorCaptor.capture());
 		calibrationStructure = sensorCaptor.getValue().getCalibrationStructure();
-		Assert.assertFalse( calibrationStructure.isCalibrationFlag());
+		Assert.assertFalse(calibrationStructure.isCalibrationFlag());
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	 }
+}

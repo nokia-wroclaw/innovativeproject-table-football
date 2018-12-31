@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mkdir -p backend/log 
+
 cd ./backend
 
 ./gradlew bootJar

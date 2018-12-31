@@ -1,0 +1,16 @@
+.mat-radio-button {
+    margin: 0 1rem;
+}
+
+.calibration-form {
+    width: 70%;
+}
+
+.input-title {
+    opacity: .8;
+}
+
+.mat-raised-button {
+    margin-top: 2rem;
+    width: 120px;
+}

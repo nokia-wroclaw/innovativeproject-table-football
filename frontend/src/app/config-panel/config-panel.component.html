@@ -12,14 +12,14 @@
     </mat-expansion-panel-header>
 
     <div *ngFor="let floor of floors" class="ml-2">
-      <app-custom-checkbox [floorData]="floor">
+      <app-custom-checkbox [checked]="floor.visible" [floorData]="floor" (changed)="setCookies()">
         <div class="d-flex flex-column pl-3 pt-2">
-          <app-table-checkbox *ngFor="let table of floor.tables" [tableData]="table"></app-table-checkbox>
+          <app-table-checkbox *ngFor="let table of floor.tables" [tableData]="table" (changed)="setCookies()"></app-table-checkbox>
         </div>
       </app-custom-checkbox>
     </div>
   </mat-expansion-panel>
 </mat-accordion>
 <div class="d-flex justify-content-center">
-  <button mat-raised-button color="primary">Clear</button>
+  <button mat-raised-button color="primary" (click)="clear()">Clear</button>
 </div>

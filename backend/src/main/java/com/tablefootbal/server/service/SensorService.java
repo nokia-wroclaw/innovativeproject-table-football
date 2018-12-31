@@ -8,7 +8,12 @@ import java.util.Optional;
 
 public interface SensorService {
 
-    void saveOrUpdate(Sensor sensor, ReadingDto readingDto);
+
+//    Sensor saveOrUpdate(Sensor sensor, SensorReadings.Reading reading);
+
+
+     void saveOrUpdate(Sensor sensor, ReadingDto readingDto);
+
 
     void updateSensorInformation(Sensor sensor);
 
@@ -37,5 +42,5 @@ public interface SensorService {
 //
 //    List<Sensor> findDisconnected();
 //
-
+    void markAllForCalibration();
 }

@@ -1,53 +1,65 @@
-import { Component, OnInit } from '@angular/core';
-import { DataService } from '../services/data.service';
-import { Table } from '../model/table';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import { Floor } from '../model/floor';
+import {
+  trigger,
+  style,
+  animate,
+  transition
+} from '@angular/animations';
 
 @Component({
   selector: 'app-admin-panel',
   templateUrl: './admin-panel.component.html',
-  styleUrls: ['./admin-panel.component.css']
+  styleUrls: ['./admin-panel.component.css'],
+  encapsulation: ViewEncapsulation.None,
+  animations: [
+    trigger('sensorInfoAnimation', [
+      transition(':enter', [
+        style({
+          transform: 'translateX(100%)'
+        }),
+        animate('500ms ease-out', style({
+          transform: 'translateX(0%)'
+        }))
+      ]),
+      transition(':leave', [
+        animate('150ms ease-out', style({
+          transform: 'translateX(100%)'
+        }))
+      ])
+    ]),
+    trigger('parametersAnimation', [
+      transition(':enter', [
+        style({
+          transform: 'translateX(-100%)'
+        }),
+        animate('500ms ease-out', style({
+          transform: 'translateX(0%)'
+        }))
+      ]),
+      transition(':leave', [
+        animate('150ms ease-out', style({
+          transform: 'translateX(-100%)'
+        }))
+      ])
+    ])
+  ]
 })
 export class AdminPanelComponent implements OnInit {
-  tables: Table[];
-  floorMin: number;
-  floorMax: number;
-  checksum: number;
+  activeTab: string;
 
-  constructor(private dataService: DataService, private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router) {
     if (!this.authService.isAdminConfirmed()) {
       this.router.navigateByUrl('/login');
     }
-    this.fetchTables();
-    this.fetchFloors();
-    this.checksum = 0;
+    this.activeTab = 'sensorInfo';
   }
 
   ngOnInit() {
   }
 
-  fetchTables() {
-    this.dataService.getSensorStatus().subscribe((data: Table[]) => {
-      this.tables = data;
-      this.tables.sort((a: Table, b: Table) => a.floor - b.floor);
-    });
-  }
-
-  fetchFloors() {
-    const floors = new Array<number>();
-
-    this.dataService.getFloors().subscribe((floor: Floor) => {
-      floors.push(floor.floorNumber);
-    });
-  }
-
-  updateTables() {
-    this.dataService.updateSensorStatus(this.tables);
-  }
-
-  editStatusChanged(status: number) {
-    this.checksum += status;
+  setActiveTab(tab: string) {
+    this.activeTab = tab;
   }
 }
