@@ -6,4 +6,5 @@ public interface GameObserverService {
 
     void register(GameObserver observer, String[] sensor_IDs);
 
+    void notifyObservers(String sensorId);
 }

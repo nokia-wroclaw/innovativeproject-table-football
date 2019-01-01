@@ -1,4 +1,4 @@
-package com.tablefootbal.server.notifications.filters;
+package com.tablefootbal.server.notifications.filter;
 
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;

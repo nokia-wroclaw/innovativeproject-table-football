@@ -1,5 +1,9 @@
 package com.tablefootbal.server.notifications.service;
 
+import com.tablefootbal.server.entity.Sensor;
+import com.tablefootbal.server.notifications.controller.GameObserverController;
+import com.tablefootbal.server.notifications.dto.Notification;
+import com.tablefootbal.server.notifications.dto.Push;
 import com.tablefootbal.server.notifications.entity.GameObserver;
 import com.tablefootbal.server.notifications.entity.GameObserversCollection;
 import com.tablefootbal.server.notifications.repository.GameObserverRepository;
@@ -16,12 +20,15 @@ public class GameObserverServiceImp implements GameObserverService {
 
     private GameObserverRepository observerRepository;
 
-    private  SensorService sensorService;
+    private SensorService sensorService;
+
+    private NotificationService notificationService;
 
     @Autowired
-    public GameObserverServiceImp(SensorService sensorService, GameObserverRepository observerRepository) {
+    public GameObserverServiceImp(SensorService sensorService, GameObserverRepository observerRepository, NotificationService notificationService) {
        this.observerRepository = observerRepository;
        this.sensorService = sensorService;
+       this.notificationService = notificationService;
     }
 
     @Override
@@ -43,6 +50,44 @@ public class GameObserverServiceImp implements GameObserverService {
             log.info("Registered an observer for sensor ID: " + list.getSensorID());
         }
 
+    }
+
+    @Override
+    public void notifyObservers(String sensorID){
+        Optional<GameObserversCollection> optional = observerRepository.findById(sensorID);
+
+
+        //#####################################
+        // ## TO DO  ---- default notification!
+        //#####################################
+
+        Optional<Sensor> sensorOptional = sensorService.findById(sensorID);
+        String floorAndRoom = "Table on X floor in X room is available";
+        if(sensorOptional.isPresent()){
+            Sensor sensor = sensorOptional.get();
+            floorAndRoom = "Table on " + sensor.getFloor() + " floor in room " + sensor.getRoom() + " is available!";
+        }
+
+        Notification notification = new Notification();
+        notification.setBody("Hurry up!");
+        notification.setTitle(floorAndRoom);
+
+        Push push = new Push();
+        push.setPriority("HIGH");
+        push.setNotification(notification);
+
+        if(optional.isPresent()){
+            GameObserversCollection collection;
+            collection = optional.get();
+            for(GameObserver observer: collection.getObservers()){
+                push.setTo(observer.getTokenFCM().getTOKEN());
+                notificationService.sendNotification(push);
+            }
+        }
+
+        //##########################3
+        //## TO DO ###################
+        //## EXCEPTION!
     }
 
 }
