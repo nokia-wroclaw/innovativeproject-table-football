@@ -5,8 +5,10 @@ import org.springframework.validation.Validator;
 
 public class SensorDtoValidator implements Validator
 {
-	private static final String macAddressPattern = "^([0-9A-F]{2}[-:]){5}[0-9A-F]{2}$";
-	
+	private static final String macAddressPattern = "^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$";
+
+
+
 	@Override
 	public boolean supports(Class<?> aClass)
 	{
@@ -24,6 +26,7 @@ public class SensorDtoValidator implements Validator
 		}
 		else if (!sensorDto.id.matches(macAddressPattern))
 		{
+			//mac check
 			errors.rejectValue("id", "error.id_not_valid");
 		}
 //		if (null == sensorDto.readings || sensorDto.readings.length < 3)

@@ -19,6 +19,10 @@ esp-image
 #Makefile so it will not overwrite your local one
 Makefile
 
+#confidential data in those files
+ssl_conf.h
+user_config.h
+
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
