@@ -23,8 +23,11 @@ char *parse_full_buffer(float *x, float *y, float *z, int bufferSize);
 
 char *convert_buffer_to_string(float *buffer, int bufferSize);
 
+uint8 hex_to_int(const char c);
+
 void parseMAC();
 
 void init_json_template(uint32 chip_id);
+
 
 
