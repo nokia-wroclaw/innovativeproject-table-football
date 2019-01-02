@@ -58,6 +58,29 @@
         <span class="invisible">MAX READINGS</span>
       </div>
 
+      <div class="d-flex justify-content-between">
+        <span class="align-self-center input-title">STATE COUNT</span>
+        <mat-form-field>
+
+          <input required matInput [(ngModel)]="parameters.states_to_swap" type="number" name="statesToSwap">
+          <mat-error>Invalid number</mat-error>
+
+        </mat-form-field>
+        <span class="invisible">STATE COUNT</span>
+      </div>
+
+      <div class="d-flex justify-content-between">
+        <span class="align-self-center input-title">SECONDS TILL OFFLINE</span>
+        <mat-form-field>
+
+          <input required matInput [(ngModel)]="parameters.seconds_till_offline" type="number"
+                 name="secondsTillOffline">
+          <mat-error>Invalid number</mat-error>
+
+        </mat-form-field>
+        <span class="invisible">SECONDS TILL OFFLINE</span>
+      </div>
+
       <div class="d-flex justify-content-center">
         <button mat-raised-button color="primary" (click)="sendParameters()">Send</button>
       </div>
