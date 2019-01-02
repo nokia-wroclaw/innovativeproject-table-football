@@ -92,7 +92,7 @@ public class SensorServiceImp implements SensorService, ApplicationListener<Sens
         if (sensorOptional.isPresent()) {
             Sensor sensor = (Sensor) sensorOptional.get();
             sensor.setOnline(false);
-
+            sensor.getCalibrationStructure().setCalibrationFlag(true);
             repository.save(sensor);
         }
     }
