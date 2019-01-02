@@ -9,6 +9,7 @@
 #Redis logs and files
 *.rdb
 *.log
+/backend/log/*
 
 
 #C compliation thrash
