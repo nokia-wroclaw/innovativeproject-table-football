@@ -5,6 +5,8 @@ import com.tablefootbal.server.notifications.dto.Push;
 import com.tablefootbal.server.notifications.entity.FirebaseResponse;
 import com.tablefootbal.server.notifications.filter.HeaderRequestInterceptor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.scheduling.annotation.Async;
@@ -17,11 +19,14 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 @Slf4j
+@PropertySource("classpath:firebase.properties")
 public class NotificationSender implements NotificationService {
 
-    private String fcmKey = KeyStorage.FCM_key;
+    @Value("${fcm_key}")
+    private String fcmKey;
 
-    private static final String FCM_API = "https://fcm.googleapis.com/fcm/send";
+    @Value("${fcm_endpoint}")
+    private String FCM_API;
 
     public FirebaseResponse sendNotification(Push push){
 
