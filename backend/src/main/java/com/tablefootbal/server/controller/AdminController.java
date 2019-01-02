@@ -4,6 +4,7 @@ import com.tablefootbal.server.dsp.AlgorithmParameters;
 import com.tablefootbal.server.entity.CalibrationStructure;
 import com.tablefootbal.server.entity.Sensor;
 import com.tablefootbal.server.events.SensorDataManager;
+import com.tablefootbal.server.events.SensorTrackingScheduler;
 import com.tablefootbal.server.exceptions.customExceptions.InvalidJsonException;
 import com.tablefootbal.server.exceptions.customExceptions.SensorNotFoundException;
 import com.tablefootbal.server.service.AlgorithmConfigurationService;
@@ -34,14 +35,17 @@ public class AdminController {
 
     private final AlgorithmConfigurationService algorithmConfigurationService;
 
+    private final SensorTrackingScheduler trackingScheduler;
+
     @Autowired
     public AdminController(SensorService sensorService, MessageSource messageSource,
                            SensorDataManager dataManager,
-                           AlgorithmConfigurationService algorithmConfigurationService) {
+                           AlgorithmConfigurationService algorithmConfigurationService, SensorTrackingScheduler trackingScheduler) {
         this.sensorService = sensorService;
         this.messageSource = messageSource;
         this.dataManager = dataManager;
         this.algorithmConfigurationService = algorithmConfigurationService;
+        this.trackingScheduler = trackingScheduler;
     }
 
     @GetMapping("/")
@@ -92,6 +96,10 @@ public class AdminController {
                 algorithmParameters.setMIN_ABOVE_THRESHOLD_COUNT(jsonObject.getInt("peaks_count"));
             if (jsonObject.has("max_readings"))
                 algorithmParameters.setMAX_READINGS(jsonObject.getInt("max_readings"));
+            if (jsonObject.has("states_to_swap"))
+                algorithmParameters.setNUM_OF_STATES_TO_SWAP(jsonObject.getInt("states_to_swap"));
+            if (jsonObject.has("seconds_till_offline"))
+                trackingScheduler.setSECONDS_TILL_OFFLINE(jsonObject.getInt("seconds_till_offline"));
 
         } catch (JSONException e) {
             log.error("Error parsing json received at /admin/calibration/algorithm/\n" + e.getMessage());

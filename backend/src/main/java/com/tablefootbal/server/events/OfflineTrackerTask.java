@@ -2,13 +2,13 @@ package com.tablefootbal.server.events;
 
 import org.springframework.context.ApplicationEventPublisher;
 
-public class HeartbeatTrackerTask implements Runnable
+public class OfflineTrackerTask implements Runnable
 {
 	private final ApplicationEventPublisher eventPublisher;
 	
 	private final String sensorId;
 	
-	 HeartbeatTrackerTask(ApplicationEventPublisher eventPublisher, String sensorId)
+	 OfflineTrackerTask(ApplicationEventPublisher eventPublisher, String sensorId)
 	{
 		this.eventPublisher = eventPublisher;
 		this.sensorId = sensorId;
