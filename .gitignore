@@ -21,8 +21,8 @@ esp-image
 Makefile
 
 #confidential data in those files
-/esp8266_client/include/ssl_conf.h
-/esp8266_client/include/user_config.h
+ssl_conf.h
+user_config.h
 
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
