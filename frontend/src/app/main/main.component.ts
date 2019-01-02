@@ -36,9 +36,14 @@ export class MainComponent implements OnInit {
         if (!this.dataService.areFloorsEqual(tempFloors, this.floors)) {
           // this.floors = tempFloors;
           this.updateFloors(tempFloors);
-          this.floors.sort((a, b) => a.floorNumber - b.floorNumber);
+          this.sort();
         }
       });
+  }
+
+  sort() {
+    this.floors.sort((a, b) => a.floorNumber - b.floorNumber);
+    this.floors.forEach(floor => floor.tables.sort((a, b) => a.room - b.room));
   }
 
   updateFloors(incomingFloors: Floor[]) {

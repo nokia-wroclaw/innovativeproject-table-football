@@ -1,7 +1,7 @@
 <mat-sidenav-container fullscreen>
   <mat-sidenav #sidenav mode="side" closed>
       <div>
-          <app-config-panel></app-config-panel>
+          <app-config-panel [floors]="floors"></app-config-panel>
           <img src="assets/innovative_projects.png" class="innovative-projects" *ngIf="smallDevice">
       </div>
   </mat-sidenav>
