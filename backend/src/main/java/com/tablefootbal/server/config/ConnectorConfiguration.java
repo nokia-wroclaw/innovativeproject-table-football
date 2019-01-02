@@ -82,7 +82,7 @@ public class ConnectorConfiguration {
         File truststore = new File(truststoreLocation);
         connector.setScheme("https");
         connector.setSecure(true);
-        connector.setPort(18443);
+        connector.setPort(sensorHttpsPort);
         protocol.setSSLEnabled(true);
         protocol.setClientAuth("true");
         protocol.setSSLCipherSuite("TLS_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_256_CBC_SHA");
