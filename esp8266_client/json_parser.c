@@ -115,7 +115,25 @@ void init_json_template(uint32 chip_id) {
 //    json_format = "{\"id\":\"%s\",\"readings\":[%d\056%d,%d\056%d,%d\056%d]}";
 }
 
+uint8 hex_to_int(const char c)
+{
+    if( c >= 'a' && c <= 'f'){
+        return c - 'a' + 10;
+    }
+
+    if( c >= 'A' && c <= 'F'){
+        return c - 'A' + 10;
+    }
+
+    if( c >= '0' && c <= '9'){
+        return c - '0';
+    }
+
+    return 0;
+}
+
 void parseMAC() {
     MAC_ADDRESS = os_zalloc(sizeof(char) * 32);
-    os_sprintf(MAC_ADDRESS, "%X:%X:%X:%X:%X:%X", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+
+    os_sprintf(MAC_ADDRESS, "%02X:%02X:%02X:%02X:%02X:%02X", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
 }

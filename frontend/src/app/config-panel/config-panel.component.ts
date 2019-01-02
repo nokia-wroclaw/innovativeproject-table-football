@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnChanges, Input } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { Floor } from '../model/floor';
 import { timer } from 'rxjs';
@@ -12,29 +12,15 @@ import { fillProperties } from '@angular/core/src/util/property';
   styleUrls: ['./config-panel.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class ConfigPanelComponent implements OnInit {
+export class ConfigPanelComponent implements OnChanges {
+  @Input()
   floors: Array<Floor>;
 
   constructor(private dataService: DataService, private cookieService: CookieService) {
-    this.floors = new Array<Floor>();
-    this.getFloors();
-    timer(500, 3000).subscribe(() => {
-      this.getFloors();
-    });
   }
 
-  ngOnInit() {
-  }
-
-  getFloors() {
-    const tempFloors = new Array<Floor>();
-    this.dataService.getFloors().subscribe((floor: Floor) => tempFloors.push(floor),
-      error => console.log(error), () => {
-        if (!this.dataService.areFloorsEqual(tempFloors, this.floors)) {
-          this.floors = tempFloors;
-          this.getCookies();
-        }
-      });
+  ngOnChanges() {
+    this.getCookies();
   }
 
   getCookies() {
