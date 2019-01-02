@@ -11,34 +11,31 @@ import java.util.Date;
 @Getter
 @Setter
 @RedisHash("sensors")
-public class Sensor implements Serializable
-{
-	public Sensor(String id, boolean occupied, boolean online, Date lastNotificationDate)
-	{
-		this.id = id;
-		this.occupied = occupied;
-		this.online = online;
-		this.lastNotificationDate = lastNotificationDate;
-		this.calibrationStructure = new CalibrationStructure();
-	}
-	
-	public Sensor()
-	{
-		this.calibrationStructure = new CalibrationStructure();
-	}
-	
-	String id;
-	
-	boolean occupied;
-	
-	boolean online;
-	
-	Date lastNotificationDate;
-	
-	int floor;
-	
-	int room;
-	
-	@JsonIgnore
-	CalibrationStructure calibrationStructure;
+public class Sensor implements Serializable {
+    public Sensor(String id, boolean occupied, boolean online, Date lastNotificationDate) {
+        this.id = id;
+        this.occupied = occupied;
+        this.online = online;
+        this.lastNotificationDate = lastNotificationDate;
+        this.calibrationStructure = new CalibrationStructure();
+    }
+
+    public Sensor() {
+        this.calibrationStructure = new CalibrationStructure();
+    }
+
+    String id;
+
+    boolean occupied;
+
+    boolean online;
+
+    Date lastNotificationDate;
+
+    int floor;
+
+    int room;
+
+    @JsonIgnore
+    CalibrationStructure calibrationStructure;
 }

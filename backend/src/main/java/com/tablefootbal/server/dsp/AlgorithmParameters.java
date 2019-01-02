@@ -33,4 +33,10 @@ public class AlgorithmParameters implements Serializable
 	
 	@Value("${readings.max_readings}")
 	private int MAX_READINGS;
+
+	@Value("${readings.number_of_states_to_swap}")
+	private int NUM_OF_STATES_TO_SWAP;
+
+	@Value("${readings.seconds_until_offline}")
+	private int SECONDS_UNTIL_OFFLINE;
 }
