@@ -104,20 +104,24 @@ public class SensorDataManager implements ApplicationListener<SensorUpdateEvent>
                     sensor.getCalibrationStructure(),
                     algorithmParameters.getMIN_ABOVE_THRESHOLD_COUNT());
 
-            int stateCounter = stateChangeCounterMap.get(sensor.getId());
-            if ((isOccupied != sensor.isOccupied())) {
+            if(isOccupied)
+            {
+                stateChangeCounterMap.put(sensor.getId(),0);
+                sensor.setOccupied(true);
+            }
+            else if(sensor.isOccupied())
+            {
+                int sameStatesTillSwap = algorithmParameters.getNUM_OF_STATES_TO_SWAP();
+                int stateCounter = stateChangeCounterMap.get(sensor.getId());
                 stateCounter++;
-            } else {
-                stateCounter--;
+
+                if (stateCounter >= sameStatesTillSwap) {
+                    stateCounter = 0;
+                    sensor.setOccupied(false);
+                }
+                stateChangeCounterMap.put(sensor.getId(), stateCounter);
             }
 
-            int sameStatesTillSwap = algorithmParameters.getNUM_OF_STATES_TO_SWAP();
-            if (stateCounter < 0) stateCounter = 0;
-            if (stateCounter >= sameStatesTillSwap) {
-                stateCounter = 0;
-                sensor.setOccupied(isOccupied);
-            }
-            stateChangeCounterMap.put(sensor.getId(), stateCounter);
             log.info("Sensor: " + sensor.getId() + " occupied value has been set to " + sensor.isOccupied() + "\n");
         }
     }
