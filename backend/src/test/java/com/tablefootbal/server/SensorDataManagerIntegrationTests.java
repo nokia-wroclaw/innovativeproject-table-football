@@ -119,15 +119,15 @@ public class SensorDataManagerIntegrationTests extends TestCase {
     }
 
     @Test
-    public void testStateChangeAfterTwoGamesDetections() {
+    public void testStateChange() {
 
         Sensor sensor = new Sensor();
         sensor.setId("11:11:11:11:11:11");
         sensor.setOccupied(false);
         sensor.getCalibrationStructure().setCalibrationFlag(false);
-        sensor.getCalibrationStructure().setMaxValue(0.00);
+        sensor.getCalibrationStructure().setMaxValue(1.00);
         sensor.getCalibrationStructure().setMinValue(0.00);
-        sensor.getCalibrationStructure().setThreshold(0.00);
+        sensor.getCalibrationStructure().setThreshold(0.20);
         sensor.getCalibrationStructure().setAxis(CalibrationStructure.Axis.Z);
 
         double[] x_test = {2.221, 3.332, 4.332, 0.00, 0.00};
@@ -140,12 +140,19 @@ public class SensorDataManagerIntegrationTests extends TestCase {
         when(event.getSource()).thenReturn(sensor);
         when(event.getReading()).thenReturn(
                 new ReadingDto(x_test, y_test, z_test, System.currentTimeMillis()));
-        manager.onApplicationEvent(event);
-
-        Assert.assertFalse(sensor.isOccupied());
 
         manager.onApplicationEvent(event);
         Assert.assertTrue(sensor.isOccupied());
+
+        z_test = new double[] {0.10,0.10,0.10,0.10,0.10};
+        when(event.getReading()).thenReturn(
+                new ReadingDto(x_test, y_test, z_test, System.currentTimeMillis()));
+
+        manager.onApplicationEvent(event);
+        Assert.assertTrue(sensor.isOccupied());
+
+        manager.onApplicationEvent(event);
+        Assert.assertFalse(sensor.isOccupied());
     }
 
     @Test
