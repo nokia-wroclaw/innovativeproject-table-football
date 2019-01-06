@@ -32,12 +32,12 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+
         Optional<User> userOpt = repository.findById(s);
 
         if (!userOpt.isPresent()) {
             throw new UsernameNotFoundException(
-                    messageSource.getMessage("error.user_not_found", new Object[]{s}, Locale.getDefault())
-            );
+                    messageSource.getMessage("exception.user_not_found", null, Locale.getDefault()));
         } else {
             User user = userOpt.get();
             return new org.springframework.security.core.userdetails.User(
