@@ -5,7 +5,7 @@
 //#include "c_types.h"
 
 char *MAC_ADDRESS;
-char *single_reading_format = "%d.%d";
+char *single_reading_format = "%d.%05d";
 char *json_format = "{\"id\":\"%s\",\"x\": [%s], \"y\": [%s], \"z\": [%s] }";
 
 char *parse_readings(real32 x, real32 y, real32 z) {
