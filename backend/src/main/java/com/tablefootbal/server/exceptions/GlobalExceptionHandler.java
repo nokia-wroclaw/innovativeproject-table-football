@@ -1,8 +1,6 @@
 package com.tablefootbal.server.exceptions;
 
-import com.tablefootbal.server.exceptions.customExceptions.InvalidJsonException;
-import com.tablefootbal.server.exceptions.customExceptions.InvalidPortException;
-import com.tablefootbal.server.exceptions.customExceptions.SensorNotFoundException;
+import com.tablefootbal.server.exceptions.customExceptions.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
