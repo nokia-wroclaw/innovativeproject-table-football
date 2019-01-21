@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../services/auth.service';
+import {AlertService} from '../services/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -8,7 +9,8 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, public alertService: AlertService) {
+  }
 
   ngOnInit() {
   }
@@ -17,5 +19,9 @@ export class LoginComponent implements OnInit {
     const username = event.target.querySelector('#username').value;
     const password = event.target.querySelector('#password').value;
     this.authService.confirmAdmin(username, password);
+  }
+
+  dismissAlert() {
+    this.alertService.clearAlert();
   }
 }

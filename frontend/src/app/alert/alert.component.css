@@ -1,0 +1,20 @@
+.none {
+
+}
+
+.error {
+  background-color: rgba(255,0,0, 0.8);
+  color: aliceblue;
+  border-bottom: solid 1px black;
+  display: block;
+  text-align: center;
+  padding: 1em;
+  width: 100%;
+  margin: auto;
+  position: sticky;
+  cursor: pointer;
+}
+
+.none {
+  display: none;
+}
