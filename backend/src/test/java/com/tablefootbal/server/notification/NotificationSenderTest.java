@@ -10,21 +10,33 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 
-@RunWith(SpringRunner.class)
+
+@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
+@TestPropertySource("classpath:firebase.properties")
 public class NotificationSenderTest {
 
     private String device_token = KeyStorage.deviceToken;
 
     private Sensor sensor;
     private Push push;
+
+    @Value("${fcm_key}")
+    private String fcm_key;
+
+    @Value("${fcm_endpoint}")
+    private String firebase_endpoint;
 
     private NotificationService service = new NotificationSender();
 
@@ -40,6 +52,8 @@ public class NotificationSenderTest {
         push.setPriority("high");
         push.setTo(device_token);
 
+        ReflectionTestUtils.setField(service, "fcmKey", fcm_key);
+        ReflectionTestUtils.setField(service, "FCM_API", firebase_endpoint);
 
     }
 
@@ -48,10 +62,10 @@ public class NotificationSenderTest {
         Assert.assertEquals((int) service.sendNotification(push).getSuccess(), 1);
     }
 
-    @Test
-    public void shouldNotifyObserverOnMatchStopped() throws Exception {
-        Sensor activeSensor = getSensor("08:3F:33:33:3D:32" ,true, true, "2018-10-22 18:22:30", 1, 337);
-    }
+//    @Test
+//    public void shouldNotifyObserverOnMatchStopped() throws Exception {
+//        Sensor activeSensor = getSensor("08:3F:33:33:3D:32" ,true, true, "2018-10-22 18:22:30", 1, 337);
+//    }
 
     public Sensor getSensor(String id, boolean active, boolean online, String date, int floor, int room) throws Exception {
         Sensor sensor = new Sensor();
