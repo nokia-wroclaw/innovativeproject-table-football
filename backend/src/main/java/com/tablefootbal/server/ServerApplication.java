@@ -1,38 +1,30 @@
 package com.tablefootbal.server;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.tablefootbal.server.entity.Sensor;
 import com.tablefootbal.server.entity.User;
 import com.tablefootbal.server.entity.UserRole;
 import com.tablefootbal.server.repository.SensorRepository;
 import com.tablefootbal.server.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import javax.annotation.Resource;
-import java.io.BufferedReader;
-import java.io.File;
-import java.nio.file.Files;
-import java.security.AlgorithmParameters;
 import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication
-//@EnableWebSecurity
+@EnableWebSecurity
 @EnableWebMvc
 @EnableScheduling
 public class ServerApplication {
