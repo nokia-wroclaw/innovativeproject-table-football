@@ -38,7 +38,7 @@ public class GameObserverController {
 
     // TODO add validator for gameObserverDto
     @PostMapping
-    public void registerDevice(@RequestBody @Valid GameObserverDto gameObserverDto,
+    public ResponseEntity<?> registerDevice(@RequestBody @Valid GameObserverDto gameObserverDto,
                                BindingResult result)
     {
         // TODO Duplicates; try to externalize with SensorController
@@ -61,6 +61,7 @@ public class GameObserverController {
 
         gameObserverService.register(observer, gameObserverDto.getSensors_id());
 
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @ExceptionHandler(InvalidRegisterDataException.class)
