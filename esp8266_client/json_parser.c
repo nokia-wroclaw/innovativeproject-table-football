@@ -70,7 +70,7 @@ char *parse_full_buffer(float *x, float *y, float *z, int bufferSize) {
 
     os_printf("\n Freed memory\n");
 
-    os_printf("Formatted JSON: %s", json_string);
+//    os_printf("Formatted JSON: %s", json_string);
 
     return json_string;
 }
@@ -103,7 +103,7 @@ char *convert_buffer_to_string(float *buffer, int bufferSize) {
     buffer_string += string_size;
     *buffer_string = '\0';
 
-    os_printf("\nComplete buffer: %s", buffer_string_start);
+//    os_printf("\nComplete buffer: %s", buffer_string_start);
     return buffer_string_start;
 }
 
