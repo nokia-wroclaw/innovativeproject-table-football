@@ -10,7 +10,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.*;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -43,41 +46,31 @@ public class GameGameObserverServiceTest {
 
     }
 
-//    @Test
-//    public void testRegisterObservers() {
-//        service.register(o1, o1_list);
-//        service.register(o2, o2_list);
-//
-//        Assert.assertEquals(2, repository.count());
-//    }
-
     @Test
-    public void givenObserverCalledForTwoSensors_thenSaveCalledTwoTimes()
-    {
+    public void givenObserverCalledForTwoSensors_thenSaveCalledTwoTimes() {
         //Doesn't really matter what will be returned
         Mockito.when(repository.save(Mockito.any(GameObserversCollection.class))).thenReturn(new GameObserversCollection("id"));
 
         Mockito.when(repository.findById(Mockito.anyString())).thenReturn(Optional.empty());
-        String [] id = {"11:11:11:11:11:11","22:22:22:22:22:22"};
+        String[] id = {"11:11:11:11:11:11", "22:22:22:22:22:22"};
         GameObserver observer = new GameObserver(new TokenFCM("TOKEN"));
-        service.register(observer,id);
-        Mockito.verify(repository,Mockito.times(2)).save(Mockito.any(GameObserversCollection.class));
+        service.register(observer, id);
+        Mockito.verify(repository, Mockito.times(2)).save(Mockito.any(GameObserversCollection.class));
 
     }
 
     @Test
-    public void givenObserversListAlreadyInRepository_thenObserverAddedToTheLists()
-    {
+    public void givenObserversListAlreadyInRepository_thenObserverAddedToTheLists() {
         //Doesn't really matter what will be returned
         Mockito.when(repository.save(Mockito.any(GameObserversCollection.class))).thenReturn(new GameObserversCollection("id"));
 
         String id1 = "11:11:11:11:11:11";
-                String id2 = "22:22:22:22:22:22";
-        String [] id = {id1,id2};
+        String id2 = "22:22:22:22:22:22";
+        String[] id = {id1, id2};
 
         GameObserversCollection list1 = new GameObserversCollection(id1);
         GameObserversCollection list2 = new GameObserversCollection(id2);
-        List expected = asList(list1,list2);
+        List expected = asList(list1, list2);
 
         ArgumentCaptor<GameObserversCollection> listCaptor = ArgumentCaptor.forClass(GameObserversCollection.class);
 
@@ -86,17 +79,18 @@ public class GameGameObserverServiceTest {
 
         GameObserver observer = new GameObserver(new TokenFCM("TOKEN"));
 
-        service.register(observer,id);
+        service.register(observer, id);
 
-        Mockito.verify(repository,Mockito.times(2)).save(listCaptor.capture());
-        Assert.assertEquals(expected,listCaptor.getAllValues());
+        Mockito.verify(repository, Mockito.times(2)).save(listCaptor.capture());
+        Assert.assertEquals(expected, listCaptor.getAllValues());
 
         Assert.assertTrue(list1.getObservers().contains(observer));
         Assert.assertTrue(list2.getObservers().contains(observer));
     }
 
+
     @After
-    public void cleanUp(){
+    public void cleanUp() {
         repository.deleteAll();
     }
 }
