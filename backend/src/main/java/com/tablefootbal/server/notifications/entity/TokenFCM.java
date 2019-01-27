@@ -2,12 +2,14 @@ package com.tablefootbal.server.notifications.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.redis.core.RedisHash;
 
 import java.util.Objects;
 
 @Getter
 @RedisHash("token_fcm")
+@ToString
 public class TokenFCM {
 
     private final String TOKEN;

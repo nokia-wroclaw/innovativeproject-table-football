@@ -3,6 +3,7 @@ package com.tablefootbal.server.notifications.entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
@@ -30,5 +31,10 @@ public class GameObserver {
     @Override
     public int hashCode() {
         return Objects.hash(tokenFCM);
+    }
+
+    @Override
+    public String toString(){
+        return tokenFCM.toString();
     }
 }

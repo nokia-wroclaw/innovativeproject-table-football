@@ -16,7 +16,7 @@ public class GameObserversCollection {
     private final String sensorID;
 
     @Getter
-    private Set<GameObserver> observers = new HashSet<>();
+    private HashSet<GameObserver> observers = new HashSet<>();
 
     public GameObserversCollection(String sensorID){
         this.sensorID = sensorID;
