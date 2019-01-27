@@ -3,18 +3,20 @@ package com.tablefootbal.server.notifications.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.List;
 
 @Getter
 @Setter
+@ToString
 public class FirebaseResponse implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @JsonProperty("multicast_id")
-    private Object multicastId;
+    private Long multicastId;
 
     @JsonProperty("success")
     private Integer success;
