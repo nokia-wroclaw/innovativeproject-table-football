@@ -1,4 +1,4 @@
-package nokia.tablefootball.tablefootballandroid
+package nokia.tablefootball.tablefootballandroid.service
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -9,9 +9,9 @@ import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.ContextCompat
 import android.util.Log
-import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import nokia.tablefootball.tablefootballandroid.R
 
 open class MessagingHandlingService : FirebaseMessagingService() {
 

@@ -6,7 +6,7 @@
 
     <TextView
             android:id="@+id/expandedListItem"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
             android:paddingRight="?android:attr/expandableListPreferredChildPaddingLeft"
@@ -14,7 +14,17 @@
             android:paddingBottom="10dp" android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.0" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp"/>
+            android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toEndOf="@+id/imageView" android:layout_marginStart="8dp"/>
+    <ImageView
+            android:layout_width="56dp"
+            android:layout_height="42dp" app:srcCompat="@mipmap/table_free"
+            android:id="@+id/imageView" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintHorizontal_bias="0.023"
+            app:layout_constraintVertical_bias="0.0"/>
+
 
 </android.support.constraint.ConstraintLayout>
