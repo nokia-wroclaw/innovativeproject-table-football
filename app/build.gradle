@@ -22,6 +22,10 @@ android {
     }
 }
 
+repositories{
+    jcenter()
+}
+
 ext {
     firebase_core = '16.0.6'
     firebase_msg = '17.3.4'
@@ -39,11 +43,13 @@ dependencies {
     implementation "com.google.firebase:firebase-core:$firebase_core"
     implementation "com.google.firebase:firebase-messaging:$firebase_msg"
 
-    implementation 'com.android.volley:volley:1.1.1'
+    implementation 'com.android.volley:volley:1.1.0'
 
     implementation 'com.natpryce:hamkrest:1.7.0.0'
 
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.23.18'
+
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 

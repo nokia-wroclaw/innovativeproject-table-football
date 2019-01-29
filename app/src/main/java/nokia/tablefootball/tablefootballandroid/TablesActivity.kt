@@ -4,15 +4,54 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.toolbox.JsonArrayRequest
-import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_tables.*
 import nokia.tablefootball.tablefootballandroid.activity.helpers.FloorListAdapter
 import nokia.tablefootball.tablefootballandroid.activity.helpers.FloorListPump
+import nokia.tablefootball.tablefootballandroid.dto.TableDTO
+import nokia.tablefootball.tablefootballandroid.service.DataAcquirerAPIController
+import nokia.tablefootball.tablefootballandroid.service.DataAcquirerServiceImpl
+import nokia.tablefootball.tablefootballandroid.utils.JSONTableParser
+import nokia.tablefootball.tablefootballandroid.utils.TableDataUtil
 
 class TablesActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_tables)
+
+        val serviceImpl = DataAcquirerServiceImpl(this)
+        val controller = DataAcquirerAPIController(serviceImpl)
+
+        val url = intent.extras.getString("URL").toString()
+
+        controller.post(url, null) { response ->
+            var expandableListDetail = TableDataUtil.toFloorMapAsStrings(JSONTableParser.parseArray(response))
+            /// TODO edit floor list adapter!
+            var expandableListTitle = expandableListDetail.keys.toList()
+            var expandableListAdapter = FloorListAdapter(
+                applicationContext,
+                expandableListTitle,
+                expandableListDetail
+            )
+            expandableListView.setAdapter(expandableListAdapter)
+        }
+
+
+
+//        expandableListView.setOnGroupExpandListener {
+//            Toast.makeText(
+//                applicationContext,
+//                "testX" + " List Expanded.",
+//                Toast.LENGTH_SHORT
+//            ).show();
+
+        }
+
+    }
+
+
+/* POC
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,18 +67,6 @@ class TablesActivity : AppCompatActivity() {
         )
         expandableListView.setAdapter(expandableListAdapter);
         expandableListView.setOnGroupExpandListener {
-            val url = "http://192.168.0.106:8080/sensorStatus"
-            val queue = Volley.newRequestQueue(this)
-            val jsonRequest = JsonArrayRequest(Request.Method.GET, url, null,
-                Response.Listener { response ->
-                    Log.d("JSON", "OKKK \n" + response.toString())
-                },
-                Response.ErrorListener { response ->
-                    Log.d("JSON ERROR", response.toString())
-                })
-
-            queue.add(jsonRequest)
-
             Toast.makeText(
                 applicationContext,
                 "testX" + " List Expanded.",
@@ -60,4 +87,6 @@ class TablesActivity : AppCompatActivity() {
 
     }
 
-}
+
+
+ */

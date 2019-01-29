@@ -2,10 +2,13 @@ package nokia.tablefootball.tablefootballandroid
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity;
-
+import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import kotlinx.android.synthetic.main.activity_input_adress.*
+import nokia.tablefootball.tablefootballandroid.service.DataAcquirerAPIController
+import nokia.tablefootball.tablefootballandroid.service.DataAcquirerServiceImpl
+import nokia.tablefootball.tablefootballandroid.utils.JSONTableParser
+import nokia.tablefootball.tablefootballandroid.utils.TableDataUtil
 
 class InputAdressActivity : AppCompatActivity() {
 
@@ -13,15 +16,23 @@ class InputAdressActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_input_adress)
 
-
         apply_button.setOnClickListener {
-            val ipAddress = ip_textinput.text
+//            val serviceImpl = DataAcquirerServiceImpl(this)
+//            val controller = DataAcquirerAPIController(serviceImpl)
+//
+//            val url = "http://192.168.0.111:8080/sensorStatus"
+//
+//            controller.post(url,null){response ->
+//               Log.d("JSON", TableDataUtil.toFloorMap(JSONTableParser.parseArray(response!!)).toString())
+//            }
 
-            val intent = Intent(applicationContext, TablesActivity::class.java);
-            intent.putExtra("url",ipAddress)
+            var intent = Intent(applicationContext, TablesActivity::class.java).apply {
+                putExtra("URL", ip_textinput.text.toString())
+            }
 
             startActivity(intent)
         }
     }
+
 
 }

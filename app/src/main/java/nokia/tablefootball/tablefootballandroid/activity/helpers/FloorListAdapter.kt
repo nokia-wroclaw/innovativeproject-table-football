@@ -8,13 +8,13 @@ import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
 import nokia.tablefootball.tablefootballandroid.R
-
-import java.util.HashMap
+import java.util.*
 
 class FloorListAdapter(
     private val context: Context,
     private val expandableListTitle: List<String>,
-    private val expandableListDetail: HashMap<String, List<String>>) : BaseExpandableListAdapter() {
+    private val expandableListDetail: TreeMap<String, List<String>>
+) : BaseExpandableListAdapter() {
 
     override fun getChild(listPosition: Int, expandedListPosition: Int): Any {
         return this.expandableListDetail[this.expandableListTitle[listPosition]]!![expandedListPosition]
@@ -27,14 +27,18 @@ class FloorListAdapter(
     override fun getChildView(listPosition: Int, expandedListPosition: Int, isLastChild: Boolean, convertView: View?, parent: ViewGroup): View {
         var convertView = convertView
         val expandedListText = getChild(listPosition, expandedListPosition) as String
+
         if (convertView == null) {
             val layoutInflater = this.context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             convertView = layoutInflater.inflate(R.layout.list_item, null)
         }
+
         val expandedListTextView = convertView!!
             .findViewById<View>(R.id.expandedListItem) as TextView
+
         expandedListTextView.text = expandedListText
+
         return convertView
     }
 

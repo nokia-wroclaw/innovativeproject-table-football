@@ -8,7 +8,7 @@ class JSONTableParser {
     companion object {
         fun parseArray(jsonArray: JSONArray) : Set<TableDTO>{
 
-            val tableSet: HashSet<TableDTO> = HashSet<TableDTO>()
+            val tableSet = HashSet<TableDTO>()
 
             for(i in 0..(jsonArray.length()-1)){
                 val obj = jsonArray.getJSONObject(i)
