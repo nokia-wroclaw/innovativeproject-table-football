@@ -1,4 +1,4 @@
-package nokia.tablefootball.tablefootballandroid.service
+package nokia.tablefootball.tablefootballandroid.network
 
 import android.content.Context
 import android.util.Log
@@ -6,7 +6,6 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.VolleyLog
 import com.android.volley.toolbox.JsonArrayRequest
-import nokia.tablefootball.tablefootballandroid.RequestQueueSingleton
 import org.json.JSONArray
 import org.json.JSONObject
 

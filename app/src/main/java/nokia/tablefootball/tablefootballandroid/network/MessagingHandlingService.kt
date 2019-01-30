@@ -1,4 +1,4 @@
-package nokia.tablefootball.tablefootballandroid.service
+package nokia.tablefootball.tablefootballandroid.network
 
 import android.app.Notification
 import android.app.NotificationChannel

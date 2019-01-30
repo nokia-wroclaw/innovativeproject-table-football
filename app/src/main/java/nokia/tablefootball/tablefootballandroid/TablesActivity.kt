@@ -2,14 +2,10 @@ package nokia.tablefootball.tablefootballandroid
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_tables.*
 import nokia.tablefootball.tablefootballandroid.activity.helpers.FloorListAdapter
-import nokia.tablefootball.tablefootballandroid.activity.helpers.FloorListPump
-import nokia.tablefootball.tablefootballandroid.dto.TableDTO
-import nokia.tablefootball.tablefootballandroid.service.DataAcquirerAPIController
-import nokia.tablefootball.tablefootballandroid.service.DataAcquirerServiceImpl
+import nokia.tablefootball.tablefootballandroid.network.DataAcquirerAPIController
+import nokia.tablefootball.tablefootballandroid.network.DataAcquirerServiceImpl
 import nokia.tablefootball.tablefootballandroid.utils.JSONTableParser
 import nokia.tablefootball.tablefootballandroid.utils.TableDataUtil
 

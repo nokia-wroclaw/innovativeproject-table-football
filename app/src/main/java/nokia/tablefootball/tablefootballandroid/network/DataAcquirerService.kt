@@ -1,4 +1,4 @@
-package nokia.tablefootball.tablefootballandroid.service
+package nokia.tablefootball.tablefootballandroid.network
 
 import org.json.JSONArray
 import org.json.JSONObject

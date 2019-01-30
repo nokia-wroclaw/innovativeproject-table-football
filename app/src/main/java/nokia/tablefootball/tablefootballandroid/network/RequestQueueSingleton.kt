@@ -1,4 +1,4 @@
-package nokia.tablefootball.tablefootballandroid
+package nokia.tablefootball.tablefootballandroid.network
 
 import android.content.Context
 import com.android.volley.Request
@@ -12,7 +12,8 @@ class RequestQueueSingleton constructor(context: Context) {
 
         fun getInstance(context: Context) =
                 INSTANCE ?: synchronized(this) {
-                    INSTANCE ?: RequestQueueSingleton(context).also{
+                    INSTANCE
+                        ?: RequestQueueSingleton(context).also{
                         INSTANCE = it
                     }
                 }
