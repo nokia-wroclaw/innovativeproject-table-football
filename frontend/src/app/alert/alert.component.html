@@ -1,3 +1,5 @@
-<div [ngClass]="type">
-  <h4><strong>{{message}}</strong></h4>
+<div [ngClass]="type" class="d-flex justify-content-between">
+  <i class="material-icons invisible">close</i>
+  <span>{{message}}</span>
+  <i (click)="dismissAlert()" class="material-icons">close</i>
 </div>

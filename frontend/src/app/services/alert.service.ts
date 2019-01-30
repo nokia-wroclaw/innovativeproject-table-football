@@ -6,23 +6,22 @@ import {AlertComponent} from '../alert/alert.component';
 })
 export class AlertService {
 
-  public alert: AlertComponent;
+  type: string;
+  message: string;
   hasAlert: boolean;
 
-  constructor() {
-    this.alert = new AlertComponent();
-  }
+  constructor() {}
 
   clearAlert() {
-    this.alert.message = '';
-    this.alert.type = 'none';
+    this.message = '';
+    this.type = 'none';
     this.hasAlert = false;
   }
 
   publishAlert(type: string, message: string) {
     console.log('publishAlert() called with parameters: ', type, message);
-    this.alert.message = message;
-    this.alert.type = type;
+    this.message = message;
+    this.type = type;
     this.hasAlert = true;
   }
 }

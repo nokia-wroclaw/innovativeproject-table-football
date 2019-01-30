@@ -1,20 +1,22 @@
-.none {
-
-}
-
 .error {
+  font-family: 'Lato light', sans-serif;
+  font-size: 1.2rem;
+  font-weight: bold;
   background-color: rgba(255,0,0, 0.8);
-  color: aliceblue;
-  border-bottom: solid 1px black;
+  color: white;
   display: block;
   text-align: center;
-  padding: 1em;
+  padding: .5rem;
   width: 100%;
   margin: auto;
   position: sticky;
-  cursor: pointer;
 }
 
 .none {
   display: none;
+}
+
+i {
+  cursor: pointer;
+  padding-top: .2rem;
 }

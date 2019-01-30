@@ -10,7 +10,8 @@
   </form>
 </div>
 
-<div *ngIf="alertService.hasAlert">
-  <app-alert (click)="dismissAlert()" [message]="alertService.alert.message"
-             [type]="alertService.alert.type"></app-alert>
+
+<div @alertTrigger *ngIf="alertService.hasAlert"> 
+  <app-alert (click)="dismissAlert()" [message]="alertService.message"
+             [type]="alertService.type"></app-alert>
 </div>
