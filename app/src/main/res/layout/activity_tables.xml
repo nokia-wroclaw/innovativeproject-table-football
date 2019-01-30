@@ -16,7 +16,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:indicatorLeft="?android:attr/expandableListPreferredChildIndicatorLeft"
             android:divider="@android:color/darker_gray"
-            android:dividerHeight="0.5dp">
+            android:dividerHeight="0.75dp">
 
     </ExpandableListView>
 

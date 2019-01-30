@@ -3,21 +3,22 @@ package nokia.tablefootball.tablefootballandroid.utils
 import nokia.tablefootball.tablefootballandroid.dto.TableDTO
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.*
 
 class JSONTableParser {
     companion object {
-        fun parseArray(jsonArray: JSONArray) : Set<TableDTO>{
+        fun parseArray(jsonArray: JSONArray) : List<TableDTO>{
 
-            val tableSet = HashSet<TableDTO>()
+            val tables = ArrayList<TableDTO>()
 
             for(i in 0..(jsonArray.length()-1)){
                 val obj = jsonArray.getJSONObject(i)
                 val tableDto = parseObject(obj)
 
-                tableSet.add(tableDto)
+                tables.add(tableDto)
             }
 
-            return tableSet;
+            return tables
         }
 
         fun parseObject(obj: JSONObject) : TableDTO {

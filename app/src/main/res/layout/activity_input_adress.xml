@@ -9,7 +9,7 @@
             android:layout_width="273dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:text="http://192.168."
+            android:text="http://192.168.0 :8080/sensorStatus"
             android:ems="10"
             android:id="@+id/ip_textinput"
             android:layout_marginBottom="8dp"

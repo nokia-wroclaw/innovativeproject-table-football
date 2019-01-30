@@ -2,11 +2,10 @@ package nokia.tablefootball.tablefootballandroid.dto
 
 data class TableDTO(val id:String, val occupied:Boolean,
                     val online:Boolean, val lastNotifDate: Long,
-                    val floor:Int, val room:Int) {
+                    val floor:Int, val room:Int) : Comparable<TableDTO> {
 
-    // TODO set proper icon
-//    val iconPath: String = when(online){
-//        false ->
-//    }
+    override fun compareTo(other: TableDTO): Int {
+        return room - other.room
+    }
 
 }

@@ -25,7 +25,7 @@ class TableDataUtilTest{
         var result = TableDataUtil.toFloorMap(array)
 
         assertThat(result.keys.size, equalTo(2))
-        assertThat(result[1]!!.size, equalTo(1))
+        assertThat(result[1]!!.size, equalTo(2))
         assertThat(result[2]!!.size, equalTo(1))
 
     }

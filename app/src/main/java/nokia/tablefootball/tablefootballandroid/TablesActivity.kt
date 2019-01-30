@@ -21,13 +21,9 @@ class TablesActivity : AppCompatActivity() {
         val url = intent.extras.getString("URL").toString()
 
         controller.post(url, null) { response ->
-            var expandableListDetail = TableDataUtil.toFloorMapAsStrings(JSONTableParser.parseArray(response))
-            /// TODO edit floor list adapter!
-            var expandableListTitle = expandableListDetail.keys.toList()
-            var expandableListAdapter = FloorListAdapter(
+            val expandableListAdapter = FloorListAdapter(
                 applicationContext,
-                expandableListTitle,
-                expandableListDetail
+                JSONTableParser.parseArray(response)
             )
             expandableListView.setAdapter(expandableListAdapter)
         }

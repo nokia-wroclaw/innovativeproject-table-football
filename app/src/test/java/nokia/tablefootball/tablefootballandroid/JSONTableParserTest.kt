@@ -11,7 +11,7 @@ import org.junit.Test
 class JSONTableParserTest {
 
     @Test
-    fun givenArray_shouldReturnSetWithTwoEntries() {
+    fun givenArray_shouldReturnCollectionWithTwoEntries() {
         val jsonTestArray =
             "[" +
                     "{" +
@@ -33,12 +33,12 @@ class JSONTableParserTest {
 
         val jsonArray = JSONArray(jsonTestArray)
 
-        val resultSet = JSONTableParser.parseArray(jsonArray)
-        assertThat(resultSet.size, equalTo(2))
+        val result= JSONTableParser.parseArray(jsonArray)
+        assertThat(result.size, equalTo(2))
     }
 
     @Test
-    fun givenAboveAbove_shouldReturnProperDTO() {
+    fun givenJSONObject_shouldReturnProperDTO() {
         val jsonTestObj = "{" +
                 "\"id\":\"01:F1:D1:31:F1:C1\"," +
                 "\"occupied\":true," +
