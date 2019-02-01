@@ -1,20 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<com.google.android.flexbox.FlexboxLayout-->
-        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--app:flexWrap="wrap"-->
-        <!--app:alignItems="stretch"-->
-        <!--app:alignContent="stretch">-->
-
-
-<LinearLayout
+<android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="wrap_content"
-        android:orientation="vertical"
         android:layout_height="wrap_content"
         android:id="@+id/linearLayout"
         android:visibility="visible"
@@ -23,66 +11,40 @@
 
     <ImageView
             android:id="@+id/table_imageview"
-            android:layout_width="200dp"
-            android:layout_height="185dp"
-            app:srcCompat="@mipmap/table_free"
-            tools:layout_conversion_absoluteHeight="129dp"
-            tools:layout_editor_absoluteY="8dp"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_conversion_absoluteWidth="145dp" />
+            android:layout_width="77dp"
+            android:layout_height="77dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp" />
 
     <TextView
             android:id="@+id/table_room_textview"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="dsadad"
             android:textSize="14sp"
             android:textStyle="bold"
-            tools:layout_conversion_absoluteHeight="19dp"
-            tools:layout_editor_absoluteY="145dp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_conversion_absoluteWidth="161dp"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@+id/table_imageview"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
             android:id="@+id/table_state_textview"
-            android:text="dsada"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            tools:layout_conversion_absoluteHeight="19dp"
-            tools:layout_editor_absoluteY="164dp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_conversion_absoluteWidth="161dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/table_room_textview"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
 
-</LinearLayout>
-
-
-
-
-
-
-
-    <!--<TextView-->
-            <!--android:id="@+id/expandedListItem"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"-->
-            <!--android:paddingRight="?android:attr/expandableListPreferredChildPaddingLeft"-->
-            <!--android:paddingTop="10dp"-->
-            <!--android:paddingBottom="10dp"-->
-            <!--android:layout_marginTop="8dp"-->
-            <!--app:layout_constraintTop_toTopOf="parent"-->
-            <!--android:layout_marginBottom="8dp"-->
-            <!--app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--app:layout_constraintVertical_bias="0.0"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--android:layout_marginEnd="8dp"-->
-            <!--app:layout_constraintStart_toEndOf="@+id/imageView"-->
-            <!--android:layout_marginStart="8dp" />-->
-
-
-
-
-<!--</com.google.android.flexbox.FlexboxLayout>-->
+</android.support.constraint.ConstraintLayout>

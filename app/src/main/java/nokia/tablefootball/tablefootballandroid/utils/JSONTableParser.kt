@@ -3,7 +3,7 @@ package nokia.tablefootball.tablefootballandroid.utils
 import nokia.tablefootball.tablefootballandroid.dto.TableDTO
 import org.json.JSONArray
 import org.json.JSONObject
-import java.util.*
+import kotlin.collections.*
 
 class JSONTableParser {
     companion object {

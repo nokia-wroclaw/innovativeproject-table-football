@@ -2,11 +2,9 @@ package nokia.tablefootball.tablefootballandroid.utils
 
 import nokia.tablefootball.tablefootballandroid.dto.TableDTO
 import java.util.*
-import kotlin.collections.Collection
-import kotlin.collections.getValue
 
-class TableDataUtil {
-    companion object {
+object TableDataUtil {
+    //companion object {
         fun toFloorMap(tables: Collection<TableDTO>): TreeMap<Int, ArrayList<TableDTO>> {
 
             val resultMap = TreeMap<Int, ArrayList<TableDTO>>()
@@ -20,6 +18,7 @@ class TableDataUtil {
                 }
 
                 operationSet.add(dto)
+                operationSet.sort()
                 resultMap[dto.floor] = operationSet
             }
 
@@ -38,7 +37,7 @@ class TableDataUtil {
             return result
         }
 
-        fun asStringList(floors: Collection<Int>) : ArrayList<String>{
+        fun asStringList(floors: Collection<Int>) : List<String>{
             val list = ArrayList<String>(floors.size)
 
             for(i : Int in floors){
@@ -49,7 +48,7 @@ class TableDataUtil {
 
         }
 
-        fun dtoAsStringList(dtos: Collection<TableDTO>) : ArrayList<String>{
+        fun dtoAsStringList(dtos: Collection<TableDTO>) : List<String>{
             val list = ArrayList<String>(dtos.size)
 
             for(dto : TableDTO in dtos){
@@ -59,5 +58,5 @@ class TableDataUtil {
             return list
 
         }
-    }
+   // }
 }
