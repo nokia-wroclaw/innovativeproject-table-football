@@ -3,18 +3,11 @@ package nokia.tablefootball.tablefootballandroid.adapters
 import android.content.Context
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
-import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
-import com.google.android.flexbox.FlexDirection
-import com.google.android.flexbox.FlexWrap
-import com.google.android.flexbox.FlexboxLayoutManager
-import com.google.android.flexbox.JustifyContent
 import nokia.tablefootball.tablefootballandroid.R
 import nokia.tablefootball.tablefootballandroid.dto.TableDTO
 import nokia.tablefootball.tablefootballandroid.utils.TableDataUtil
@@ -24,12 +17,7 @@ class FloorListAdapter(private val context: Context, tableDtos: List<TableDTO>) 
 
     private val tablesMap: java.util.TreeMap<Int, ArrayList<TableDTO>> = TableDataUtil.toFloorMap(tableDtos)
 
-    private val expandableListDetail = TableDataUtil.toFloorMapAsStrings(tableDtos)
-    private val expandableListTitle: List<String>
-
-    init {
-        expandableListTitle = expandableListDetail.keys.toList()
-    }
+    private val expandableListTitle: List<Int> = tablesMap.keys.toList()
 
     override fun getChild(listPosition: Int, expandedListPosition: Int): Any {
         return tablesMap[listPosition]!![expandedListPosition]
@@ -46,6 +34,7 @@ class FloorListAdapter(private val context: Context, tableDtos: List<TableDTO>) 
 
         var convertView = convertView
         val childHolder: ChildHolder
+
         if (convertView == null) {
             val layoutInflater = this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             convertView = layoutInflater.inflate(R.layout.item_group, parent, false)
@@ -56,16 +45,11 @@ class FloorListAdapter(private val context: Context, tableDtos: List<TableDTO>) 
         }
 
         childHolder.listView = convertView.findViewById(R.id.item_group_recycler_view) as RecyclerView
-/*        val layoutManager = FlexboxLayoutManager(context).apply {
-            flexDirection = FlexDirection.ROW
-            justifyContent = JustifyContent.CENTER
-            flexWrap = FlexWrap.WRAP
-        }*/
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         childHolder.listView!!.layoutManager = layoutManager
-        childHolder.listView!!.adapter = ChildItemAdapter(context, tablesMap[listPosition]!!)
+        childHolder.listView!!.adapter = ChildItemAdapter(context, tablesMap[expandableListTitle[listPosition]]!!)
 
         return convertView
     }
@@ -91,7 +75,7 @@ class FloorListAdapter(private val context: Context, tableDtos: List<TableDTO>) 
         convertView: View?, parent: ViewGroup
     ): View {
         var convertView = convertView
-        val listTitle = getGroup(listPosition) as String
+        val listTitle = getGroup(listPosition) //as String
         if (convertView == null) {
             val layoutInflater = this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             convertView = layoutInflater.inflate(R.layout.floor_list, null)
