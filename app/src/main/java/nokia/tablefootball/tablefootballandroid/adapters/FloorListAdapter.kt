@@ -8,14 +8,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import nokia.tablefootball.tablefootballandroid.R
-import nokia.tablefootball.tablefootballandroid.dto.TableDTO
+import nokia.tablefootball.tablefootballandroid.dto.TableModel
 import nokia.tablefootball.tablefootballandroid.utils.TableDataUtil
 
 
-class FloorListAdapter(private val context: Context, tableDtos: List<TableDTO>) : BaseExpandableListAdapter() {
+class FloorListAdapter(private val context: Context, tableModels: List<TableModel>) : BaseExpandableListAdapter() {
 
-    private val tablesMap: java.util.TreeMap<Int, ArrayList<TableDTO>> = TableDataUtil.toFloorMap(tableDtos)
+    private val tablesMap: java.util.TreeMap<Int, ArrayList<TableModel>> = TableDataUtil.toFloorMap(tableModels)
 
     private val expandableListTitle: List<Int> = tablesMap.keys.toList()
 
@@ -46,7 +50,13 @@ class FloorListAdapter(private val context: Context, tableDtos: List<TableDTO>) 
 
         childHolder.listView = convertView.findViewById(R.id.item_group_recycler_view) as RecyclerView
 
-        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+       // val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+        val layoutManager = FlexboxLayoutManager(context).apply {
+            flexWrap = FlexWrap.WRAP
+            flexDirection = FlexDirection.ROW
+            justifyContent = JustifyContent.CENTER
+        }
 
         childHolder.listView!!.layoutManager = layoutManager
         childHolder.listView!!.adapter = ChildItemAdapter(context, tablesMap[expandableListTitle[listPosition]]!!)

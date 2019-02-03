@@ -1,23 +1,22 @@
 package nokia.tablefootball.tablefootballandroid
 
 import com.natpryce.hamkrest.assertion.assertThat
-import com.natpryce.hamkrest.contains
 import com.natpryce.hamkrest.equalTo
-import nokia.tablefootball.tablefootballandroid.dto.TableDTO
+import nokia.tablefootball.tablefootballandroid.dto.TableModel
 import nokia.tablefootball.tablefootballandroid.utils.TableDataUtil
 import org.junit.Test
 
 class TableDataUtilTest{
 
-    var dto1 = TableDTO("aaaaaaaaaa",true,true,123,1,2)
-    var dto2 = TableDTO("aaaaaaaaaa",true,true,123,1,2)
-    var dto3 = TableDTO("bbbbbbbbbb",true,true,123,2,2)
-    var dto4 = TableDTO("cccccccccc",false,false,122,2,3)
+    var dto1 = TableModel("aaaaaaaaaa",true,true,123,1,2)
+    var dto2 = TableModel("aaaaaaaaaa",true,true,123,1,2)
+    var dto3 = TableModel("bbbbbbbbbb",true,true,123,2,2)
+    var dto4 = TableModel("cccccccccc",false,false,122,2,3)
 
 
     @Test
     fun givenArrayListWithDoubledEntries_thenReturnProperMap(){
-        var array = ArrayList<TableDTO>()
+        var array = ArrayList<TableModel>()
         array.add(dto1)
         array.add(dto2)
         array.add(dto3)
@@ -32,7 +31,7 @@ class TableDataUtilTest{
 
     @Test
     fun givenArrayWithTheSameFloorNo_thenReturnSetContaingValueWithTwoEntries(){
-        val array = ArrayList<TableDTO>()
+        val array = ArrayList<TableModel>()
         array.add(dto3)
         array.add(dto4)
 

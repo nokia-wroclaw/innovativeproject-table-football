@@ -1,5 +1,10 @@
 <resources>
-    <string name="app_name">TableFootballAndroid</string>
+    <string name="app_name">Table Football</string>
     <string name="title_activity_main2">MainActivity2</string>
-    <string name="title_activity_input_adress">InputAdressActivity</string>
+    <string name="title_activity_input_adress">Table Football</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="table_state_occupied">Occupied</string>
+    <string name="table_state_free">Free</string>
+    <string name="table_state_inactive">Inactive</string>
 </resources>

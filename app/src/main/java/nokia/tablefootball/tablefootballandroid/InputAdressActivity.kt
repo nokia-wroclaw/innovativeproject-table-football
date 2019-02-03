@@ -18,6 +18,9 @@ class InputAdressActivity : AppCompatActivity() {
 
             startActivity(intent)
         }
+
+        setSupportActionBar(findViewById(R.id.app_bar))
+
     }
 
 

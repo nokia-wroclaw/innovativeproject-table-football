@@ -1,19 +1,19 @@
 package nokia.tablefootball.tablefootballandroid.adapters
 
+import android.app.AlertDialog
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import nokia.tablefootball.tablefootballandroid.R
-import nokia.tablefootball.tablefootballandroid.dto.TableDTO
-import kotlin.collections.*
+import nokia.tablefootball.tablefootballandroid.dto.TableModel
 
-class ChildItemAdapter(private val context: Context, var dtosList : ArrayList<TableDTO>)
-    : RecyclerView.Adapter<ChildItemAdapter.TableViewHolder>(){
+class ChildItemAdapter(private val context: Context, var dtosList: ArrayList<TableModel>) :
+    RecyclerView.Adapter<ChildItemAdapter.TableViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TableViewHolder {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -33,28 +33,42 @@ class ChildItemAdapter(private val context: Context, var dtosList : ArrayList<Ta
 
     }
 
-    class TableViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    class TableViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private var tableImageView: ImageView = itemView.findViewById(R.id.table_imageview) as ImageView
         private var tableStateTextView: TextView = itemView.findViewById(R.id.table_state_textview) as TextView
         private var tableRoomTextView: TextView = itemView.findViewById(R.id.table_room_textview) as TextView
 
-        private var tableDto : TableDTO? = null
+        private var tableModel: TableModel? = null
 
-        fun bindDto(dto: TableDTO){
-            tableDto = dto
+        fun bindDto(model: TableModel) {
+            tableModel = model
 
-            tableImageView.setImageResource(
-                when(tableDto!!.online){
-                    false -> R.mipmap.table_inactive
-                    true -> if(tableDto!!.occupied) R.mipmap.table_occupied else R.mipmap.table_free
+            tableImageView.apply {
+                setImageResource(
+                    when (tableModel!!.online) {
+                        false -> R.mipmap.table_inactive
+                        true -> if (tableModel!!.occupied) R.mipmap.table_occupied else R.mipmap.table_free
+                    })
+
+                setOnLongClickListener(TableLongClickListener(tableModel!!))
+            }
+
+            tableRoomTextView.text = "Room: ${tableModel!!.room}"
+
+            tableStateTextView.apply {
+                if (!tableModel!!.online) {
+                    text = context.getString(R.string.table_state_inactive)
+                    setTextColor(ContextCompat.getColor(context, R.color.colorTableInactive))
+                } else when (tableModel!!.occupied) {
+                    false -> {
+                        text = context.getString(R.string.table_state_free)
+                        setTextColor(ContextCompat.getColor(context, R.color.colorTableFree))
+                    }
+                    true -> {
+                        text = context.getString(R.string.table_state_occupied)
+                        setTextColor(ContextCompat.getColor(context, R.color.colorTableOccupied))
+                    }
                 }
-            )
-            tableImageView.setOnLongClickListener(TableLongClickListener(tableDto!!))
-
-            tableRoomTextView.text = "Room: ${tableDto!!.room.toString()}"
-            tableStateTextView.text = if(!tableDto!!.online) "Inactive" else when(tableDto!!.occupied){
-                false -> "Free"
-                true -> "Occupied"
             }
 
 
@@ -62,14 +76,23 @@ class ChildItemAdapter(private val context: Context, var dtosList : ArrayList<Ta
 
     }
 
-    class TableLongClickListener(private val tableDto: TableDTO) : View.OnLongClickListener{
-        override fun onLongClick(v: View?): Boolean {
-            Toast.makeText(v?.context,"Floor ${tableDto.floor} ",Toast.LENGTH_SHORT).show()
+    class TableLongClickListener(private val tableModel: TableModel) : View.OnLongClickListener {
+        override fun onLongClick(view: View?): Boolean {
+            val alertDialog: AlertDialog? = view?.let {
+                val builder = AlertDialog.Builder(view.context)
+                builder.apply {
+                    setPositiveButton(R.string.dialog_ok, null)
+                    setNegativeButton(R.string.dialog_cancel, null)
+                }
+                builder.create()
+            }
+
+            alertDialog?.show()
+
             return true
         }
 
     }
-
 
 
 }

@@ -2,9 +2,6 @@ package nokia.tablefootball.tablefootballandroid
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.RecyclerView
-import android.util.Log
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_tables.*
 import nokia.tablefootball.tablefootballandroid.adapters.FloorListAdapter
 import nokia.tablefootball.tablefootballandroid.network.DataAcquirerAPIController
@@ -14,14 +11,26 @@ import org.json.JSONArray
 
 class TablesActivity : AppCompatActivity() {
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setSupportActionBar(findViewById(R.id.app_bar))
         setContentView(R.layout.activity_tables)
 
+        val url = intent.extras.getString("URL").toString()
+
+        initializeView(url)
+
+        swipe_refresh_layout.setOnRefreshListener {
+            initializeView(url)
+        }
+    }
+
+    private fun initializeView(url: String){
         val serviceImpl = DataAcquirerServiceImpl(this)
         val controller = DataAcquirerAPIController(serviceImpl)
 
-        val url = intent.extras.getString("URL").toString()
+
 //        controller.post(url, null) { response ->
 //            val expandableListAdapter = FloorListAdapter(
 //                applicationContext,
@@ -38,7 +47,10 @@ class TablesActivity : AppCompatActivity() {
             JSONTableParser.parseArray(testArray)
         )
 
-        expandableListView.setAdapter(expandableListAdapter)
-        }
+        expandable_list_view.setAdapter(expandableListAdapter)
+
+        swipe_refresh_layout.isRefreshing = false
+    }
+
 
     }

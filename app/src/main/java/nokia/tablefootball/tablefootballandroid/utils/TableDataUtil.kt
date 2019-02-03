@@ -1,17 +1,17 @@
 package nokia.tablefootball.tablefootballandroid.utils
 
-import nokia.tablefootball.tablefootballandroid.dto.TableDTO
+import nokia.tablefootball.tablefootballandroid.dto.TableModel
 import java.util.*
 
 object TableDataUtil {
     //companion object {
-        fun toFloorMap(tables: Collection<TableDTO>): TreeMap<Int, ArrayList<TableDTO>> {
+        fun toFloorMap(tables: Collection<TableModel>): TreeMap<Int, ArrayList<TableModel>> {
 
-            val resultMap = TreeMap<Int, ArrayList<TableDTO>>()
+            val resultMap = TreeMap<Int, ArrayList<TableModel>>()
 
             for (dto in tables) {
 
-                var operationSet = ArrayList<TableDTO>()
+                var operationSet = ArrayList<TableModel>()
 
                 if (resultMap.containsKey(dto.floor)) {
                     operationSet = resultMap.getValue(dto.floor)
@@ -25,7 +25,7 @@ object TableDataUtil {
             return resultMap
         }
 
-        fun toFloorMapAsStrings(tables: Collection<TableDTO>): TreeMap<String, List<String>>{
+        fun toFloorMapAsStrings(tables: Collection<TableModel>): TreeMap<String, List<String>>{
             val map = toFloorMap(tables)
 
             val result = TreeMap<String, List<String>>()
@@ -48,11 +48,11 @@ object TableDataUtil {
 
         }
 
-        fun dtoAsStringList(dtos: Collection<TableDTO>) : List<String>{
-            val list = ArrayList<String>(dtos.size)
+        fun dtoAsStringList(models: Collection<TableModel>) : List<String>{
+            val list = ArrayList<String>(models.size)
 
-            for(dto : TableDTO in dtos){
-                list.add("${dto.id} ${dto.occupied}")
+            for(model : TableModel in models){
+                list.add("${model.id} ${model.occupied}")
             }
 
             return list

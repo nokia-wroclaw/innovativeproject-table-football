@@ -1,10 +1,10 @@
 package nokia.tablefootball.tablefootballandroid.dto
 
-data class TableDTO(val id:String, val occupied:Boolean,
-                    val online:Boolean, val lastNotifDate: Long,
-                    val floor:Int, val room:Int) : Comparable<TableDTO> {
+data class TableModel(val id:String, val occupied:Boolean,
+                      val online:Boolean, val lastNotifDate: Long,
+                      val floor:Int, val room:Int) : Comparable<TableModel> {
 
-    override fun compareTo(other: TableDTO): Int {
+    override fun compareTo(other: TableModel): Int {
         return room - other.room
     }
 
@@ -12,7 +12,7 @@ data class TableDTO(val id:String, val occupied:Boolean,
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as TableDTO
+        other as TableModel
 
         if (id != other.id) return false
 
