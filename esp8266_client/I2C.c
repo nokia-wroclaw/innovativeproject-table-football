@@ -10,20 +10,23 @@
 
 bool configure_for_calibration();
 
-int initI2C() {
-    i2c_master_gpio_init();
-    i2c_master_init();
-
+void allocateBufferMemory()
+{
     fifo_buffer_x = os_zalloc(sizeof(sint16) * FIFO_SIZE);
     fifo_buffer_y = os_zalloc(sizeof(sint16) * FIFO_SIZE);
     fifo_buffer_z = os_zalloc(sizeof(sint16) * FIFO_SIZE);
+
+}
+
+int initI2C() {
+    i2c_master_gpio_init();
+    i2c_master_init();
 
     setRange(SENSITIVITY_2G);
     output_rate = OUTPUT_RATE_1_25Hz;
 
     MMA845x_Standby();
     os_delay_us(100);
-//    configure_for_calibration();
     configure_accelerometer();
     os_delay_us(100);
     MMA845x_Active();
@@ -56,7 +59,7 @@ bool configure_accelerometer() {
     write_to(SENSITIVITY_CFG_REGISTER, range);
 
     if (FIFO_INTERRUPT_ENABLE) {
-        write_to(FIFO_SETUP_REGISTER, FIFO_FILL);
+        write_to(FIFO_SETUP_REGISTER, FIFO_CIRCURAL_MODE);
         write_to(INTERRUPT_REGISTER, FIFO_INTERRUPT_ENABLE);
         write_to(INT_MAPPING_REGISTER, FIFO_INT_MAP_1);
     } else {
@@ -231,8 +234,8 @@ void MMA845x_Standby(void) {
         os_printf("\nCannot put accelerometer in standby mode -> reading error\n");
     }
 
-    os_printf("\nCTRL1_REG before standby: ");
-    print_in_binary(current_register_status);
+//    os_printf("\nCTRL1_REG before standby: ");
+//    print_in_binary(current_register_status);
 
     if (!write_to(CTRL_REG_1, current_register_status & ~1)) {
         os_printf("\nCannot put accelerometer in standby mode -> register write error\n");
@@ -253,8 +256,8 @@ void MMA845x_Active(void) {
     }
 
     read_from(CTRL_REG_1, &current_register_status);
-    os_printf("CTRL1 register after active is ");
-    print_in_binary(current_register_status);
+//    os_printf("CTRL1 register after active is ");
+//    print_in_binary(current_register_status);
 }
 
 void setRange(uint8_t r) {
@@ -272,7 +275,7 @@ void print_readings() {
     unsigned int fraction_y = (unsigned int) (y_g * FLOAT_CONVERSION_PRECISION) % FLOAT_CONVERSION_PRECISION;
     unsigned int fraction_z = (unsigned int) (z_g * FLOAT_CONVERSION_PRECISION) % FLOAT_CONVERSION_PRECISION;
 
-    os_printf("%d\056%d\t%d\056%d\t%d\056%d", x_int, fraction_x, y_int, fraction_y, z_int, fraction_z);
+//    os_printf("%d\056%d\t%d\056%d\t%d\056%d", x_int, fraction_x, y_int, fraction_y, z_int, fraction_z);
 }
 
 void clear_overflow_flag() {
@@ -323,32 +326,39 @@ void read_full_fifo() {
         fifo_buffer_z[i] = z;
 
 
-        os_printf("\nX: %d\n", x);
-        os_printf("\nY: %d\n", y);
-        os_printf("\nZ: %d\n", z);
+//        os_printf("\nX: %d\n", x);
+//        os_printf("\nY: %d\n", y);
+//        os_printf("\nZ: %d\n", z);
     }
 
     end_transmission();
+    MMA845x_Active();
 
     os_printf("\nCalibration data acquired\n");
 }
 
 void read_full_fifo_with_float_conversion() {
+    os_printf("Entering fifo read function\n");
     MMA845x_Standby();
 
     start_transmission();
+
+    os_printf("After starting transmission\n");
 
     i2c_master_writeByte(OUT_X_MSB);
     i2c_master_checkAck();
     i2c_master_start();
     i2c_master_writeByte(SLAVE_ADDRESS_READ);
     i2c_master_checkAck();
+    os_printf("ACK_READ\n");
 
+    os_printf("Before using divider\n");
     uint16_t divider = 0;
     if (range == SENSITIVITY_8G) divider = 1024 / GRAVITY_CONSTANT;
     if (range == SENSITIVITY_4G) divider = 2048 / GRAVITY_CONSTANT;
     if (range == SENSITIVITY_2G) divider = 4096 / GRAVITY_CONSTANT;
 
+    os_printf("Before reading from accelerometer\n");
 
     int i;
     for (i = 0; i < FIFO_SIZE; i++) {
@@ -385,6 +395,7 @@ void read_full_fifo_with_float_conversion() {
     end_transmission();
 
     MMA845x_Active();
+    os_printf("Leaving fifo read function\n");
 }
 
 void perform_calibration() {
