@@ -1,5 +1,6 @@
 package com.tablefootbal.server;
 
+import com.tablefootbal.server.controller.ControllerTestSuite;
 import com.tablefootbal.server.dsp.DspAlgorithmsTests;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,7 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 @Suite.SuiteClasses({SensorRepositoryIntegrationTests.class, SensorDataManagerIntegrationTests.class,
         SensorReadingsTests.class, DspAlgorithmsTests.class, SensorServiceTests.class,
-        AlgorithmPropertiesServiceIntegrationTests.class, CalibrationStructureDeserializerTest.class})
+        AlgorithmPropertiesServiceIntegrationTests.class, CalibrationStructureDeserializerTest.class,
+        ControllerTestSuite.class})
 public class ServerApplicationTests {
 
     @Test

@@ -29,9 +29,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(SensorNotFoundException.class)
-    public ResponseEntity<String> handleSensorNotFound(InvalidPortException ex) {
-
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN);
+    public ResponseEntity<String> handleSensorNotFound(SensorNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(InvalidJsonException.class)
