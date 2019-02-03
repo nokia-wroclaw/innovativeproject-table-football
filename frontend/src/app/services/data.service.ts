@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Table } from '../model/table';
-import { Floor } from '../model/floor';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Table} from '../model/table';
+import {Floor} from '../model/floor';
+import {Observable} from 'rxjs';
+import {NotificationsService} from './notifications.service';
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +50,7 @@ export class DataService {
     let headers = new HttpHeaders();
     headers = headers.append('Authorization', 'Basic ' + btoa('admin:admin'));
 
-    return this.http.post<Table[]>('https://localhost:8443/admin/', sensors, { headers: headers })
+    return this.http.post<Table[]>('https://localhost:8443/admin/', sensors, {headers: headers})
       .subscribe(response => {
         if (response == null) {
           window.alert('Updated successfully.');
@@ -99,5 +100,17 @@ export class DataService {
     }
 
     return true;
+  }
+
+  updateTables(tables: Table[]) {
+    this.floors.forEach((floor, ind, array) => {
+      floor.tables.forEach((table) => {
+        for (let i = 0; i < tables.length; i++) {
+          if (tables[i].id === table.id) {
+            tables[i].occupied = table.occupied;
+          }
+        }
+      });
+    });
   }
 }

@@ -1,0 +1,25 @@
+<h4>Notifications</h4>
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Floors
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div *ngFor="let floor of floors" class="ml-2">
+      <app-notifications-checkbox [floorData]="floor">
+        <div class="d-flex flex-column pl-3 pt-2">
+          <app-table-notifications-checkbox *ngFor="let table of floor.tables;"
+                                            [tableData]="table"
+                                            (changed)="handleNotificationsChange($event)">
+          </app-table-notifications-checkbox>
+        </div>
+      </app-notifications-checkbox>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+<div class="d-flex justify-content-center">
+  <button mat-raised-button color="primary" (click)="clearNotifications()">Clear</button>
+</div>
+
