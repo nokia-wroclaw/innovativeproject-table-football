@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { DataService } from '../services/data.service';
-import { Floor } from '../model/floor';
-import { timer } from 'rxjs';
-import { Table } from '../model/table';
+import {Component, OnInit} from '@angular/core';
+import {DataService} from '../services/data.service';
+import {Floor} from '../model/floor';
+import {timer} from 'rxjs';
+import {Table} from '../model/table';
+import {NotificationsService} from '../services/notifications.service';
 
 @Component({
   selector: 'app-main',
@@ -13,7 +14,8 @@ export class MainComponent implements OnInit {
   floors: Array<Floor>;
   smallDevice: boolean;
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService, private notificationsService: NotificationsService) {
+    this.notificationsService.requestPermission();
     this.floors = new Array<Floor>();
     if (window.screen.width <= 768) {
       this.smallDevice = true;
@@ -37,6 +39,7 @@ export class MainComponent implements OnInit {
           // this.floors = tempFloors;
           this.updateFloors(tempFloors);
           this.sort();
+          this.notificationsService.onDatasetChange();
         }
       });
   }
@@ -49,14 +52,14 @@ export class MainComponent implements OnInit {
   updateFloors(incomingFloors: Floor[]) {
     // filtering floors
     this.floors = this.floors
-    .filter(floor => incomingFloors.find(incomingFloor => incomingFloor.floorNumber === floor.floorNumber) !== undefined);
+      .filter(floor => incomingFloors.find(incomingFloor => incomingFloor.floorNumber === floor.floorNumber) !== undefined);
 
     // filtering tables
     this.floors.forEach(floor => {
       const incomingTables = incomingFloors.find(incomingFloor => incomingFloor.floorNumber === floor.floorNumber).tables;
 
       floor.tables = floor.tables
-      .filter(table => incomingTables.find(incomingTable => this.areTablesEqual(incomingTable, table)) !== undefined);
+        .filter(table => incomingTables.find(incomingTable => this.areTablesEqual(incomingTable, table)) !== undefined);
     });
 
     // inserting new floors

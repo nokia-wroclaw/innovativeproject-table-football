@@ -1,10 +1,8 @@
-import { Component, OnInit, ViewEncapsulation, OnChanges, Input } from '@angular/core';
-import { DataService } from '../services/data.service';
-import { Floor } from '../model/floor';
-import { timer } from 'rxjs';
-import { CookieService } from 'ngx-cookie-service';
-import { Table } from '../model/table';
-import { fillProperties } from '@angular/core/src/util/property';
+import {Component, OnInit, ViewEncapsulation, OnChanges, Input} from '@angular/core';
+import {DataService} from '../services/data.service';
+import {Floor} from '../model/floor';
+import {CookieService} from 'ngx-cookie-service';
+import {Table} from '../model/table';
 
 @Component({
   selector: 'app-config-panel',

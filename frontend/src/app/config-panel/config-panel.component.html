@@ -1,3 +1,4 @@
+<h4>Visible</h4>
 <div class="slide-toggle-container">
   <mat-slide-toggle (change)="slideChanged($event)" [color]="'primary'" class="slide-toggle">
     Only free tables
@@ -14,7 +15,8 @@
     <div *ngFor="let floor of floors" class="ml-2">
       <app-custom-checkbox [checked]="floor.visible" [floorData]="floor" (changed)="setCookies()">
         <div class="d-flex flex-column pl-3 pt-2">
-          <app-table-checkbox *ngFor="let table of floor.tables" [tableData]="table" (changed)="setCookies()"></app-table-checkbox>
+          <app-table-checkbox *ngFor="let table of floor.tables" [tableData]="table"
+                              (changed)="setCookies()"></app-table-checkbox>
         </div>
       </app-custom-checkbox>
     </div>
@@ -23,3 +25,12 @@
 <div class="d-flex justify-content-center">
   <button mat-raised-button color="primary" (click)="clear()">Clear</button>
 </div>
+
+
+
+
+
+
+
+
+
