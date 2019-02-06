@@ -68,7 +68,7 @@ export class NotificationsService {
   generateNotification(table: Table): void {
     const options = {
       body: 'Table on floor ' + table.floor + ' in room ' + table.room + ' is now free',
-      // icon: ''
+       icon: 'src/assets/ball_64.png'
     };
     const notify = this.create('Table Free', options).subscribe();
     console.log('Notification sent for table with id ' + table.id);
@@ -118,7 +118,7 @@ export class NotificationsService {
     );
 
     this.tables.filter((table, index, array) => {
-      return !table.occupied;
+      return table.online && !table.occupied;
     }).forEach((table, index, tables) => {
       this.generateNotification(table);
     });

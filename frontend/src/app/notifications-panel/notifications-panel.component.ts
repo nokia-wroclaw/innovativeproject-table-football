@@ -22,7 +22,6 @@ export class NotificationsPanelComponent implements OnChanges {
 
   constructor(private dataService: DataService, private cookieService: CookieService,
               private notificationsService: NotificationsService) {
-    this.floors = dataService.floors;
   }
 
   ngOnChanges() {

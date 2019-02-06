@@ -1,16 +1,18 @@
 <mat-sidenav-container fullscreen>
   <mat-sidenav #sidenav mode="side" closed>
-      <div>
-          <app-config-panel [floors]="floors"></app-config-panel>
-          <img src="assets/innovative_projects.png" class="innovative-projects" *ngIf="smallDevice">
-      </div>
+    <div>
+      <app-config-panel [floors]="floors"></app-config-panel>
+      <br>
+      <app-notifications-panel [floors]="floors"></app-notifications-panel>
+      <img src="assets/innovative_projects.png" class="innovative-projects" *ngIf="smallDevice">
+    </div>
   </mat-sidenav>
   <mat-sidenav-content>
-      <app-nav [sidenav]="sidenav"></app-nav>
-      <div *ngFor="let floor of floors">    
-          <app-floor [floorData]="floor" [sidenav]="sidenav"></app-floor>
-      </div>
-      <router-outlet></router-outlet>
-      <img src="assets/innovative_projects.png" class="innovative-projects" *ngIf="!smallDevice">
+    <app-nav [sidenav]="sidenav"></app-nav>
+    <div *ngFor="let floor of floors">
+      <app-floor [floorData]="floor" [sidenav]="sidenav"></app-floor>
+    </div>
+    <router-outlet></router-outlet>
+    <img src="assets/innovative_projects.png" class="innovative-projects" *ngIf="!smallDevice">
   </mat-sidenav-content>
 </mat-sidenav-container>
