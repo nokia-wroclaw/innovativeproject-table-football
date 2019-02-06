@@ -28,8 +28,7 @@ import java.text.SimpleDateFormat;
 @Slf4j
 public class NotificationSenderTest {
 
-    @Value("${device}")
-    private String device_token;
+    private String device_token = "device_TOKEN_from_android_app";
 
 
     @Value("${fcm_key}")
