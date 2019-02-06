@@ -27,7 +27,7 @@ public class NotificationSender implements NotificationService {
     @Value("${fcm_endpoint}")
     private String FCM_API;
 
-    public FirebaseResponse sendNotification(Push push){
+    public FirebaseResponse sendNotification(Push push) {
 
         HttpEntity<Push> request = new HttpEntity<>(push);
         CompletableFuture<FirebaseResponse> pushNotification = this.send(request);
@@ -35,9 +35,9 @@ public class NotificationSender implements NotificationService {
 
         FirebaseResponse firebaseResponse = null;
 
-        try{
+        try {
             firebaseResponse = pushNotification.get();
-        }catch (InterruptedException | ExecutionException e){
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
 
@@ -45,7 +45,7 @@ public class NotificationSender implements NotificationService {
     }
 
     @Async
-    CompletableFuture<FirebaseResponse> send(HttpEntity<Push> entity){
+    CompletableFuture<FirebaseResponse> send(HttpEntity<Push> entity) {
 
         RestTemplate restTemplate = new RestTemplate();
         ArrayList<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();

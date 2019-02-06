@@ -30,7 +30,5 @@ public class FirebaseResponse implements Serializable {
     @JsonProperty("results")
     private List<Object> results;
 
-    public FirebaseResponse() {
-
-    }
+    public FirebaseResponse() {}
 }

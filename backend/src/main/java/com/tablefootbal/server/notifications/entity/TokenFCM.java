@@ -1,7 +1,6 @@
 package com.tablefootbal.server.notifications.entity;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.redis.core.RedisHash;
 
@@ -14,7 +13,7 @@ public class TokenFCM {
 
     private final String TOKEN;
 
-    public TokenFCM(String TOKEN){
+    public TokenFCM(String TOKEN) {
         this.TOKEN = TOKEN;
     }
 

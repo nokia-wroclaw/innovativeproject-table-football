@@ -7,7 +7,9 @@ import com.tablefootbal.server.notifications.entity.GameObserver;
 import com.tablefootbal.server.notifications.entity.GameObserversCollection;
 import com.tablefootbal.server.notifications.repository.GameObserverRepository;
 import com.tablefootbal.server.service.SensorService;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +27,9 @@ public class GameObserverServiceImp implements GameObserverService {
 
     @Autowired
     public GameObserverServiceImp(SensorService sensorService, GameObserverRepository observerRepository, NotificationService notificationService) {
-       this.observerRepository = observerRepository;
-       this.sensorService = sensorService;
-       this.notificationService = notificationService;
+        this.observerRepository = observerRepository;
+        this.sensorService = sensorService;
+        this.notificationService = notificationService;
     }
 
     @Override
@@ -35,54 +37,50 @@ public class GameObserverServiceImp implements GameObserverService {
 
         GameObserversCollection list;
 
-        for(String id: sensor_IDs){
+        for (String id : sensor_IDs) {
             Optional<GameObserversCollection> optional = observerRepository.findById(id);
-            if(optional.isPresent()){
+            if (optional.isPresent()) {
                 list = optional.get();
                 list.getObservers().add(observer);
-            }else{
+            } else {
                 list = new GameObserversCollection(id);
                 list.getObservers().add(observer);
             }
 
             observerRepository.save(list);
-
-            log.info("ObserverService: ","Registered an observer for sensor ID: " + list.getSensorID());
-            StringBuilder stringBuilder = new StringBuilder("Actually registered for: " + list.getSensorID() + ":");
-            for(GameObserver g: list.getObservers()){
-                stringBuilder.append(g.toString() +" ");
-            }
-            log.info("ObserverService: ",stringBuilder.toString());
         }
 
     }
 
     @Override
-    public int notifyObservers(String sensorID){
+    public int notifyObservers(String sensorID) {
         Optional<GameObserversCollection> optional = observerRepository.findById(sensorID);
 
-        if(optional.isPresent()){
+        if (optional.isPresent()) {
             Optional<Sensor> sensorOptional = sensorService.findById(sensorID);
             String floorAndRoom = "Table on X floor in X room is available";
 
-            if(sensorOptional.isPresent()){
+            //TODO move notification body and title construction to mobile app
+            if (sensorOptional.isPresent()) {
                 Sensor sensor = sensorOptional.get();
-                floorAndRoom = "Table on " + sensor.getFloor() + " floor in room " + sensor.getRoom() + " is available!";
+                floorAndRoom = "Table in " + sensor.getRoom() + ". room on " + sensor.getFloor() + ". floor is available!";
             }
 
             Notification notification = new Notification();
-            notification.setBody("Hurry up!");
-            notification.setTitle(floorAndRoom);
+            notification.setTitle("Hurry up!");
+            notification.setBody(floorAndRoom);
 
             Push push = new Push();
             push.setPriority("HIGH");
             push.setNotification(notification);
 
             GameObserversCollection collection = optional.get();
-            for(GameObserver observer: collection.getObservers()){
+            for (GameObserver observer : collection.getObservers()) {
                 push.setTo(observer.getTokenFCM().getTOKEN());
-                notificationService.sendNotification(push);
+                log.info(notificationService.sendNotification(push).toString());
             }
+
+            observerRepository.deleteById(sensorID);
 
             return collection.getObservers().size();
         }

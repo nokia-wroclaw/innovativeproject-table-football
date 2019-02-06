@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class InvalidRegisterDataException extends RuntimeException {
 
-    public InvalidRegisterDataException(){ super();}
+    public InvalidRegisterDataException() {
+        super();
+    }
 
-    public InvalidRegisterDataException(String msg){
+    public InvalidRegisterDataException(String msg) {
         super(msg);
     }
 

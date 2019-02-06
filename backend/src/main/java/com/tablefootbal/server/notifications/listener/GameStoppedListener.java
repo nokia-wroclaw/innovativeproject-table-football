@@ -12,7 +12,7 @@ public class GameStoppedListener implements ApplicationListener<PlayStoppedEvent
     private final GameObserverService service;
 
     @Autowired
-    public GameStoppedListener(GameObserverService service){
+    public GameStoppedListener(GameObserverService service) {
         this.service = service;
     }
 

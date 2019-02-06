@@ -12,13 +12,13 @@ public interface SensorService {
 //    Sensor saveOrUpdate(Sensor sensor, SensorReadings.Reading reading);
 
 
-     void saveOrUpdate(Sensor sensor, ReadingDto readingDto);
+    void saveOrUpdate(Sensor sensor, ReadingDto readingDto);
 
 
     void updateSensorInformation(Sensor sensor);
 
     void setOccupied(String SensorId, boolean isOccupied);
-    
+
     void save(Sensor sensor);
 
     List<Sensor> findOccupiedSensors();
@@ -32,8 +32,7 @@ public interface SensorService {
     Optional<Sensor> findById(String id);
 
 
-
-//    boolean checkIfExistsById(String id);
+    //    boolean checkIfExistsById(String id);
 //    Sensor saveOrUpdate(Sensor sensor, SensorReadings.Reading reading);
 //
 //    List<Sensor> findConnectedSensors();

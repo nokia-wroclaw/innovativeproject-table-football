@@ -1,13 +1,11 @@
 package com.tablefootbal.server;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.tablefootbal.server.entity.Sensor;
 import com.tablefootbal.server.entity.User;
 import com.tablefootbal.server.entity.UserRole;
 import com.tablefootbal.server.repository.SensorRepository;
 import com.tablefootbal.server.repository.UserRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -33,21 +31,26 @@ public class ServerApplication {
 
     @Autowired
     UserRepository userRepository;
-
+    @Autowired
+    PasswordEncoder passwordEncoder;
     @Value("${spring.security.user.name}")
     private String sensorName;
-
     @Value("${spring.security.user.password}")
     private String sensorPassword;
-
     @Value("${admin.user.name}")
     private String adminUsername;
-
     @Value("${admin.password}")
     private String adminPassword;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    public static void main(String[] args) {
+        ApplicationContext context =
+                SpringApplication.run(ServerApplication.class, args);
+
+        for (String name : context.getBeanDefinitionNames())
+            System.out.println(name);
+
+
+    }
 
     @EventListener(ApplicationStartedEvent.class)
     public void initialize() throws Exception {
@@ -84,16 +87,6 @@ public class ServerApplication {
 
         user.setRoles(roles);
         userRepository.save(user);
-        
-    }
-
-    public static void main(String[] args) {
-        ApplicationContext context =
-        SpringApplication.run(ServerApplication.class, args);
-
-        for(String name: context.getBeanDefinitionNames())
-            System.out.println(name);
-
 
     }
 }
