@@ -29,6 +29,7 @@ import { LoginComponent } from './login/login.component';
 import { TableCheckboxComponent } from './table-checkbox/table-checkbox.component';
 import { AdminSensorInfoComponent } from './admin-sensor-info/admin-sensor-info.component';
 import { AdminParametersComponent } from './admin-calibration/admin-parameters.component';
+import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { AdminParametersComponent } from './admin-calibration/admin-parameters.c
     LoginComponent,
     TableCheckboxComponent,
     AdminSensorInfoComponent,
-    AdminParametersComponent
+    AdminParametersComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,

@@ -1,9 +1,17 @@
-<form class="panel" (submit)="login($event)">
-  <mat-form-field>
-    <input matInput placeholder="Username" id="username">
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput type="password" placeholder="Password" id="password">
-  </mat-form-field>
-  <button mat-raised-button color="primary" class="button">Login</button>
-</form>
+<div>
+  <form class="panel" (submit)="login($event)" ngDefaultControl>
+    <mat-form-field>
+      <input matInput placeholder="Username" id="username">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="password" placeholder="Password" id="password">
+    </mat-form-field>
+    <button mat-raised-button color="primary" class="button">Login</button>
+  </form>
+</div>
+
+
+<div @alertTrigger *ngIf="alertService.hasAlert"> 
+  <app-alert (click)="dismissAlert()" [message]="alertService.message"
+             [type]="alertService.type"></app-alert>
+</div>

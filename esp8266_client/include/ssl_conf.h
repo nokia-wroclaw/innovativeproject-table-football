@@ -8,4 +8,4 @@
 #define BASIC_HASH "c2Vuc29yOnNlbnNvcg=="
 
 //Server ip
-uint8 SERVER_IP[4] = {192,168,1,105};
+uint8 SERVER_IP[4] = {192,168,43,64};
