@@ -2,7 +2,7 @@ package nokia.tablefootball.tablefootballandroid
 
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
-import nokia.tablefootball.tablefootballandroid.dto.TableModel
+import nokia.tablefootball.tablefootballandroid.model.TableModel
 import nokia.tablefootball.tablefootballandroid.utils.TableDataUtil
 import org.junit.Test
 

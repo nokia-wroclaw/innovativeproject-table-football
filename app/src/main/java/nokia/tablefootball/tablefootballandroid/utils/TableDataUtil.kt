@@ -1,62 +1,72 @@
 package nokia.tablefootball.tablefootballandroid.utils
 
-import nokia.tablefootball.tablefootballandroid.dto.TableModel
+import nokia.tablefootball.tablefootballandroid.model.TableModel
 import java.util.*
 
-object TableDataUtil {
+object TableDataUtil
+{
     //companion object {
-        fun toFloorMap(tables: Collection<TableModel>): TreeMap<Int, ArrayList<TableModel>> {
+    fun toFloorMap(tables: Collection<TableModel>): TreeMap<Int, ArrayList<TableModel>>
+    {
 
-            val resultMap = TreeMap<Int, ArrayList<TableModel>>()
+        val resultMap = TreeMap<Int, ArrayList<TableModel>>()
 
-            for (dto in tables) {
+        for (dto in tables)
+        {
 
-                var operationSet = ArrayList<TableModel>()
+            var operationSet = ArrayList<TableModel>()
 
-                if (resultMap.containsKey(dto.floor)) {
-                    operationSet = resultMap.getValue(dto.floor)
-                }
-
-                operationSet.add(dto)
-                operationSet.sort()
-                resultMap[dto.floor] = operationSet
+            if (resultMap.containsKey(dto.floor))
+            {
+                operationSet = resultMap.getValue(dto.floor)
             }
 
-            return resultMap
+            operationSet.add(dto)
+            operationSet.sort()
+            resultMap[dto.floor] = operationSet
         }
 
-        fun toFloorMapAsStrings(tables: Collection<TableModel>): TreeMap<String, List<String>>{
-            val map = toFloorMap(tables)
+        return resultMap
+    }
 
-            val result = TreeMap<String, List<String>>()
+    fun toFloorMapAsStrings(tables: Collection<TableModel>): TreeMap<String, List<String>>
+    {
+        val map = toFloorMap(tables)
 
-            for(key : Int in map.keys){
-                result[key.toString()] = dtoAsStringList(map[key]!!)
-            }
+        val result = TreeMap<String, List<String>>()
 
-            return result
+        for (key: Int in map.keys)
+        {
+            result[key.toString()] = dtoAsStringList(map[key]!!)
         }
 
-        fun asStringList(floors: Collection<Int>) : List<String>{
-            val list = ArrayList<String>(floors.size)
+        return result
+    }
 
-            for(i : Int in floors){
-                list.add(i.toString())
-            }
+    fun asStringList(floors: Collection<Int>): List<String>
+    {
+        val list = ArrayList<String>(floors.size)
 
-            return list
-
+        for (i: Int in floors)
+        {
+            list.add(i.toString())
         }
 
-        fun dtoAsStringList(models: Collection<TableModel>) : List<String>{
-            val list = ArrayList<String>(models.size)
+        return list
 
-            for(model : TableModel in models){
-                list.add("${model.id} ${model.occupied}")
-            }
+    }
 
-            return list
+    fun dtoAsStringList(models: Collection<TableModel>): List<String>
+    {
+        val list = ArrayList<String>(models.size)
 
+        for (model: TableModel in models)
+        {
+            list.add("${model.id} ${model.occupied}")
         }
-   // }
+
+        return list
+
+    }
+    // }
 }

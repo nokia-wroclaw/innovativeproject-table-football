@@ -150,4 +150,7 @@ gradle-app.setting
 **/build/
 
 
+###Android###
+local.properties
+
 # End of https://www.gitignore.io/api/linux,maven,gradle,windows,intellij+iml

@@ -8,7 +8,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "nokia.tablefootball.tablefootballandroid"
-        minSdkVersion 23
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -27,7 +27,7 @@ repositories{
 }
 
 ext {
-    firebase_core = '16.0.6'
+    firebase_core = '16.0.7'
     firebase_msg = '17.3.4'
 }
 

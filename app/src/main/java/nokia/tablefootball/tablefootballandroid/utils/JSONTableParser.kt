@@ -1,17 +1,20 @@
 package nokia.tablefootball.tablefootballandroid.utils
 
-import nokia.tablefootball.tablefootballandroid.dto.TableModel
+import nokia.tablefootball.tablefootballandroid.model.TableModel
 import org.json.JSONArray
 import org.json.JSONObject
-import kotlin.collections.*
 
-class JSONTableParser {
-    companion object {
-        fun parseArray(jsonArray: JSONArray) : List<TableModel>{
+class JSONTableParser
+{
+    companion object
+    {
+        fun parseArray(jsonArray: JSONArray): List<TableModel>
+        {
 
             val tables = ArrayList<TableModel>()
 
-            for(i in 0..(jsonArray.length()-1)){
+            for (i in 0..(jsonArray.length() - 1))
+            {
                 val obj = jsonArray.getJSONObject(i)
                 val tableDto = parseObject(obj)
 
@@ -21,7 +24,8 @@ class JSONTableParser {
             return tables
         }
 
-        fun parseObject(obj: JSONObject) : TableModel {
+        fun parseObject(obj: JSONObject): TableModel
+        {
             return TableModel(
                 obj.getString("id"),
                 obj.getBoolean("occupied"),
