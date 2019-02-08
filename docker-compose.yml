@@ -30,3 +30,4 @@ services:
       - ./frontend/src/:/usr/src/app/node_modules
     ports:
       - '4200:80'
+

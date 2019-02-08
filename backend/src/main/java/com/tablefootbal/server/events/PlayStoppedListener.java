@@ -3,7 +3,6 @@ package com.tablefootbal.server.events;
 import com.tablefootbal.server.service.SensorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Component

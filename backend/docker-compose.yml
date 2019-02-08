@@ -27,10 +27,10 @@ services:
   ports:
   - "6379:6379"
 
- # frontend:
- #    build: ./frontend/
- #    volumes:
- #      - ./frontend/src/:/usr/src/app
- #      - ./frontend/src//usr/src/app/node_modules
- #    ports:
- #      - '4200:80'
+  frontend:
+     build: ./frontend/
+     volumes:
+       - ./frontend/src/:/usr/src/app
+       - ./frontend/src//usr/src/app/node_modules
+     ports:
+       - '4200:80'

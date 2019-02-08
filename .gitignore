@@ -9,6 +9,7 @@
 #Redis logs and files
 *.rdb
 *.log
+/backend/log/*
 
 
 #C compliation thrash
@@ -67,3 +68,8 @@ Thumbs.db
 
 #Linux files
 *~
+
+##Sensitive data
+*KeyStorage.java
+*firebase.properties
+

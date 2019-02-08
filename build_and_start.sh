@@ -8,4 +8,4 @@ cd ./backend
 
 cd ..
 
-sudo docker-compose up -d --build
+sudo docker-compose up --build
