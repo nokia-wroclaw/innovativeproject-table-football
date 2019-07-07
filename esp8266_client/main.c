@@ -5,6 +5,7 @@
 #include "sntp.h"
 #include "I2C.h"
 #include <ets_sys.h>
+#include "main.h"
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wimplicit-function-declaration"
@@ -23,11 +24,13 @@ os_timer_t heartbeat_timer;
 
 uint32 ICACHE_FLASH_ATTR
 
-user_rf_cal_sector_set(void) {
+user_rf_cal_sector_set(void)
+{
     enum flash_size_map size_map = system_get_flash_size_map();
     uint32 rf_cal_sec = 0;
 
-    switch (size_map) {
+    switch (size_map)
+    {
         case FLASH_SIZE_4M_MAP_256_256:
             rf_cal_sec = 128 - 8;
             break;
@@ -54,8 +57,10 @@ user_rf_cal_sector_set(void) {
     return rf_cal_sec;
 }
 
-void update_status() {
-    if (num_of_readings >= INTERRUPT_THRHESHOLD && ready_to_send) {
+void update_status()
+{
+    if (num_of_readings >= INTERRUPT_THRHESHOLD && ready_to_send)
+    {
         num_of_readings = 0;
         last_send_timestamp = system_get_time();
         start_transmission();
@@ -65,7 +70,8 @@ void update_status() {
     }
 }
 
-void motionEventInterrupt() {
+void motionEventInterrupt()
+{
     uint32 gpio_status = 0;
     gpio_status = GPIO_REG_READ(GPIO_STATUS_ADDRESS);
     GPIO_REG_WRITE(GPIO_STATUS_W1TC_ADDRESS, gpio_status);
@@ -74,14 +80,16 @@ void motionEventInterrupt() {
     read_from(MOTION_INT_SOURCE_REGISTER, &data);
 
     uint32 current_time = system_get_time();
-    if (current_time - last_interrupt_timestamp >= DEBOUNCE_DELAY) {
+    if (current_time - last_interrupt_timestamp >= DEBOUNCE_DELAY)
+    {
         os_printf("\nMOTION EVEN DETECTED!\n");
         num_of_readings++;
     }
     last_interrupt_timestamp = system_get_time();
 }
 
-void handle_buffer_overflow() {
+void handle_buffer_overflow()
+{
     uint32 gpio_status = 0;
     gpio_status = GPIO_REG_READ(GPIO_STATUS_ADDRESS);
     GPIO_REG_WRITE(GPIO_STATUS_W1TC_ADDRESS, gpio_status);
@@ -91,17 +99,20 @@ void handle_buffer_overflow() {
     os_printf("\nCleared overflow flag\n");
     read_full_fifo_with_float_conversion();
     os_printf("\nReaded buffer\n");
-    if (connection->state == ESPCONN_CLOSE) {
+    if (connection->state == ESPCONN_CLOSE)
+    {
         is_connected = false;
         os_printf("\nRenewing connection\n");
         start_connection();
-    } else if (is_connected && ready_to_send) {
+    } else if (is_connected && ready_to_send)
+    {
         os_printf("\nCONNECTION STATE: %d\n", connection->state);
         send_request(NULL);
     }
 }
 
-void switchToMotionInterrupt() {
+void switchToMotionInterrupt()
+{
     PIN_FUNC_SELECT(PERIPHS_IO_MUX_MTDI_U, FUNC_GPIO12);
     GPIO_DIS_OUTPUT(GPIO_ID_PIN(INT_PIN));
     ETS_GPIO_INTR_DISABLE();
@@ -115,7 +126,8 @@ void switchToMotionInterrupt() {
     os_timer_arm(&status_check_timer, STATUS_CHECK_DELAY, 1);
 }
 
-void switchToBufferOverflowInterrupt() {
+void switchToBufferOverflowInterrupt()
+{
     PIN_FUNC_SELECT(PERIPHS_IO_MUX_MTDI_U, FUNC_GPIO12);
     GPIO_DIS_OUTPUT(GPIO_ID_PIN(INT_PIN));
     ETS_GPIO_INTR_DISABLE();
@@ -129,7 +141,8 @@ void switchToBufferOverflowInterrupt() {
 //    os_timer_arm(&status_check_timer, STATUS_CHECK_DELAY, 1);
 }
 
-void calibrationInterrupt() {
+void calibrationInterrupt()
+{
     uint32 gpio_status = 0;
     gpio_status = GPIO_REG_READ(GPIO_STATUS_ADDRESS);
     GPIO_REG_WRITE(GPIO_STATUS_W1TC_ADDRESS, gpio_status);
@@ -147,7 +160,8 @@ void calibrationInterrupt() {
 
 }
 
-void enableInterrupt() {
+void enableInterrupt()
+{
     PIN_FUNC_SELECT(PERIPHS_IO_MUX_MTDI_U, FUNC_GPIO12);
     GPIO_DIS_OUTPUT(GPIO_ID_PIN(INT_PIN));
     ETS_GPIO_INTR_DISABLE();
@@ -158,9 +172,11 @@ void enableInterrupt() {
 //    MMA845x_Active();
 }
 
-void send_heartbeat() {
+void send_heartbeat()
+{
     uint32 current_time = system_get_time();
-    if (current_time - last_send_timestamp >= HEARTBEAT_INTERVAL_MICRO && ready_to_send) {
+    if (current_time - last_send_timestamp >= HEARTBEAT_INTERVAL_MICRO && ready_to_send)
+    {
         last_send_timestamp = system_get_time();
         start_connection();
     }
@@ -168,32 +184,40 @@ void send_heartbeat() {
 
 void ICACHE_FLASH_ATTR
 
-user_init() {
+user_init()
+{
 //    os_timer_disarm(&heartbeat_timer);
 //    os_timer_setfn(&heartbeat_timer, (os_timer_func_t *) send_heartbeat, NULL);
 //    os_timer_arm(&heartbeat_timer, HEARTBEAT_INTERVAL, 1);
 
+
     uart_init(BIT_RATE_9600, BIT_RATE_9600);
     os_printf("\nLeaving deep sleep or starting\n");
+
+    vcc_measure = system_get_vdd33();
+    os_printf("VCC VOLTAGE : %d\n", vcc_measure);
+
     initConnection();
 
-    int wakeupFlag = 0;
-    system_rtc_mem_read(64, &wakeupFlag, sizeof(wakeupFlag));
+    int wakeupReading = 0;
+    system_rtc_mem_read(64, &wakeupReading, sizeof(wakeupReading));
 
     allocateBufferMemory();
     user_rf_cal_sector_set();
-    if (wakeupFlag != 1) {
+    if (wakeupReading != 1)
+    {
         enableInterrupt();
         os_printf("\nFirst Run accelerometer will be configured");
         initI2C();
-    } else {
+    } else
+    {
         os_printf("\nWaking up: accelerometer not configured");
         i2c_master_gpio_init();
 //        i2c_master_init();
     }
 
 //    switchToBufferOverflowInterrupt();
-    setWakeupFlag(wakeupFlag);
+    setWakeupFlag(wakeupReading);
 
     const char ssid[32] = SSID;
     const char password[32] = WIFI_PASS;
@@ -212,8 +236,8 @@ user_init() {
 //    os_printf("Connecting to wifi %s: \n", SSID);
     wifi_station_connect();
 
-    wakeupFlag = 1;
-    system_rtc_mem_write(64, &wakeupFlag, sizeof(wakeupFlag));
+    wakeupReading = 1;
+    system_rtc_mem_write(64, &wakeupReading, sizeof(wakeupReading));
 
 }
 

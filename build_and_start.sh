@@ -4,7 +4,7 @@ mkdir -p backend/log
 
 cd ./backend
 
-./gradlew bootJar
+./gradlew clean bootJar
 
 cd ..
 

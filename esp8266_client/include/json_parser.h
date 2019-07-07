@@ -19,7 +19,7 @@ void parse_reading(float reading);
 
 void reading_to_char();
 
-char *parse_full_buffer(float *x, float *y, float *z, int bufferSize);
+char *parse_request_body(uint16_t  vcc_data, float *x, float *y, float *z, int bufferSize);
 
 char *convert_buffer_to_string(float *buffer, int bufferSize);
 

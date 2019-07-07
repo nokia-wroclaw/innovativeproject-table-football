@@ -6,7 +6,7 @@
 
 char *MAC_ADDRESS;
 char *single_reading_format = "%d.%05d";
-char *json_format = "{\"id\":\"%s\",\"x\": [%s], \"y\": [%s], \"z\": [%s] }";
+char *json_format = "{\"id\":\"%s\", \"vcc\" : %d,\"x\": [%s], \"y\": [%s], \"z\": [%s] }";
 
 char *parse_readings(real32 x, real32 y, real32 z) {
     os_printf("\nEntering parseReadings()\n");
@@ -50,7 +50,7 @@ void reading_to_char() {
 //    os_printf("\nLeaving reading_to_char() with reading %s", reading);
 }
 
-char *parse_full_buffer(float *x, float *y, float *z, int bufferSize) {
+char *parse_request_body(uint16_t vcc_data,float *x, float *y, float *z, int bufferSize) {
     char *json_string = (char *) os_zalloc(2048 * sizeof(char));
 
     os_printf("\n Located memory and made json_format\n");
@@ -62,15 +62,13 @@ char *parse_full_buffer(float *x, float *y, float *z, int bufferSize) {
     os_printf("\n All buffers ready\n");
     os_printf("\n Formatting json\n");
 
-    os_sprintf(json_string, json_format, MAC_ADDRESS, x_string, y_string, z_string);
+    os_sprintf(json_string, json_format, MAC_ADDRESS,vcc_data, x_string, y_string, z_string);
 
     os_free(x_string);
     os_free(y_string);
     os_free(z_string);
 
     os_printf("\n Freed memory\n");
-
-//    os_printf("Formatted JSON: %s", json_string);
 
     return json_string;
 }
