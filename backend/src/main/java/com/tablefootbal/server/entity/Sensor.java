@@ -25,15 +25,11 @@ public class Sensor implements Serializable {
     }
 
     String id;
-
     boolean occupied;
-
     boolean online;
-
     Date lastNotificationDate;
-
+    float vcc;
     int floor;
-
     int room;
 
     @JsonIgnore

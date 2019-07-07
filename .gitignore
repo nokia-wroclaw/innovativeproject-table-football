@@ -7,8 +7,9 @@
 *.idea
 
 #Redis logs and files
-*.rdb
-*.log
+**/*.rdb
+**/*.log
+backend/log/**
 
 
 #C compliation thrash
@@ -41,6 +42,10 @@ user_config.h
 *.launch
 .settings/
 *.sublime-workspace
+
+#Cmake (Not used in this project, but default of some IDEs)
+esp8266_client/CMakeLists.txt
+esp8266_client/cmake-build-debug/
 
 # IDE - VSCode
 .vscode/*

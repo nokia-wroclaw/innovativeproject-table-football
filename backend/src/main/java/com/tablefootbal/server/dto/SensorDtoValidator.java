@@ -26,12 +26,7 @@ public class SensorDtoValidator implements Validator
 		}
 		else if (!sensorDto.id.matches(macAddressPattern))
 		{
-			//mac check
 			errors.rejectValue("id", "error.id_not_valid");
 		}
-//		if (null == sensorDto.readings || sensorDto.readings.length < 3)
-//		{
-//			errors.rejectValue("readings", "error.reading_missing");
-//		}
 	}
 }
