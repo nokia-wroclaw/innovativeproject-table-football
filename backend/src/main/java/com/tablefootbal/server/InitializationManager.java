@@ -15,7 +15,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 @Component
@@ -54,8 +53,9 @@ public class InitializationManager implements ApplicationListener<ApplicationSta
             for (Sensor s : sensors) {
                 sensorRepository.save(s);
             }
-        } catch (IOException e) {
-            log.error("Cannot load dummy sensors from file");
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("Cannot save dummy sensors from file");
         }
 
         User user = new User();

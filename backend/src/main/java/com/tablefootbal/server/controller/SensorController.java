@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.tablefootbal.server.dto.ReadingDto;
 import com.tablefootbal.server.dto.SensorDto;
 import com.tablefootbal.server.dto.SensorDtoValidator;
-import com.tablefootbal.server.entity.CalibrationStructure;
+import com.tablefootbal.server.dto.VoltageReading;
 import com.tablefootbal.server.entity.Sensor;
 import com.tablefootbal.server.exceptions.customExceptions.InvalidPortException;
 import com.tablefootbal.server.exceptions.customExceptions.InvalidSensorDataException;
@@ -89,7 +89,7 @@ public class SensorController {
             sensor.setFloor(0);
         }
         sensor.setOnline(true);
-        sensor.setVcc(sensorDto.getVcc() / 1024f);
+        sensor.addReading(new VoltageReading(sensorDto.getVcc(), date));
 
         ReadingDto readingDto = new ReadingDto(sensorDto.x, sensorDto.y, sensorDto.z, System.currentTimeMillis());
         sensorService.saveOrUpdate(sensor, readingDto);
