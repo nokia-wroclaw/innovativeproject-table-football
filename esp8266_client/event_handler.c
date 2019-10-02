@@ -42,6 +42,10 @@ void connection_success_handler(void *connection)
     {
         handle_buffer_overflow();
     }
+    else
+    {
+	    system_deep_sleep_instant(DEEPSLEEP_TIME);
+    }
 }
 
 void set_ready_send_flag()
