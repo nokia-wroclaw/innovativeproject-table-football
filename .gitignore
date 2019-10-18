@@ -13,8 +13,8 @@ backend/log/**
 
 
 #C compliation thrash
-*.bin
 *.o
+esp8266_client/*.bin
 esp-image
 
 #Makefile so it will not overwrite your local one
