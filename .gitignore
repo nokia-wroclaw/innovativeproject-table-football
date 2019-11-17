@@ -72,3 +72,10 @@ Thumbs.db
 
 #Linux files
 *~
+
+#keystores, certificates, private keys
+*.crt
+*.key 
+*.p12
+*.jks
+*.pem
