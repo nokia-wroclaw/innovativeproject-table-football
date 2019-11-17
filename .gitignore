@@ -79,3 +79,6 @@ Thumbs.db
 *.p12
 *.jks
 *.pem
+#env file with secrets
+backend/startup.env
+
