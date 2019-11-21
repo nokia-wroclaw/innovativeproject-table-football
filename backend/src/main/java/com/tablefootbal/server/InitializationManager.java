@@ -38,6 +38,9 @@ public class InitializationManager implements ApplicationListener<ApplicationSta
     @Value("${admin.password}")
     private String adminPassword;
 
+    @Value("${sensors.fixture}")
+    private Boolean fixtureFlag;
+
     @Autowired
     PasswordEncoder passwordEncoder;
 
@@ -46,17 +49,19 @@ public class InitializationManager implements ApplicationListener<ApplicationSta
 
         ObjectMapper mapper = new ObjectMapper();
 
-        try {
-            ClassPathResource resource = new ClassPathResource("sensors.json");
-            Sensor[] sensors = mapper.readValue(resource.getURL().openStream(), Sensor[].class);
+	if(fixtureFlag) {
+            try {
+                ClassPathResource resource = new ClassPathResource("sensors.json");
+                Sensor[] sensors = mapper.readValue(resource.getURL().openStream(), Sensor[].class);
 
-            for (Sensor s : sensors) {
-                sensorRepository.save(s);
+                for (Sensor s : sensors) {
+                    sensorRepository.save(s);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                log.error("Cannot save dummy sensors from file");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error("Cannot save dummy sensors from file");
-        }
+	}
 
         User user = new User();
         user.setUsername(sensorName);
